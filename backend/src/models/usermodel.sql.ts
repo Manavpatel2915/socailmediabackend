@@ -3,11 +3,12 @@ import bcrypt from "bcrypt";
 
 export default (sequelize: Sequelize) => {
  class User extends Model {
-  public user_id!: number;
-  public username!: string;
-  public email!: string;
-  public password!: string;
-  public role!: "Admin" | "user";
+  declare user_id: number;
+  declare username: string;
+  declare email: string;
+  declare password: string;
+  declare role: "Admin" | "user";
+
 }
 
   User.init(

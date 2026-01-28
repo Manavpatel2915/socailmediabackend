@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import db from "../config/sqldbconnnect";
-
+import { model } from "mongoose";
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
 const creatpost = async(
@@ -43,9 +43,42 @@ const getpost = async(
     req:Request,
     res:Response
 ):Promise<Response>=>{
-  return res.status(201).send({message:"jsut demo"});
+  const postid = Number(req.params.postid);
+  
+  
+  
+  const post_user_comment = await db.Post.findOne({
+    where:{
+      post_id :postid,
+    },
+    include:[
+      {
+        model :db.User,
+        attributes:["username"],
+        
+      },
+      {
+      model :db.Comment,
+      attributes:["Comment"]
+    }
+    ],
+   
+  })
+  return res.status(201).send({
+    post_user_comment,
+    message : "hello"
+  });
+}
+const deletepost = async(
+    res:Response,
+    req:Request
+):Promise<Response>=>{
+  return res.status(200).json({
+    messsage :  "delete post succesfully"
+  })
 }
 export {
     creatpost,
-    getpost
+    getpost,
+    deletepost
 }

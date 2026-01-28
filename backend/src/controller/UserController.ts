@@ -9,8 +9,11 @@ const register = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const { username, email, password, role } = req.body;
+    const { username, email, password, role } = req.body;
 
+
+  console.log("PASSWORD:", password);
+  console.log("REQ BODY:", req.body);
   if (!username || !email || !password) {
     return res.status(400).json({ message: "All fields are required" });
   }
@@ -19,7 +22,7 @@ const register = async (
     const existingUser = await db.User.findOne({ where: { email } });
 
     if (existingUser) {
-      return res.status(409).json({ message: "User already exists" });
+      return res.status(500).json({ message: "User already exists" });
     }
 
     const user = await db.User.create({
@@ -27,16 +30,21 @@ const register = async (
       email,
       password,
       role,
-    });
-
+    }); 
     const token = jwt.sign(
       { user_id: user.user_id, role: user.role },
       JWT_SECRET,
-      { expiresIn: "1d" }
+      { expiresIn: "5d" }
     );
 
+    const tokendata = await db.Token.create({
+      genratedtoken : token
+    });
+    if(!tokendata){
+      console.log("not set token data");
+    }
+    
     return res.status(201).json({
-      message: "User registered successfully",
       token,
       user: {
         id: user.user_id,
@@ -76,11 +84,14 @@ const login = async (
   const token = jwt.sign(
     { user_id: user.user_id, role: user.role },
     JWT_SECRET,
-    { expiresIn: "1d" }
+    { expiresIn: "5d" }
   );
-
+   const tokendata = db.Token.create({
+      genratedtoken : token
+    });
   return res.json({
     token,
+    message : "token is set to the db",
     user: {
       id: user.user_id,
       email: user.email,
@@ -90,18 +101,11 @@ const login = async (
 };
 
 
-const logout =async (
-  req:Request,
-  res:Response
-):Promise<Response>=>
-  {
-  
-  return res.status(201).send({message:"succesfully logout"});
+
 
   
-}
+
 export { register, 
           login,
-          logout,
-          
+        
          };

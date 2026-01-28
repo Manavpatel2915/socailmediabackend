@@ -2,7 +2,7 @@ const { Sequelize } = require('sequelize');
 import UserModel from "../models/usermodel.sql";
 import CommentModel from "../models/commentmodel.sql";
 import PostModel from "../models/postmodel.sql";
-
+import TokenModel from "../models/tokenmodel.sql";
 
 const Databasename :string = "aribin";
 const sequelize = new Sequelize('airbin', 'root', 'MANAVPATEL291', {
@@ -26,7 +26,7 @@ db.sequelize = sequelize;
 db.User=UserModel(sequelize);
 db.Post=PostModel(sequelize);
 db.Comment=CommentModel(sequelize);
-
+db.Token=TokenModel(sequelize);
 // one to many 1user have many post 
 db.User.hasMany(db.Post,{
     foreignKey: 'user_id',
