@@ -100,12 +100,72 @@ const login = async (
   });
 };
 
+const deleteuser = async(
+  req:Request,
+  res:Response
+):Promise<Response> =>{
+  try{
+ const user = req.user as any ;
+  
+  const User = await db.User.findByPk(user.user_id);
+   if(!User){
+    return res.status(404).json({
+      message : "user not found "
+    })
+  }
+  if(User.user_id !== user.user_id  ){
+    return res.status(401).json({
+      message : "you have not Authorized to delete this account "
+    })
+  }
+ 
+  const comments = await db.Comment.findAll({
+    where: {
+      user_id : user.user_id
+    }
+  });
+  const comment_id = comments.map(item=>item.id);
+  const deteled_comment =await db.Comment.destroy({
+  where: {
+    id: comment_id
+  }
+}); 
 
+   const posts = await db.Post.findAll({
+    where: {
+      user_id : user.user_id
+    }
+  });
+  const post_id = posts.map(item => item.id);
+  const deleted_post = await db.Post.destroy({
+    where:{
+      post_id : post_id
+    }
+  })
+
+  const deletedUser = await db.User.destroy({
+    where : {
+      user_id :User.user_id
+    }
+  })
+    return res.status(201).json({
+    deletedUser,
+    deleted_post,
+    deteled_comment,
+    message : "delete user sucessfully "
+  });
+  }catch (error: unknown) {
+    return res.status(500).json({
+      message: "Failed to delete user",
+      error: error instanceof Error ? error.message : error,
+    });
+  }
+}
 
 
   
 
 export { register, 
           login,
-        
+          deleteuser,
          };
