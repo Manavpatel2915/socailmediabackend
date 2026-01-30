@@ -72,7 +72,58 @@ const update_comment = async (
     data: existingComment,
   });
 };
+
+
+
+const delete_comment = async(
+  req:Request,
+  res:Response
+    
+):Promise<Response>=>{
+ 
+  try{
+  const user = req.user;
+  if (!user) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+  const comment_id = Number(req.params.id);
+   const comment = await db.Comment.findByPk(comment_id);
+
+     if(!comment) {
+    return res.status(404).json({
+      message : "comment not found "
+    })
+  }
+   if(comment.user_id !== user.user_id && user.role !=="Admin" ){
+    return res.status(401).json({
+      message : "you have not Authorized to delete this post "
+    })
+  }
+  
+  const deteled_comment =await db.Comment.destroy({
+  where: {
+    id: comment_id
+  }
+});
+  
+  
+
+    return res.status(200).json({
+      message : "your commented deleted scuessfully !"
+    })
+
+  }catch (error: unknown) {
+    return res.status(500).json({
+      message: "Failed to delete comment ",
+      error: error instanceof Error ? error.message : error,
+    });
+  }
+  
+}
+
 export {
     create_comment,
-    update_comment
+    update_comment,
+    delete_comment,
+
 }

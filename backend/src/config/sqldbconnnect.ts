@@ -7,14 +7,14 @@ import TokenModel from "../models/tokenmodel.sql";
 
 dotenv.config();
 
-// Database configuration from environment variables
+
 const DB_NAME = process.env.DB_NAME || 'airbin';
 const DB_USER = process.env.DB_USER || 'root';
 const DB_PASSWORD = process.env.DB_PASSWORD || '';
 const DB_HOST = process.env.DB_HOST || 'localhost';
 const DB_PORT = process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 3306;
 
-// Sequelize instance
+
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   host: DB_HOST,
   port: DB_PORT,
@@ -28,7 +28,6 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   }
 });
 
-// Database connection interface
 interface Database {
   Sequelize: typeof Sequelize;
   sequelize: Sequelize;
@@ -38,7 +37,7 @@ interface Database {
   Token: ReturnType<typeof TokenModel>;
 }
 
-// Initialize database models
+
 const db: Database = {
   Sequelize,
   sequelize,
@@ -48,7 +47,7 @@ const db: Database = {
   Token: TokenModel(sequelize),
 };
 
-// Define associations
+
 // User -> Posts (one-to-many)
 db.User.hasMany(db.Post, {
   foreignKey: 'user_id',
@@ -88,18 +87,16 @@ db.Comment.belongsTo(db.User, {
   as: 'user'
 });
 
-// Connection function with proper error handling
+
 export const connectDatabase = async (): Promise<void> => {
   try {
     await sequelize.authenticate();
-    console.log(`✅ Database "${DB_NAME}" connected successfully at ${DB_HOST}:${DB_PORT}`);
+    console.log(` Database "${DB_NAME}" connected successfully at ${DB_HOST}:${DB_PORT}`);
   } catch (error) {
-    console.error('❌ Database connection error:', error);
-    throw error; // Re-throw to allow caller to handle
+    console.error(' Database connection error:', error);
+    throw error; 
   }
 };
-
-// Optional: Sync database schema (use with caution in production)
-// db.sequelize.sync({ force: true }); // ⚠️ DANGER: Drops all tables!
+// db.sequelize.sync({ force: true }); 
 
 export default db;

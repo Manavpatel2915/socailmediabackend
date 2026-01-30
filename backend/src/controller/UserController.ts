@@ -9,12 +9,9 @@ const register = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-    const { username, email, password, role } = req.body;
+    const { user_name, email, password, role } = req.body;
 
-
-  console.log("PASSWORD:", password);
-  console.log("REQ BODY:", req.body);
-  if (!username || !email || !password) {
+  if (!user_name || !email || !password) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
@@ -26,7 +23,7 @@ const register = async (
     }
 
     const user = await db.User.create({
-      username,
+      user_name,
       email,
       password,
       role,

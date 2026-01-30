@@ -1,16 +1,17 @@
-import passport from "passport"; 
+import passport from "passport";
+import type { NextFunction, Request, Response } from "express";
 
-const optionalJwt = (req: any, res: any, next: any) => {
+const optionalJwt = (req: Request, res: Response, next: NextFunction) => {
   passport.authenticate(
     "jwt",
     { session: false },
-    (err: any, user: any) => {
+    (err: unknown, user: Express.User | false | null | undefined) => {
       if (err) {
-        return next(err);
+        return next(err as Error);
       }
 
       if (user) {
-        req.user = user; 
+        req.user = user;
       }
 
       next();
