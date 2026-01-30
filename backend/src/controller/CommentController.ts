@@ -3,27 +3,33 @@ import db from '../config/sqldbconnnect';
 import { log } from "node:console";
 
 
-const create_comment = async(
-    req:Request,
-    res:Response
-):Promise<Response>=>{
-    const user = req.user as any ;
-    const {Comment} = req.body;
-    const postid = Number(req.params.postId); 
-    
-    
+const create_comment = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+    const user = req.user as any; 
+    const { Comment } = req.body;
+    const postid = Number(req.params.postId);
+
     const comment_data = await db.Comment.create({
-        Comment :Comment,
-        user_id:user.user_id,
-        post_id:postid
+      Comment,
+      post_id: postid,
+      user_id: user ? user.user_id : null, 
     });
-    
-    return res.status(200).json({
-        
-        message :"comment created",
-        comment_data
-    })
-}
+
+    return res.status(201).json({
+      message: "comment created",
+      comment_data,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "error creating comment",
+      error,
+    });
+  }
+};
+
 
 const update_comment = async (
   req: Request,

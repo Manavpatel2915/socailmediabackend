@@ -2,9 +2,9 @@ import type { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import db from "../config/sqldbconnnect";
-
+import dotenv from 'dotenv';
+dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET as string;
-
 const register = async (
   req: Request,
   res: Response
@@ -34,7 +34,7 @@ const register = async (
     const token = jwt.sign(
       { user_id: user.user_id, role: user.role },
       JWT_SECRET,
-      { expiresIn: "5d" }
+      { expiresIn:process.env.TOKEN_EXPRI as "5d" }
     );
 
     const tokendata = await db.Token.create({
@@ -84,7 +84,7 @@ const login = async (
   const token = jwt.sign(
     { user_id: user.user_id, role: user.role },
     JWT_SECRET,
-    { expiresIn: "5d" }
+    { expiresIn: process.env.TOKEN_EXPRI as "5d" }
   );
    const tokendata = db.Token.create({
       genratedtoken : token

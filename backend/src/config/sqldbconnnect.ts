@@ -47,13 +47,20 @@ db.Comment.belongsTo(db.Post,{
 
 /// one to many connect between user and comment
 
-db.User.hasMany(db.Comment,{
-    foreignKey: 'user_id',
+db.User.hasMany(db.Comment, {
+  foreignKey: {
+    name: "user_id",
+    allowNull: true,
+  },
 });
 
-db.Comment.belongsTo(db.User,{
-  foreignKey: 'user_id',
+db.Comment.belongsTo(db.User, {
+  foreignKey: {
+    name: "user_id",
+    allowNull: true,
+  },
 });
+
 
 // sequelize.sync({ force: true });
 
