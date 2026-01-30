@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --watch src --ext ts --exec tsx src/server.ts",
-    "build": "tsc",
+    "build": " npm run lint && tsc",
     "start": "node dist/index.js",
     "lint": "eslint . --ext .ts"
   },

@@ -1,11 +1,8 @@
-// import mongodbconnect from './mongodbconnect';
+import mongodbconnect from './mongodbconnect';
 import sqldbconnect from './sqldbconnnect';
 
-
-
-
 const connectdb =( () => {
-        // mongodbconnect();
+        mongodbconnect();
         sqldbconnect;
 });
 export default connectdb;
