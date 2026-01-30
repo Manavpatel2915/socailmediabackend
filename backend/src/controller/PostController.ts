@@ -13,9 +13,7 @@ const creatpost = async(
       return res.status(401).json({ message: "Unauthorized" });
     }
     const { title, content, image } = req.body;
-    if(!title || !content || !image ){
-         return res.status(400).json({ message: "All fields are required" });
-    }
+  
 
     const post = await db.Post.create({
       title,
@@ -30,7 +28,9 @@ const creatpost = async(
 }
 catch (error) {
     return res.status(500).json({
+
       message: "Failed to create post",
+       error: error instanceof Error ? error.message : error
     });
   }
 }
@@ -41,8 +41,7 @@ const getpost = async(
 ):Promise<Response>=>{
   const postid = Number(req.params.postid);
   
-  
-  
+  try{
   const post_user_comment = await db.Post.findOne({
     where:{
       post_id :postid,
@@ -50,20 +49,33 @@ const getpost = async(
     include:[
       {
         model :db.User,
-        attributes:["username"],
-        
+        attributes:["user_name"],
+        as :"user"
       },
       {
       model :db.Comment,
-      attributes:["Comment"]
+      attributes:["Comment"],
+      as:"comments"
     }
     ],
    
   })
   return res.status(201).send({
     post_user_comment,
-    message : "hello"
+    message : "all data get"
   });
+  
+  }catch(error:unknown){
+    console.log(error);
+    return res.status(500).json({
+      message:"filed to get post",
+      error:error instanceof Error ? error.message : error
+    }
+      
+    )
+  }
+  
+
 }
 const deletepost = async(
   req:Request,

@@ -19,7 +19,7 @@ export default (sequelize: Sequelize) => {
         autoIncrement: true,
         primaryKey: true,
       },
-      username: {
+      user_name: {
         type: DataTypes.STRING,
         allowNull: false,
       },

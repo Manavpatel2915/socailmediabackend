@@ -10,7 +10,7 @@ import PostRoutes from './routes/PostRoutes';
 import CommentRoutes from './routes/CommentRoutes';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3306;
 
 // Initialize database connections before starting server
 (async () => {
@@ -29,10 +29,10 @@ const PORT = process.env.PORT || 3000;
     });
 
     app.listen(PORT, () => {
-      console.log(`🚀 Server running on port ${PORT}`);
+      console.log(` Server running on port ${PORT}`);
     });
   } catch (error) {
-    console.error('❌ Failed to start server:', error);
+    console.error(' Failed to start server:', error);
     process.exit(1);
   }
 })();
