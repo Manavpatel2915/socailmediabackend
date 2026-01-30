@@ -39,6 +39,7 @@ export default (sequelize: Sequelize
     },
     {
       sequelize,
+      underscored: true,
       tableName: 'Post',
       modelName: 'Post',
     }

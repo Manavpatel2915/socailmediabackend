@@ -33,6 +33,7 @@ export default (sequelize: Sequelize) => {
     },
     {
       sequelize,
+      underscored: true,
       tableName: "Comment",
       modelName: "Comment",
     }

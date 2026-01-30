@@ -11,9 +11,15 @@ export default defineConfig([
   /* TypeScript recommended rules */
   ...tseslint.configs.recommended,
 
+  /* Ignore dist folder */
+  {
+    ignores: ["dist/**", "**/dist/**"],
+  },
+
   /* Node + Express environment */
   {
     files: ["**/*.{js,ts}"],
+    ignores: ["dist/**", "**/dist/**"],
     languageOptions: {
       globals: globals.node,
       sourceType: "commonjs",
@@ -23,6 +29,7 @@ export default defineConfig([
   /* Type-aware linting for TypeScript */
   {
     files: ["**/*.ts"],
+    ignores: ["dist/**", "**/dist/**"],
     languageOptions: {
       parserOptions: {
         project: "./tsconfig.json",

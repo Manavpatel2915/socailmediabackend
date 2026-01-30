@@ -1,4 +1,4 @@
-const { Sequelize } = require('sequelize');
+import { Sequelize } from 'sequelize';
 import UserModel from "../models/usermodel.sql";
 import CommentModel from "../models/commentmodel.sql";
 import PostModel from "../models/postmodel.sql";
