@@ -1,9 +1,19 @@
 import mongodbconnect from './mongodbconnect';
-import sqldbconnect from './sqldbconnnect';
+import { connectDatabase } from './sqldbconnnect';
 
-const connectdb = (() => {
-  mongodbconnect();
-  // sqldbconnect is imported and runs its connection code automatically
-  return sqldbconnect;
-});
+const connectdb = async (): Promise<void> => {
+  try {
+    // Connect to MongoDB
+    await mongodbconnect();
+    
+    // Connect to MySQL/Sequelize
+    await connectDatabase();
+    
+    console.log('✅ All database connections established');
+  } catch (error) {
+    console.error('❌ Database connection failed:', error);
+    throw error; // Re-throw to prevent server from starting without DB
+  }
+};
+
 export default connectdb;

@@ -1,6 +1,5 @@
 import type { Request, Response } from "express";
 import db from '../config/sqldbconnnect';
-import { log } from "node:console";
 
 
 const create_comment = async (
@@ -8,7 +7,7 @@ const create_comment = async (
   res: Response
 ): Promise<Response> => {
   try {
-    const user = req.user as any; 
+    const user = req.user; 
     const { Comment } = req.body;
     const postid = Number(req.params.postId);
 
@@ -35,7 +34,10 @@ const update_comment = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const user = req.user as any;
+  const user = req.user;
+  if (!user) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
   const comment_id = Number(req.params.commentId);
   const { comment } = req.body;
 
@@ -54,7 +56,7 @@ const update_comment = async (
   }
 
   if (
-    existingComment.id !== user.user_id &&
+    existingComment.user_id !== user.user_id &&
     user.role !== 'Admin'
   ) {
     return res.status(500).json({
@@ -63,7 +65,7 @@ const update_comment = async (
   }
 
   
-  await existingComment.update({ comment });
+  await existingComment.update({ Comment: comment });
 
   return res.status(200).json({
     message: "Comment updated successfully",

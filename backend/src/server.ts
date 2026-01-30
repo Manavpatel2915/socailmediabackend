@@ -9,25 +9,33 @@ import UserRoutes from './routes/UserRoutes';
 import PostRoutes from './routes/PostRoutes';
 import CommentRoutes from './routes/CommentRoutes';
 
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-connectdb();
-const app =express();
-const PORT = process.env.PORT||3000 ;
+// Initialize database connections before starting server
+(async () => {
+  try {
+    await connectdb();
+    
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
+    app.use(passport.initialize());
+    app.use('/user', UserRoutes);
+    app.use('/post', PostRoutes);
+    app.use('/comment', CommentRoutes);
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(passport.initialize());
-app.use('/user',UserRoutes);
-app.use('/post',PostRoutes);
-app.use('/comment',CommentRoutes)
+    app.get('/', (req: Request, res: Response) => {
+      res.send('hello');
+    });
 
-app.get('/',(req:Request ,res:Response)=>{
-    res.send('hello');
-})
-
-app.listen(PORT,()=>{
-    console.log(`server running on port ${PORT}`);
-})
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error('❌ Failed to start server:', error);
+    process.exit(1);
+  }
+})();
 
 
 

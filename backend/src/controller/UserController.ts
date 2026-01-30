@@ -74,7 +74,7 @@ const login = async (
 
   const isMatch = await bcrypt.compare(
     password,
-    (user as any).password
+    user.password
   );
 
   if (!isMatch) {
@@ -105,7 +105,10 @@ const deleteuser = async(
   res:Response
 ):Promise<Response> =>{
   try{
- const user = req.user as any ;
+  const user = req.user;
+  if (!user) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
   
   const User = await db.User.findByPk(user.user_id);
    if(!User){
@@ -136,7 +139,7 @@ const deleteuser = async(
       user_id : user.user_id
     }
   });
-  const post_id = posts.map(item => item.id);
+  const post_id = posts.map((item) => item.post_id);
   const deleted_post = await db.Post.destroy({
     where:{
       post_id : post_id

@@ -46,12 +46,12 @@ export default (sequelize: Sequelize) => {
     }
   );
 
-  User.beforeCreate(async (user: any) => {
+  User.beforeCreate(async (user: User) => {
     user.password = await bcrypt.hash(user.password, 10);
   });
 
  
-  User.beforeUpdate(async (user: any) => {
+  User.beforeUpdate(async (user: User) => {
     if (user.changed("password")) {
       user.password = await bcrypt.hash(user.password, 10);
     }

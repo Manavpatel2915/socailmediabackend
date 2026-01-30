@@ -1,11 +1,5 @@
 import type { Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
 import db from "../config/sqldbconnnect";
-import { model } from "mongoose";
-import { where } from "sequelize";
-import { log } from "console";
-const JWT_SECRET = process.env.JWT_SECRET as string;
 
 const creatpost = async(
     req:Request,
@@ -13,12 +7,12 @@ const creatpost = async(
 ):Promise<Response>=>{
 
    try{
-    const user = req.user as any;
+    const user = req.user;
     
     if (!user) {
       return res.status(401).json({ message: "Unauthorized" });
     }
-    const {title,content,image,like} = req.body;
+    const { title, content, image } = req.body;
     if(!title || !content || !image ){
          return res.status(400).json({ message: "All fields are required" });
     }
@@ -78,7 +72,10 @@ const deletepost = async(
 ):Promise<Response>=>{
  
   try{
- const user = req.user as any ;
+  const user = req.user;
+  if (!user) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
   const postid = Number(req.params.postid);
    const Post = await db.Post.findByPk(postid);
 
@@ -131,7 +128,10 @@ const updatepost = async(
   req:Request,
   res:Response
 ):Promise<Response> =>{
-  const user = req.user as any;
+  const user = req.user;
+  if (!user) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
   const postid =Number(req.params.postid);
   const data = req.body;
   const Post = await db.Post.findByPk(postid);

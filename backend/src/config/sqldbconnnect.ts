@@ -1,57 +1,83 @@
 import { Sequelize } from 'sequelize';
+import dotenv from 'dotenv';
 import UserModel from "../models/usermodel.sql";
 import CommentModel from "../models/commentmodel.sql";
 import PostModel from "../models/postmodel.sql";
 import TokenModel from "../models/tokenmodel.sql";
 
-const Databasename :string = "aribin";
-const sequelize = new Sequelize('airbin', 'root', 'MANAVPATEL291', {
-  host: 'localhost',
-  logging:false,
+dotenv.config();
+
+// Database configuration from environment variables
+const DB_NAME = process.env.DB_NAME || 'airbin';
+const DB_USER = process.env.DB_USER || 'root';
+const DB_PASSWORD = process.env.DB_PASSWORD || '';
+const DB_HOST = process.env.DB_HOST || 'localhost';
+const DB_PORT = process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 3306;
+
+// Sequelize instance
+const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
+  host: DB_HOST,
+  port: DB_PORT,
+  logging: false,
   dialect: 'mysql',
-});
-
-(async () => {
-    try{
-    await sequelize.authenticate();
-    console.log(`Database connected ${Databasename}`);
-  }catch(error){
-    console.log(error);
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
   }
-})();
-
-const db:any ={};
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
-db.User=UserModel(sequelize);
-db.Post=PostModel(sequelize);
-db.Comment=CommentModel(sequelize);
-db.Token=TokenModel(sequelize);
-// one to many 1user have many post 
-db.User.hasMany(db.Post,{
-    foreignKey: 'user_id',
 });
 
-db.Post.belongsTo(db.User,{
+// Database connection interface
+interface Database {
+  Sequelize: typeof Sequelize;
+  sequelize: Sequelize;
+  User: ReturnType<typeof UserModel>;
+  Post: ReturnType<typeof PostModel>;
+  Comment: ReturnType<typeof CommentModel>;
+  Token: ReturnType<typeof TokenModel>;
+}
+
+// Initialize database models
+const db: Database = {
+  Sequelize,
+  sequelize,
+  User: UserModel(sequelize),
+  Post: PostModel(sequelize),
+  Comment: CommentModel(sequelize),
+  Token: TokenModel(sequelize),
+};
+
+// Define associations
+// User -> Posts (one-to-many)
+db.User.hasMany(db.Post, {
   foreignKey: 'user_id',
+  as: 'posts'
 });
 
-// one to many connect between post and comment 
-db.Post.hasMany(db.Comment,{
-    foreignKey: 'post_id',
+db.Post.belongsTo(db.User, {
+  foreignKey: 'user_id',
+  as: 'user'
 });
 
-db.Comment.belongsTo(db.Post,{
+// Post -> Comments (one-to-many)
+db.Post.hasMany(db.Comment, {
   foreignKey: 'post_id',
+  as: 'comments'
 });
 
-/// one to many connect between user and comment
+db.Comment.belongsTo(db.Post, {
+  foreignKey: 'post_id',
+  as: 'post'
+});
 
+// User -> Comments (one-to-many, optional)
 db.User.hasMany(db.Comment, {
   foreignKey: {
     name: "user_id",
     allowNull: true,
   },
+  as: 'comments'
 });
 
 db.Comment.belongsTo(db.User, {
@@ -59,9 +85,21 @@ db.Comment.belongsTo(db.User, {
     name: "user_id",
     allowNull: true,
   },
+  as: 'user'
 });
 
+// Connection function with proper error handling
+export const connectDatabase = async (): Promise<void> => {
+  try {
+    await sequelize.authenticate();
+    console.log(`✅ Database "${DB_NAME}" connected successfully at ${DB_HOST}:${DB_PORT}`);
+  } catch (error) {
+    console.error('❌ Database connection error:', error);
+    throw error; // Re-throw to allow caller to handle
+  }
+};
 
-// sequelize.sync({ force: true });
+// Optional: Sync database schema (use with caution in production)
+// db.sequelize.sync({ force: true }); // ⚠️ DANGER: Drops all tables!
 
 export default db;
