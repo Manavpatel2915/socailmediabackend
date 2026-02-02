@@ -2,8 +2,6 @@ import express from 'express';
 import passport from "passport";
 import "./config/passport";
 import type { Request, Response } from 'express';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 import connectdb from './config/connectdb'
 import UserRoutes from './routes/UserRoutes';
 import PostRoutes from './routes/PostRoutes';
