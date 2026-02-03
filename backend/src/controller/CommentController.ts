@@ -1,12 +1,11 @@
 import type { Request, Response } from "express";
 import db from '../config/sqldbconnnect';
-
+import { AppError } from "../utils/AppError";
 
 const create_comment = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  try {
     const user = req.user; 
     const { Comment } = req.body;
     const postid = Number(req.params.postId);
@@ -21,12 +20,7 @@ const create_comment = async (
       message: "comment created",
       comment_data,
     });
-  } catch (error) {
-    return res.status(500).json({
-      message: "error creating comment",
-      error,
-    });
-  }
+  
 };
 
 

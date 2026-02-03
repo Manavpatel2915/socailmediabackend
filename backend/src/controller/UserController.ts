@@ -1,25 +1,30 @@
-import type { Request, Response } from "express";
+import type { Request, Response  } from "express";
+
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import db from "../config/sqldbconnnect";
 import dotenv from 'dotenv';
+import { AppError } from "../utils/AppError";
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET as string;
+
+
 const register = async (
   req: Request,
-  res: Response
+  res: Response,
+
 ): Promise<Response> => {
     const { user_name, email, password, role } = req.body;
 
   if (!user_name || !email || !password) {
-    return res.status(400).json({ message: "All fields are required" });
+     throw new AppError("All fields are required", 400);
   }
 
-  try {
+  
     const existingUser = await db.User.findOne({ where: { email } });
 
     if (existingUser) {
-      return res.status(500).json({ message: "User already exists" });
+      throw new AppError("User already exists", 409);
     }
 
     const user = await db.User.create({
@@ -34,12 +39,7 @@ const register = async (
       { expiresIn:process.env.TOKEN_EXPRI as "5d" }
     );
 
-    const tokendata = await db.Token.create({
-      genratedtoken : token
-    });
-    if(!tokendata){
-      console.log("not set token data");
-    }
+    
     
     return res.status(201).json({
       token,
@@ -50,12 +50,7 @@ const register = async (
         role: user.role,
       },
     });
-  } catch (error: unknown) {
-    return res.status(500).json({
-      message: "Failed to create user",
-      error: error instanceof Error ? error.message : error,
-    });
-  }
+  
 };
 
 const login = async (
@@ -66,7 +61,7 @@ const login = async (
 
   const user = await db.User.findOne({ where: { email } });
   if (!user) {
-    return res.status(401).json({ message: "Invalid email or password" });
+    throw new AppError("Invalid email or password", 401);
   }
 
   const isMatch = await bcrypt.compare(
@@ -75,7 +70,7 @@ const login = async (
   );
 
   if (!isMatch) {
-    return res.status(401).json({ message: "Invalid email or password" });
+    throw new AppError("Invalid email or password", 401);
   }
 
   const token = jwt.sign(
@@ -83,9 +78,7 @@ const login = async (
     JWT_SECRET,
     { expiresIn: process.env.TOKEN_EXPRI as "5d" }
   );
-   const tokendata = db.Token.create({
-      genratedtoken : token
-    });
+   
   return res.json({
     token,
     message : "token is set to the db",
@@ -101,22 +94,18 @@ const deleteuser = async(
   req:Request,
   res:Response
 ):Promise<Response> =>{
-  try{
+  
   const user = req.user;
   if (!user) {
-    return res.status(401).json({ message: "Unauthorized" });
+   throw new AppError("Unauthorized", 401);
   }
   
   const User = await db.User.findByPk(user.user_id);
    if(!User){
-    return res.status(404).json({
-      message : "user not found "
-    })
+     throw new AppError("User not found", 404);
   }
   if(User.user_id !== user.user_id  ){
-    return res.status(401).json({
-      message : "you have not Authorized to delete this account "
-    })
+    throw new AppError("Not authorized to delete this account", 403);
   }
  
   const comments = await db.Comment.findAll({
@@ -154,12 +143,7 @@ const deleteuser = async(
     deteled_comment,
     message : "delete user sucessfully "
   });
-  }catch (error: unknown) {
-    return res.status(500).json({
-      message: "Failed to delete user",
-      error: error instanceof Error ? error.message : error,
-    });
-  }
+  
 }
 
 

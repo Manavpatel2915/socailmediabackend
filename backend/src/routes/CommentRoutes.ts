@@ -7,9 +7,10 @@ import {
     
 }from '../controller/CommentController'
 import optionalJwt from "../middleware/optinaljwt";
+import { asyncHandler } from "../utils/asyncHandler";
 const router = Router();
 
-router.post("/create_comment/:postId",optionalJwt, create_comment);
-router.patch('/update_comment/:commentId',passport.authenticate("jwt", { session: false }),update_comment);
-router.get('/delete_comment/:id',passport.authenticate("jwt", { session: false }),delete_comment);
+router.post("/create_comment/:postId",optionalJwt, asyncHandler(create_comment));
+router.patch('/update_comment/:commentId',passport.authenticate("jwt", { session: false }),asyncHandler(update_comment));
+router.get('/delete_comment/:id',passport.authenticate("jwt", { session: false }),asyncHandler(delete_comment));
 export default router;

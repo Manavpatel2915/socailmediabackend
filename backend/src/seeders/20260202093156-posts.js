@@ -10,16 +10,17 @@ module.exports = {
         title: `Post Title ${i}`,
         content: `This is the content of post ${i}`,
         image: 'https://justdemo.jpeg',
-        like: i * 2,
+        like: i * 3,
+        user_id: ((i - 1) % 8) + 1, // rotate users 1–8
         created_at: new Date(),
         updated_at: new Date(),
       });
     }
 
-    await queryInterface.bulkInsert('Post', posts);
+    await queryInterface.bulkInsert('post', posts);
   },
 
   async down(queryInterface) {
-    await queryInterface.bulkDelete('Post', null, {});
+    await queryInterface.bulkDelete('post', null, {});
   },
 };
