@@ -9,7 +9,7 @@ import CommentRoutes from './routes/CommentRoutes';
 import { morganMongoLogger } from "./middleware/morganLogger";
 import { errorHandler } from "./middleware/errorHandler.midddleware";
 const app = express();
-const PORT = process.env.PORT || 3306;
+const PORT = process.env.PORT || 3000;
 
 (async () => {
   try {
@@ -26,7 +26,7 @@ const PORT = process.env.PORT || 3306;
     app.get('/', (req: Request, res: Response) => {
       res.send('hello');
     });
-
+    
     app.listen(PORT, () => {
       console.log(` Server running on port ${PORT}`);
     });

@@ -9,10 +9,12 @@ const createcomment = async (
   res: Response
 ): Promise<Response> => {
     const user = req.user; 
-    const { data } = req.body;
+    const {Comment} = req.body;
+  
     const postId = Number(req.params.postId);
-
-    const commentData = await createComment(postId,user,data);
+    const userId = user ? user.user_id : null;
+    
+    const commentData = await createComment(postId,userId,Comment);
 
     return res.status(201).json({
       message: "comment created",
@@ -32,9 +34,9 @@ const updatecomment = async (
 
   }
   const commentId = Number(req.params.commentId);
-  const { comment } = req.body;
+  const { Comment } = req.body;
 
-  if (!comment) {
+  if (!Comment) {
     throw new AppError("Comment text is required", 500);
   }
   const existingComment = await findCommentById(commentId);
@@ -50,7 +52,7 @@ const updatecomment = async (
   }
 
   
-  await updateComment(existingComment,comment);
+  await updateComment(existingComment,Comment);
 
   return res.status(200).json({
     message: "Comment updated successfully"

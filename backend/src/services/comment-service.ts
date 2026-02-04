@@ -11,16 +11,16 @@ const findCommentById = async(
 
 const createComment = async(
     postId,
-    user,
-    data
+    userId,
+    Comment
 )=>{
-    
+   
     const commentData = await db.Comment.create({
-      data,
+      Comment:Comment,
       post_id: postId,
-      user_id: user ? user.user_id : null, 
+      user_id: userId 
     });
-    return commentData
+    return commentData;
 }
 
 const updateComment= async(
