@@ -1,21 +1,32 @@
-import {
-  Model,
-  Sequelize,
-  DataTypes,
-  DATE,
-} from 'sequelize';
+import { Model, Sequelize, DataTypes } from 'sequelize';
+import { Models } from "../types/models.types";
 
-export default (sequelize: Sequelize
-) => {
+export default (sequelize: Sequelize) => {
   class Post extends Model {
- 
-  declare post_id:number;
-  declare title:string;
-  declare content:string;
-  declare image:string;
-  declare like:number;
-  declare user_id:number;
-}
+    declare post_id: number;
+    declare title: string;
+    declare content: string;
+    declare image: string;
+    declare like: number;
+    declare user_id: number;
+
+    // Properly typed association method
+    static associate(models: Models): void {
+      // Post -> User (many-to-one)
+      Post.belongsTo(models.User, {
+        foreignKey: 'user_id',
+        as: 'user',
+        onDelete: 'CASCADE',
+      });
+
+      // Post -> Comments (one-to-many)
+      Post.hasMany(models.Comment, {
+        foreignKey: 'post_id',
+        as: 'comments',
+        onDelete: 'CASCADE',
+      });
+    }
+  }
 
   Post.init(
     {
@@ -44,10 +55,9 @@ export default (sequelize: Sequelize
         allowNull: false,
         defaultValue: 1,
       },
-      user_id:{
-        type :DataTypes.INTEGER,
-        allowNull:false,
-        
+      user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       }
     },
     {

@@ -1,123 +1,94 @@
 import type { Request, Response } from "express";
-import db from '../config/sqldbconnnect';
+
+import { findCommentById,createComment,updateComment,deletedComment } from "../services/comment-service";
 import { AppError } from "../utils/AppError";
 
-const create_comment = async (
+
+const createcomment = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
     const user = req.user; 
-    const { Comment } = req.body;
-    const postid = Number(req.params.postId);
+    const { data } = req.body;
+    const postId = Number(req.params.postId);
 
-    const comment_data = await db.Comment.create({
-      Comment,
-      post_id: postid,
-      user_id: user ? user.user_id : null, 
-    });
+    const commentData = await createComment(postId,user,data);
 
     return res.status(201).json({
       message: "comment created",
-      comment_data,
+      commentData,
     });
   
 };
 
-
-const update_comment = async (
+const updatecomment = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
   const user = req.user;
   if (!user) {
-    return res.status(401).json({ message: "Unauthorized" });
+  
+    throw new AppError("Unauthorized", 401);
+
   }
-  const comment_id = Number(req.params.commentId);
+  const commentId = Number(req.params.commentId);
   const { comment } = req.body;
 
   if (!comment) {
-    return res.status(500).json({
-      message: "Comment text is required",
-    });
+    throw new AppError("Comment text is required", 500);
   }
-
-  const existingComment = await db.Comment.findByPk(comment_id);
-
+  const existingComment = await findCommentById(commentId);
   if (!existingComment) {
-    return res.status(500).json({
-      message: "Comment not found",
-    });
+    throw new AppError("Comment not found", 500);
+    
   }
-
   if (
     existingComment.user_id !== user.user_id &&
     user.role !== 'Admin'
   ) {
-    return res.status(500).json({
-      message: "You are not authorized to update this comment",
-    });
+    throw new AppError("You are not authorized to update this comment",500);
   }
 
   
-  await existingComment.update({ Comment: comment });
+  await updateComment(existingComment,comment);
 
   return res.status(200).json({
-    message: "Comment updated successfully",
-    data: existingComment,
+    message: "Comment updated successfully"
   });
 };
 
-
-
-const delete_comment = async(
+const deletecomment = async(
   req:Request,
   res:Response
     
 ):Promise<Response>=>{
  
-  try{
+  
   const user = req.user;
   if (!user) {
-    return res.status(401).json({ message: "Unauthorized" });
+    throw new AppError("unathorized",401);
   }
-  const comment_id = Number(req.params.id);
-   const comment = await db.Comment.findByPk(comment_id);
+  const commentId = Number(req.params.id);
+   const comment = await findCommentById(commentId);
 
      if(!comment) {
-    return res.status(404).json({
-      message : "comment not found "
-    })
+    throw new AppError("comment not found",404);
   }
    if(comment.user_id !== user.user_id && user.role !=="Admin" ){
-    return res.status(401).json({
-      message : "you have not Authorized to delete this post "
-    })
+    throw new AppError("you have not Authorized to delete this post",401);
   }
-  
-  const deteled_comment =await db.Comment.destroy({
-  where: {
-    id: comment_id
-  }
-});
-  
-  
 
+    await deletedComment(commentId);
+  
     return res.status(200).json({
       message : "your commented deleted scuessfully !"
     })
-
-  }catch (error: unknown) {
-    return res.status(500).json({
-      message: "Failed to delete comment ",
-      error: error instanceof Error ? error.message : error,
-    });
-  }
   
 }
 
 export {
-    create_comment,
-    update_comment,
-    delete_comment,
+    createcomment,
+    updatecomment,
+    deletecomment,
 
 }

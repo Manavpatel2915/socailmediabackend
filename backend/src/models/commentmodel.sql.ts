@@ -1,4 +1,5 @@
 import { Model, Sequelize, DataTypes } from "sequelize";
+import { Models } from "../types/models.types";
 
 export default (sequelize: Sequelize) => {
   class Comment extends Model {
@@ -6,6 +7,26 @@ export default (sequelize: Sequelize) => {
     declare Comment: string;
     declare user_id: number | null;
     declare post_id: number;
+
+    // Properly typed association method
+    static associate(models: Models): void {
+      // Comment -> Post (many-to-one)
+      Comment.belongsTo(models.Post, {
+        foreignKey: 'post_id',
+        as: 'post',
+        onDelete: 'CASCADE',
+      });
+
+      // Comment -> User (many-to-one, optional)
+      Comment.belongsTo(models.User, {
+        foreignKey: {
+          name: "user_id",
+          allowNull: true,
+        },
+        as: 'user',
+        onDelete: 'SET NULL',
+      });
+    }
   }
 
   Comment.init(
@@ -15,20 +36,17 @@ export default (sequelize: Sequelize) => {
         autoIncrement: true,
         primaryKey: true,
       },
-
       Comment: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-
       user_id: {
         type: DataTypes.INTEGER,
-        allowNull: true, 
+        allowNull: true,
       },
-
       post_id: {
         type: DataTypes.INTEGER,
-        allowNull: false, 
+        allowNull: false,
       },
     },
     {

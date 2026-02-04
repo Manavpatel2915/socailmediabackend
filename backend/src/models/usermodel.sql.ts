@@ -1,15 +1,35 @@
 import { Model, Sequelize, DataTypes } from "sequelize";
 import bcrypt from "bcrypt";
+import { Models } from "../types/models.types";
 
 export default (sequelize: Sequelize) => {
- class User extends Model {
-  declare user_id: number;
-  declare username: string;
-  declare email: string;
-  declare password: string;
-  declare role: "Admin" | "user";
+  class User extends Model {
+    declare user_id: number;
+    declare user_name: string;
+    declare email: string;
+    declare password: string;
+    declare role: "Admin" | "user";
 
-}
+    // Properly typed association method
+    static associate(models: Models): void {
+      // User -> Posts (one-to-many)
+      User.hasMany(models.Post, {
+        foreignKey: 'user_id',
+        as: 'posts',
+        onDelete: 'CASCADE',
+      });
+
+      // User -> Comments (one-to-many, optional)
+      User.hasMany(models.Comment, {
+        foreignKey: {
+          name: "user_id",
+          allowNull: true,
+        },
+        as: 'comments',
+        onDelete: 'SET NULL',
+      });
+    }
+  }
 
   User.init(
     {
@@ -50,7 +70,6 @@ export default (sequelize: Sequelize) => {
     user.password = await bcrypt.hash(user.password, 10);
   });
 
- 
   User.beforeUpdate(async (user: User) => {
     if (user.changed("password")) {
       user.password = await bcrypt.hash(user.password, 10);
