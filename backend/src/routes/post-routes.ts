@@ -5,9 +5,9 @@ import {
     getpost,
     deletepost,
     updatepost,
-}from '../controller/PostController'
-import {validate} from '../middleware/validatemiddleware'
-import {createPostSchema,updatePostSchema} from '../validation/post.validation'
+}from '../controller/post-controller'
+import {validate} from '../middleware/validate-middleware'
+import {createPostSchema,updatePostSchema} from '../validation/post-validation'
 import { asyncHandler } from "../utils/asyncHandler";
 
 const router = Router();

@@ -4,9 +4,9 @@ import {
     register,
     login,
     deleteuser,
-} from '../controller/UserController'
-import { validate } from '../middleware/validatemiddleware';
-import { createUserSchema } from '../validation/user.validation';
+} from '../controller/user-controller'
+import { validate } from '../middleware/validate-middleware';
+import { createUserSchema } from '../validation/user-validation';
 import { asyncHandler } from "../utils/asyncHandler";
 
 

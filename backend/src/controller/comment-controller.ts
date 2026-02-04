@@ -91,6 +91,5 @@ const deletecomment = async(
 export {
     createcomment,
     updatecomment,
-    deletecomment,
-
+    deletecomment
 }

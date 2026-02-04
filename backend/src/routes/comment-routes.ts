@@ -5,8 +5,8 @@ import {
     updatecomment,
     deletecomment,
     
-}from '../controller/CommentController'
-import optionalJwt from "../middleware/optinaljwt";
+}from '../controller/comment-controller'
+import optionalJwt from "../middleware/optinaljwt-middleware";
 import { asyncHandler } from "../utils/asyncHandler";
 const router = Router();
 

@@ -1,19 +1,42 @@
 import { Sequelize, Model, ModelStatic } from 'sequelize';
 import dotenv from 'dotenv';
-import UserModel from "../models/usermodel.sql";
-import CommentModel from "../models/commentmodel.sql";
-import PostModel from "../models/postmodel.sql";
+import UserModel from "./models/user-model";
+import CommentModel from "./models/comment-model";
+import PostModel from "./models/post-model";
 
 dotenv.config();
 
 const DB_NAME = process.env.DB_NAME || 'airbin';
-const DB_USER = process.env.DB_USER || 'root';
-const DB_PASSWORD = process.env.DB_PASSWORD || '';
-const DB_HOST = process.env.DB_HOST || 'localhost';
 const DB_PORT = process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 3306;
+const env = process.env.NODE_ENV || 'development';
 
-const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
-  host: DB_HOST,
+const configs = {
+  "development": {
+    "username": "root",
+    "password": "MANAVPATEL291",
+    "database": "airbin",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
+
+const config = configs[env];
+const sequelize = new Sequelize(DB_NAME, config.username,config.password, {
+  host: config.host,
   port: DB_PORT,
   logging: false,
   dialect: 'mysql',
@@ -25,7 +48,7 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   }
 });
 
-// Type for models with associate method
+
 type ModelWithAssociate = ModelStatic<Model> & {
   associate?: (models: Database) => void;
 };
@@ -46,7 +69,7 @@ const db: Database = {
   Comment: CommentModel(sequelize), 
 };
 
-// Initialize all associations - only process actual models
+
 const models: ModelWithAssociate[] = [
   db.User,
   db.Post,
@@ -63,7 +86,7 @@ export const connectDatabase = async (): Promise<void> => {
   try {
     // await sequelize.sync({ force: true });
     await sequelize.authenticate();
-    console.log(`Database "${DB_NAME}" connected successfully at ${DB_HOST}:${DB_PORT}`);
+    console.log(`Database "${DB_NAME}" connected successfully at ${config.username}:${DB_PORT}`);
   } catch (error) {
     console.error('Database connection error:', error);
     throw error;

@@ -35,7 +35,7 @@ const register = async (
       token,
       user: {
         id: user.user_id,
-        username: user.username,
+        username: user.user_name,
         email: user.email,
         role: user.role,
       },

@@ -1,6 +1,6 @@
 import passport from "passport";
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
-import db from "./sqldbconnnect";
+import db from "../config/sqldbconnnect";
 import dotenv from "dotenv";
 
 dotenv.config();

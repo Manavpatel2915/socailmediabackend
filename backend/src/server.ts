@@ -1,13 +1,14 @@
 import express from 'express';
 import passport from "passport";
-import "./config/passport";
+import "./middleware/passport-middleware";
 import type { Request, Response } from 'express';
 import connectdb from './config/connectdb'
-import UserRoutes from './routes/UserRoutes';
-import PostRoutes from './routes/PostRoutes';
-import CommentRoutes from './routes/CommentRoutes';
-import { morganMongoLogger } from "./middleware/morganLogger";
-import { errorHandler } from "./middleware/errorHandler.midddleware";
+import UserRoutes from './routes/user-routes';
+import PostRoutes from './routes/post-routes';
+import CommentRoutes from './routes/comment-routes';
+import { morganMongoLogger } from "./middleware/morgan-logger-middleware";
+import { errorHandler } from "./middleware/error-handler-midddleware";
+import routes from "./routes/routes";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -19,17 +20,16 @@ const PORT = process.env.PORT || 3000;
     app.use(express.urlencoded({ extended: true }));
     app.use(morganMongoLogger);
     app.use(passport.initialize());
-    app.use('/user', UserRoutes);
-    app.use('/post', PostRoutes);
-    app.use('/comment', CommentRoutes);
-    app.use(errorHandler);
-    app.get('/', (req: Request, res: Response) => {
-      res.send('hello');
-    });
-    
+   
     app.listen(PORT, () => {
-      console.log(` Server running on port ${PORT}`);
+    console.log(` Server running on port ${PORT}`);
     });
+    app.use('/',routes);
+    
+    app.use(errorHandler);
+
+    
+
   } catch (error) {
     console.error(' Failed to start server:', error);
     process.exit(1);
