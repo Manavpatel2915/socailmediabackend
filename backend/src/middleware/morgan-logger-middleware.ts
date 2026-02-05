@@ -1,5 +1,5 @@
 import morgan from "morgan";
-import { RequestLog } from "../config/models/requestlog-model";
+import { RequestLog } from "../config/models/requestlog-mongodbmodel";
 import { Request, Response } from "express";
 export const morganMongoLogger = morgan(
   (tokens, req: Request, res: Response) => {
