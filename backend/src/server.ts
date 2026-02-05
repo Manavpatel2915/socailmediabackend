@@ -1,14 +1,12 @@
 import express from 'express';
 import passport from "passport";
 import "./middleware/passport-middleware";
-import type { Request, Response } from 'express';
-import connectdb from './config/connectdb'
-import UserRoutes from './routes/user-routes';
-import PostRoutes from './routes/post-routes';
-import CommentRoutes from './routes/comment-routes';
+import connectdb from './config/connectdb';
 import { morganMongoLogger } from "./middleware/morgan-logger-middleware";
 import { errorHandler } from "./middleware/error-handler-midddleware";
 import routes from "./routes/routes";
+
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 

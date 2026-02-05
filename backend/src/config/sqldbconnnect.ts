@@ -1,29 +1,14 @@
-import dotenv from 'dotenv';
-import dbPromise from './models/index';
-
-
-dotenv.config();
-
-const DB_NAME = process.env.DB_NAME || 'airbin';
-const DB_PORT = process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 3306;
+import db, { initModels } from './models/index';
 
 export const connectDatabase = async (): Promise<void> => {
   try {
     
+    await initModels();
     
-    const db = await dbPromise;
-    
-    
-
     await db.sequelize.authenticate();
-   
     
-  
-    // await db.sequelize.sync(); 
-    // await db.sequelize.sync({ alter: true });
-    // await db.sequelize.sync({ force: true }); 
-    
-
+    await db.sequelize.sync();
+    console.log(' Database synced successfully');
     
   } catch (error) {
     console.error(' Database connection error:', error);
@@ -31,4 +16,4 @@ export const connectDatabase = async (): Promise<void> => {
   }
 };
 
-export default dbPromise;
+export default db;

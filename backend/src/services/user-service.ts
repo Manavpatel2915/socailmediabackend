@@ -5,7 +5,7 @@ import db from "../config/sqldbconnnect";
   user_name: string,
   email: string,
   password: string,
-  role: string
+  role: "Admin" | "user"
 ) => {
   const user = await db.User.create({
     user_name,
