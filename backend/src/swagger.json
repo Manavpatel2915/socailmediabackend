@@ -1,0 +1,496 @@
+{
+	"basePath": "/",
+	"consumes": [
+		"application/json"
+	],
+	"definitions": {
+		"RegisterRequest": {
+			"properties": {
+				"user_name": {
+					"type": "string"
+				},
+				"email": {
+					"type": "string"
+				},
+				"password": {
+					"type": "string"
+				},
+				"role": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"user_name",
+				"email",
+				"password"
+			],
+			"type": "object",
+			"additionalProperties": false
+		},
+		"LoginRequest": {
+			"properties": {
+				"email": {
+					"type": "string"
+				},
+				"password": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"email",
+				"password"
+			],
+			"type": "object",
+			"additionalProperties": false
+		},
+		"CreatePostRequest": {
+			"properties": {
+				"title": {
+					"type": "string"
+				},
+				"content": {
+					"type": "string"
+				},
+				"image": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"content"
+			],
+			"type": "object",
+			"additionalProperties": false
+		},
+		"UpdatePostRequest": {
+			"properties": {
+				"title": {
+					"type": "string"
+				},
+				"content": {
+					"type": "string"
+				},
+				"image": {
+					"type": "string"
+				}
+			},
+			"type": "object",
+			"additionalProperties": false
+		},
+		"CreateCommentRequest": {
+			"properties": {
+				"Comment": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"Comment"
+			],
+			"type": "object",
+			"additionalProperties": false
+		},
+		"UpdateCommentRequest": {
+			"properties": {
+				"Comment": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"Comment"
+			],
+			"type": "object",
+			"additionalProperties": false
+		}
+	},
+	"info": {
+		"title": "backend",
+		"version": "1.0.0",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {
+			"name": "Manav_Patel"
+		}
+	},
+	"paths": {
+		"/user/register": {
+			"post": {
+				"operationId": "Register",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"201": {
+						"description": "User registered successfully"
+					}
+				},
+				"consumes": [
+					"application/json"
+				],
+				"description": "Register a new user.",
+				"tags": [
+					"User"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "_body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/RegisterRequest"
+						}
+					}
+				]
+			}
+		},
+		"/user/login": {
+			"post": {
+				"operationId": "Login",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "User logged in successfully"
+					}
+				},
+				"consumes": [
+					"application/json"
+				],
+				"description": "Login user and get JWT token.",
+				"tags": [
+					"User"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "_body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/LoginRequest"
+						}
+					}
+				]
+			}
+		},
+		"/user/delete/{id}": {
+			"get": {
+				"operationId": "DeleteUser",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"201": {
+						"description": "User deleted successfully"
+					}
+				},
+				"description": "Delete the currently authenticated user.",
+				"tags": [
+					"User"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"format": "double",
+						"type": "number"
+					},
+					{
+						"in": "header",
+						"name": "Authorization",
+						"required": false,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/post/createpost": {
+			"post": {
+				"operationId": "CreatePost",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"201": {
+						"description": "Post created successfully"
+					}
+				},
+				"consumes": [
+					"application/json"
+				],
+				"description": "Create a new post.",
+				"tags": [
+					"Post"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "header",
+						"name": "Authorization",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "_body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/CreatePostRequest"
+						}
+					}
+				]
+			}
+		},
+		"/post/{postid}": {
+			"get": {
+				"operationId": "GetPost",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Post fetched successfully"
+					}
+				},
+				"description": "Get post by ID.",
+				"tags": [
+					"Post"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "postid",
+						"required": true,
+						"format": "double",
+						"type": "number"
+					}
+				]
+			}
+		},
+		"/post/delete/{postid}": {
+			"get": {
+				"operationId": "DeletePost",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Post deleted successfully"
+					}
+				},
+				"description": "Delete post by ID.",
+				"tags": [
+					"Post"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "postid",
+						"required": true,
+						"format": "double",
+						"type": "number"
+					},
+					{
+						"in": "header",
+						"name": "Authorization",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/post/updatepost/{postid}": {
+			"patch": {
+				"operationId": "UpdatePost",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Post updated successfully"
+					}
+				},
+				"consumes": [
+					"application/json"
+				],
+				"description": "Update post by ID.",
+				"tags": [
+					"Post"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "postid",
+						"required": true,
+						"format": "double",
+						"type": "number"
+					},
+					{
+						"in": "header",
+						"name": "Authorization",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "_body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/UpdatePostRequest"
+						}
+					}
+				]
+			}
+		},
+		"/comment/create_comment/{postId}": {
+			"post": {
+				"operationId": "CreateComment",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"201": {
+						"description": "Comment created successfully"
+					}
+				},
+				"consumes": [
+					"application/json"
+				],
+				"description": "Create a new comment on a post.",
+				"tags": [
+					"Comment"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "postId",
+						"required": true,
+						"format": "double",
+						"type": "number"
+					},
+					{
+						"in": "header",
+						"name": "Authorization",
+						"required": true,
+						"type": "object"
+					},
+					{
+						"in": "body",
+						"name": "_body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/CreateCommentRequest"
+						}
+					}
+				]
+			}
+		},
+		"/comment/update_comment/{commentId}": {
+			"patch": {
+				"operationId": "UpdateComment",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Comment updated successfully"
+					}
+				},
+				"consumes": [
+					"application/json"
+				],
+				"description": "Update an existing comment.",
+				"tags": [
+					"Comment"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "commentId",
+						"required": true,
+						"format": "double",
+						"type": "number"
+					},
+					{
+						"in": "header",
+						"name": "Authorization",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "_body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/UpdateCommentRequest"
+						}
+					}
+				]
+			}
+		},
+		"/comment/delete_comment/{id}": {
+			"get": {
+				"operationId": "DeleteComment",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Comment deleted successfully"
+					}
+				},
+				"description": "Delete a comment by ID.",
+				"tags": [
+					"Comment"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"format": "double",
+						"type": "number"
+					},
+					{
+						"in": "header",
+						"name": "Authorization",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		}
+	},
+	"produces": [
+		"application/json"
+	],
+	"swagger": "2.0",
+	"securityDefinitions": {},
+	"host": "localhost:3000",
+	"tags": [
+		{
+			"name": "User",
+			"description": "User related endpoints"
+		},
+		{
+			"name": "Post",
+			"description": "Post related endpoints"
+		},
+		{
+			"name": "Comment",
+			"description": "Comment related endpoints"
+		}
+	],
+	"schemes": [
+		"http"
+	]
+}
