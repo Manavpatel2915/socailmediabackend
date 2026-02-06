@@ -13,6 +13,10 @@ const register = async (
   res: Response,
 
 ): Promise<Response> => {
+
+  try{
+
+  
     const { user_name, email, password, role } = req.body;
 
   if (!user_name || !email || !password) {
@@ -40,13 +44,18 @@ const register = async (
         role: user.role,
       },
     });
-  
+  }catch(error){
+    throw new AppError("User not register ",error.message);
+  }
 };
 
 const login = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
+  try{
+
+  
   const { email, password } = req.body;
 
   const user = await findUserByEmail(email);
@@ -80,12 +89,17 @@ const login = async (
       role: user.role,
     },
   });
+}catch(error){
+    throw new AppError("User not login ",error.message);
+  }
 };
 
 const deleteuser = async(
   req:Request,
   res:Response
 ):Promise<Response> =>{
+  try{
+
   
   const user = req.user;
   if (!user) {
@@ -106,7 +120,9 @@ const deleteuser = async(
    result,
     message : "delete user sucessfully "
   });
-  
+}catch(error){
+    throw new AppError("User not delete ",error.message);
+  }
 }
 
 

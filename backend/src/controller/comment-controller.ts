@@ -8,6 +8,9 @@ const createcomment = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
+  try{
+
+  
     const user = req.user; 
     const {Comment} = req.body;
   
@@ -20,6 +23,9 @@ const createcomment = async (
       message: "comment created",
       commentData,
     });
+  }catch(error){
+    throw new AppError("comment  not create ",error.message);
+  }
   
 };
 
@@ -27,6 +33,9 @@ const updatecomment = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
+  try{
+
+  
   const user = req.user;
   if (!user) {
   
@@ -57,6 +66,9 @@ const updatecomment = async (
   return res.status(200).json({
     message: "Comment updated successfully"
   });
+}catch(error){
+    throw new AppError("Comment not update ",error.message);
+  }
 };
 
 const deletecomment = async(
@@ -65,6 +77,8 @@ const deletecomment = async(
     
 ):Promise<Response>=>{
  
+  try{
+
   
   const user = req.user;
   if (!user) {
@@ -84,7 +98,10 @@ const deletecomment = async(
   
     return res.status(200).json({
       message : "your commented deleted scuessfully !"
-    })
+    });
+  }catch(error){
+    throw new AppError("comment not delete ",error.message);
+  }
   
 }
 

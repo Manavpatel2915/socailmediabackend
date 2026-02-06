@@ -8,7 +8,9 @@ const creatpost = async (
   res: Response
 ): Promise<Response> => {
 
+  try{
 
+  
   const user = req.user;
 
   if (!user) {
@@ -23,6 +25,9 @@ const creatpost = async (
     message: "Post created successfully",
     post,
   });
+}catch(error){
+    throw new AppError("Post not create ",error.message);
+  }
 
 }
 
@@ -30,6 +35,9 @@ const getpost = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
+  try{
+
+  
   const postId = Number(req.params.postid);
   if (!postId) {
     throw new AppError("Invalid post id", 400);
@@ -43,7 +51,10 @@ const getpost = async (
     postData,
     message: "all data get"
   });
-
+  }
+catch(error){
+    throw new AppError("Post not get ",error.message);
+  }
 
 
 }
@@ -53,7 +64,9 @@ const deletepost = async (
   res: Response
 
 ): Promise<Response> => {
+  try{
 
+  
 
   const user = req.user;
   if (!user) {
@@ -74,6 +87,9 @@ const deletepost = async (
     deleteData,
     message: "your post deleted scuessfully !"
   })
+}catch(error){
+    throw new AppError("Post not delete ",error.message);
+  }
 
 
 
@@ -83,6 +99,9 @@ const updatepost = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
+  try{
+
+  
   const user = req.user;
   if (!user) {
     throw new AppError("Unauthorized", 401);
@@ -103,6 +122,9 @@ const updatepost = async (
     updated_data,
     message: "data updated scessfully"
   })
+}catch(error){
+    throw new AppError("not update post ",error.message);
+  }
 }
 
 
