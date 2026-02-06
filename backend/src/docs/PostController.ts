@@ -15,47 +15,35 @@ interface UpdatePostRequest {
 @Route('post')
 @Tags('Post')
 export class PostController extends Controller {
-  /**
-   * Create a new post.
-   */
-  @SuccessResponse('201', 'Post created successfully')
+  @SuccessResponse('201', 'Created')
   @Post('createpost')
   public async createPost(
-    @Header('Authorization') _auth: string,
+    @Header('Authorization') _authorization: string,
     @Body() _body: CreatePostRequest
   ): Promise<void> {
     return;
   }
 
-  /**
-   * Get post by ID.
-   */
-  @SuccessResponse('200', 'Post fetched successfully')
+  @SuccessResponse('200', 'OK')
   @Get('{postid}')
-  public async getPost(@Path() postid: number): Promise<void> {
+  public async getPost(@Path('postid') _postid: number): Promise<void> {
     return;
   }
 
-  /**
-   * Delete post by ID.
-   */
-  @SuccessResponse('200', 'Post deleted successfully')
+  @SuccessResponse('200', 'OK')
   @Get('delete/{postid}')
   public async deletePost(
-    @Path() postid: number,
-    @Header('Authorization') _auth: string
+    @Path('postid') _postid: number,
+    @Header('Authorization') _authorization: string
   ): Promise<void> {
     return;
   }
 
-  /**
-   * Update post by ID.
-   */
-  @SuccessResponse('200', 'Post updated successfully')
+  @SuccessResponse('200', 'OK')
   @Patch('updatepost/{postid}')
   public async updatePost(
-    @Path() postid: number,
-    @Header('Authorization') _auth: string,
+    @Path('postid') _postid: number,
+    @Header('Authorization') _authorization: string,
     @Body() _body: UpdatePostRequest
   ): Promise<void> {
     return;

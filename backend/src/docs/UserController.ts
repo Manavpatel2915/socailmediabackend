@@ -1,10 +1,10 @@
-import { Body, Controller, Delete, Get, Header, Path, Post, Route, SuccessResponse, Tags } from 'tsoa';
+import { Body, Controller, Get, Header, Path, Post, Route, SuccessResponse, Tags } from 'tsoa';
 
 interface RegisterRequest {
   user_name: string;
   email: string;
   password: string;
-  role?: string;
+  role?: 'Admin' | 'user';
 }
 
 interface LoginRequest {
@@ -15,26 +15,23 @@ interface LoginRequest {
 @Route('user')
 @Tags('User')
 export class UserController extends Controller {
- 
-  @SuccessResponse('201', 'User registered successfully')
+  @SuccessResponse('201', 'Created')
   @Post('register')
   public async register(@Body() _body: RegisterRequest): Promise<void> {
     return;
   }
 
-
-  @SuccessResponse('200', 'User logged in successfully')
+  @SuccessResponse('200', 'OK')
   @Post('login')
   public async login(@Body() _body: LoginRequest): Promise<void> {
     return;
   }
 
-
-  @SuccessResponse('201', 'User deleted successfully')
+  @SuccessResponse('200', 'OK')
   @Get('delete/{id}')
   public async deleteUser(
-    @Path() id: number,
-    @Header('Authorization') _auth?: string
+    @Path('id') _id: number,
+    @Header('Authorization') _authorization?: string
   ): Promise<void> {
     return;
   }

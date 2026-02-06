@@ -2,7 +2,7 @@
 	"basePath": "/",
 	"consumes": [
 		"application/json"
-	],
+	],                
 	"definitions": {
 		"RegisterRequest": {
 			"properties": {
@@ -16,7 +16,12 @@
 					"type": "string"
 				},
 				"role": {
-					"type": "string"
+					"type": "string",
+					"enum": [
+						"Admin",
+						"user"
+					],
+					"x-nullable": false
 				}
 			},
 			"required": [
@@ -120,13 +125,12 @@
 				],
 				"responses": {
 					"201": {
-						"description": "User registered successfully"
+						"description": "Created"
 					}
 				},
 				"consumes": [
 					"application/json"
 				],
-				"description": "Register a new user.",
 				"tags": [
 					"User"
 				],
@@ -151,13 +155,12 @@
 				],
 				"responses": {
 					"200": {
-						"description": "User logged in successfully"
+						"description": "OK"
 					}
 				},
 				"consumes": [
 					"application/json"
 				],
-				"description": "Login user and get JWT token.",
 				"tags": [
 					"User"
 				],
@@ -181,11 +184,10 @@
 					"application/json"
 				],
 				"responses": {
-					"201": {
-						"description": "User deleted successfully"
+					"200": {
+						"description": "OK"
 					}
 				},
-				"description": "Delete the currently authenticated user.",
 				"tags": [
 					"User"
 				],
@@ -215,13 +217,12 @@
 				],
 				"responses": {
 					"201": {
-						"description": "Post created successfully"
+						"description": "Created"
 					}
 				},
 				"consumes": [
 					"application/json"
 				],
-				"description": "Create a new post.",
 				"tags": [
 					"Post"
 				],
@@ -252,10 +253,9 @@
 				],
 				"responses": {
 					"200": {
-						"description": "Post fetched successfully"
+						"description": "OK"
 					}
 				},
-				"description": "Get post by ID.",
 				"tags": [
 					"Post"
 				],
@@ -279,10 +279,9 @@
 				],
 				"responses": {
 					"200": {
-						"description": "Post deleted successfully"
+						"description": "OK"
 					}
 				},
-				"description": "Delete post by ID.",
 				"tags": [
 					"Post"
 				],
@@ -312,13 +311,12 @@
 				],
 				"responses": {
 					"200": {
-						"description": "Post updated successfully"
+						"description": "OK"
 					}
 				},
 				"consumes": [
 					"application/json"
 				],
-				"description": "Update post by ID.",
 				"tags": [
 					"Post"
 				],
@@ -356,13 +354,12 @@
 				],
 				"responses": {
 					"201": {
-						"description": "Comment created successfully"
+						"description": "Created"
 					}
 				},
 				"consumes": [
 					"application/json"
 				],
-				"description": "Create a new comment on a post.",
 				"tags": [
 					"Comment"
 				],
@@ -376,18 +373,18 @@
 						"type": "number"
 					},
 					{
-						"in": "header",
-						"name": "Authorization",
-						"required": true,
-						"type": "object"
-					},
-					{
 						"in": "body",
 						"name": "_body",
 						"required": true,
 						"schema": {
 							"$ref": "#/definitions/CreateCommentRequest"
 						}
+					},
+					{
+						"in": "header",
+						"name": "Authorization",
+						"required": false,
+						"type": "string"
 					}
 				]
 			}
@@ -400,13 +397,12 @@
 				],
 				"responses": {
 					"200": {
-						"description": "Comment updated successfully"
+						"description": "OK"
 					}
 				},
 				"consumes": [
 					"application/json"
 				],
-				"description": "Update an existing comment.",
 				"tags": [
 					"Comment"
 				],
@@ -444,10 +440,9 @@
 				],
 				"responses": {
 					"200": {
-						"description": "Comment deleted successfully"
+						"description": "OK"
 					}
 				},
-				"description": "Delete a comment by ID.",
 				"tags": [
 					"Comment"
 				],
@@ -476,20 +471,6 @@
 	"swagger": "2.0",
 	"securityDefinitions": {},
 	"host": "localhost:3000",
-	"tags": [
-		{
-			"name": "User",
-			"description": "User related endpoints"
-		},
-		{
-			"name": "Post",
-			"description": "Post related endpoints"
-		},
-		{
-			"name": "Comment",
-			"description": "Comment related endpoints"
-		}
-	],
 	"schemes": [
 		"http"
 	]

@@ -14,19 +14,21 @@ const PORT = process.env.PORT || 3000;
 (async () => {
   try {
     await connectdb();
+    
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(morganMongoLogger);
     app.use(passport.initialize());
 
-    // Swagger UI route
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-  
+    // Your actual API routes (Express)
     app.use('/', routes);
 
+    // Swagger UI using TSOA-generated swagger.json
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+  
     app.use(errorHandler);
 
-    
     app.listen(PORT, () => {
       console.log(` Server running on port ${PORT}`);
       console.log(` Swagger docs available at http://localhost:${PORT}/api-docs`);

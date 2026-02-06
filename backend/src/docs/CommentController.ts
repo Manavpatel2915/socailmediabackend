@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Header, Path, Post, Route, SuccessResponse, Tags, Patch } from 'tsoa';
+
+import { Body, Controller, Get, Header, Patch, Path, Post, Route, SuccessResponse, Tags } from 'tsoa';
 
 interface CreateCommentRequest {
   Comment: string;
@@ -11,40 +12,31 @@ interface UpdateCommentRequest {
 @Route('comment')
 @Tags('Comment')
 export class CommentController extends Controller {
-  /**
-   * Create a new comment on a post.
-   */
-  @SuccessResponse('201', 'Comment created successfully')
+  @SuccessResponse('201', 'Created')
   @Post('create_comment/{postId}')
   public async createComment(
-    @Path() postId: number,
-    @Header('Authorization') _auth: string | undefined,
-    @Body() _body: CreateCommentRequest
+    @Path('postId') _postId: number,
+    @Body() _body: CreateCommentRequest,
+    @Header('Authorization') _authorization?: string
   ): Promise<void> {
     return;
   }
 
-  /**
-   * Update an existing comment.
-   */
-  @SuccessResponse('200', 'Comment updated successfully')
+  @SuccessResponse('200', 'OK')
   @Patch('update_comment/{commentId}')
   public async updateComment(
-    @Path() commentId: number,
-    @Header('Authorization') _auth: string,
+    @Path('commentId') _commentId: number,
+    @Header('Authorization') _authorization: string,
     @Body() _body: UpdateCommentRequest
   ): Promise<void> {
     return;
   }
 
-  /**
-   * Delete a comment by ID.
-   */
-  @SuccessResponse('200', 'Comment deleted successfully')
+  @SuccessResponse('200', 'OK')
   @Get('delete_comment/{id}')
   public async deleteComment(
-    @Path() id: number,
-    @Header('Authorization') _auth: string
+    @Path('id') _id: number,
+    @Header('Authorization') _authorization: string
   ): Promise<void> {
     return;
   }
