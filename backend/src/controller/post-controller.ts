@@ -1,7 +1,8 @@
 import type { Request, Response } from "express";
 import { AppError } from "../utils/AppError";
 import {createPost,PostData,findPostById,deletePost,updatePost} from "../services/post-service";
-
+// import { ErrorMessages, ERRORS } from './error.message';
+import {ERRORS,operationFailed,IdNotFound} from '../const/error-message';
 
 const creatpost = async (
   req: Request,
@@ -10,23 +11,22 @@ const creatpost = async (
 
   try{
 
-  
   const user = req.user;
 
   if (!user) {
-    throw new AppError("Unauthorized", 401);
-
+    throw new AppError(ERRORS.UNAUTHORIZED.message, ERRORS.UNAUTHORIZED.statusCode);
   }
   const { title, content, image } = req.body;
-
 
   const post = await createPost(title,content,image,user.user_id); 
   return res.status(201).json({
     message: "Post created successfully",
     post,
   });
-}catch(error){
-    throw new AppError("Post not create ",error.message);
+}catch (error) {
+    if (error instanceof AppError) throw error;
+    const err = operationFailed("create post");
+    throw new AppError(err.message, err.statusCode);
   }
 
 }
@@ -39,21 +39,24 @@ const getpost = async (
 
   
   const postId = Number(req.params.postid);
+
   if (!postId) {
-    throw new AppError("Invalid post id", 400);
+    const error =IdNotFound("PostId");
+      throw new AppError(error.message, error.statusCode);
   }
 
   const postData = await PostData(postId);
   if (!postData) {
-    throw new AppError("Post not found", 404);
+      throw new AppError(ERRORS.POST_NOT_FOUND.message, ERRORS.POST_NOT_FOUND.statusCode);
   }
   return res.status(201).send({
     postData,
     message: "all data get"
   });
-  }
-catch(error){
-    throw new AppError("Post not get ",error.message);
+  } catch (error) {
+    if (error instanceof AppError) throw error;
+    const err = operationFailed("get post");
+    throw new AppError(err.message, err.statusCode);
   }
 
 
@@ -65,20 +68,18 @@ const deletepost = async (
 
 ): Promise<Response> => {
   try{
-
-  
-
   const user = req.user;
   if (!user) {
-    throw new AppError("Unauthorized", 401);
+   throw new AppError(ERRORS.UNAUTHORIZED.message, ERRORS.UNAUTHORIZED.statusCode);
   }
   const postId = Number(req.params.postid);
   const Post = await findPostById(postId);
   if (!Post) {
-    throw new AppError("Post not found", 404);
+     throw new AppError(ERRORS.POST_NOT_FOUND.message, ERRORS.POST_NOT_FOUND.statusCode);
   }
   if (Post.user_id !== user.user_id) {
-    throw new AppError("Not authorized to delete this post", 403);
+    const error = ERRORS.UNAUTHORIZED;
+      throw new AppError(error.message, error.statusCode);
   }
 
   const deleteData= await deletePost(postId)
@@ -86,9 +87,10 @@ const deletepost = async (
   return res.status(200).json({
     deleteData,
     message: "your post deleted scuessfully !"
-  })
-}catch(error){
-    throw new AppError("Post not delete ",error.message);
+  })} catch (error) {
+    if (error instanceof AppError) throw error;
+    const err = operationFailed("delete post");
+    throw new AppError(err.message, err.statusCode);
   }
 
 
@@ -104,16 +106,17 @@ const updatepost = async (
   
   const user = req.user;
   if (!user) {
-    throw new AppError("Unauthorized", 401);
+    throw new AppError(ERRORS.UNAUTHORIZED.message, ERRORS.UNAUTHORIZED.statusCode);
   }
   const postId = Number(req.params.postid);
   const data = req.body;
   const Post = await findPostById(postId);
   if (!Post) {
-    throw new AppError("Post not found", 404);
+   throw new AppError(ERRORS.POST_NOT_FOUND.message, ERRORS.POST_NOT_FOUND.statusCode);
   }
   if (Post.user_id !== user.user_id) {
-    throw new AppError("Not authorized to update this post", 403);
+     const error = ERRORS.UNAUTHORIZED;
+      throw new AppError(error.message, error.statusCode);
   }
 
 
@@ -122,8 +125,10 @@ const updatepost = async (
     updated_data,
     message: "data updated scessfully"
   })
-}catch(error){
-    throw new AppError("not update post ",error.message);
+} catch (error) {
+    if (error instanceof AppError) throw error;
+    const err =operationFailed("update post");
+    throw new AppError(err.message, err.statusCode);
   }
 }
 

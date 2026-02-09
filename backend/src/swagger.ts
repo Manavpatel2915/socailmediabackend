@@ -6,7 +6,7 @@ import swaggerAutogen from 'swagger-autogen';
     description: 'Description'
 
   },
-  host: 'localhost:5000'
+  host: 'localhost:3000'
 };
 const outputFile = './swagger-output.json';
 const routes = ['src/server.ts'];

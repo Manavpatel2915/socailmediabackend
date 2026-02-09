@@ -25,7 +25,7 @@ const PORT = process.env.PORT || 3000;
     app.use('/', routes);
 
     
-    // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+   
 
     app.use(errorHandler);
 

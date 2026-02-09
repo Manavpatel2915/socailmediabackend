@@ -4,7 +4,10 @@ import bcrypt from "bcrypt";
 import dotenv from 'dotenv';
 import { AppError } from "../utils/AppError";
 import {createUser,findUserByEmail,deleteUserById,findUserById} from "../services/user-service";
+import {ERRORS,operationFailed} from '../const/error-message';
 dotenv.config();
+
+
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
 
@@ -16,16 +19,17 @@ const register = async (
 
   try{
 
-  
     const { user_name, email, password, role } = req.body;
 
   if (!user_name || !email || !password) {
-     throw new AppError("All fields are required", 400);
+     const error = ERRORS.ALL_FIELDS_REQUIRED;
+     throw new AppError(error.message, error.statusCode);
   }
     const existingUser = await findUserByEmail(email);
 
     if (existingUser) {
-      throw new AppError("User already exists", 409);
+      const error = ERRORS.USER_EXISTS;
+      throw new AppError(error.message, error.statusCode);
     }
 
    const user = await createUser(user_name, email, password, role);
@@ -45,7 +49,9 @@ const register = async (
       },
     });
   }catch(error){
-    throw new AppError("User not register ",error.message);
+    if (error instanceof AppError) throw error;
+    const err = operationFailed("register user!");
+    throw new AppError(err.message, err.statusCode);
   }
 };
 
@@ -55,14 +61,13 @@ const login = async (
 ): Promise<Response> => {
   try{
 
-  
   const { email, password } = req.body;
 
   const user = await findUserByEmail(email);
 
 
   if (!user) {
-    throw new AppError("Invalid email ", 401);
+      throw new AppError(ERRORS.INVALID_EMAIL.message, ERRORS.INVALID_EMAIL.statusCode);
   }
   
   const isMatch = await bcrypt.compare(
@@ -70,7 +75,7 @@ const login = async (
     user.password
   );
   if (!isMatch) {
-    throw new AppError("Invalid  password", 401);
+    throw new AppError(ERRORS.INVALID_PASSWORD.message, ERRORS.INVALID_PASSWORD.statusCode);
   }
 
   const token = jwt.sign(
@@ -89,8 +94,10 @@ const login = async (
       role: user.role,
     },
   });
-}catch(error){
-    throw new AppError("User not login ",error.message);
+}catch (error) {
+    if (error instanceof AppError) throw error;
+    const err = operationFailed("login User!");
+    throw new AppError(err.message, err.statusCode);
   }
 };
 
@@ -103,15 +110,16 @@ const deleteuser = async(
   
   const user = req.user;
   if (!user) {
-   throw new AppError("Unauthorized", 401);
+   throw new AppError(ERRORS.UNAUTHORIZED.message, ERRORS.UNAUTHORIZED.statusCode);
   }
   
    const existingUser = await findUserById(user.user_id);
     if (!existingUser) {
-    throw new AppError("User not found", 404);
+   throw new AppError(ERRORS.USER_NOT_FOUND.message, ERRORS.USER_NOT_FOUND.statusCode);
   }
   if(existingUser.user_id !== user.user_id){
-    throw new AppError("Not authorized to delete this account", 403);
+    const error = ERRORS.UNAUTHORIZED;
+      throw new AppError(error.message, error.statusCode);
   }
 
   const result = await deleteUserById(user.user_id);
@@ -120,13 +128,13 @@ const deleteuser = async(
    result,
     message : "delete user sucessfully "
   });
-}catch(error){
-    throw new AppError("User not delete ",error.message);
+}catch (error) {
+    if (error instanceof AppError) throw error;
+    const err = operationFailed("delete User!");
+    throw new AppError(err.message, err.statusCode);
   }
 }
 
-
-  
 
 export { register, 
           login,
