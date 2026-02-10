@@ -1,47 +1,47 @@
-import db from "../config/sqldbconnnect";
+import db from "../config/databases/sqldbconnnect";
 
 
-const findCommentById = async(
+const findCommentById = async (
     commentId
-)=>{
-    const comment= await db.Comment.findByPk(commentId);
+) => {
+    const comment = await db.Comment.findByPk(commentId);
   return comment;
 
 }
 
-const createComment = async(
+const createComment = async (
     postId,
     userId,
     Comment
-)=>{
-   
+) => {
+
     const commentData = await db.Comment.create({
       Comment:Comment,
       post_id: postId,
-      user_id: userId 
+      user_id: userId
     });
     return commentData;
 }
 
-const updateComment= async(
+const updateComment = async (
     existingComment,
     comment
-)=>{
+) => {
  return await existingComment.update({ Comment: comment });
 }
 
-const deletedComment = async(
+const deletedComment = async (
   commentId
-)=>{
+) => {
 
-   const deteledcomment =await db.Comment.destroy({
+   const deteledcomment = await db.Comment.destroy({
   where: {
     id: commentId
   }
 });
 return deteledcomment;
 }
-export{
+export {
     findCommentById,
     createComment,
     updateComment,

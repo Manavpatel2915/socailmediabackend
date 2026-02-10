@@ -1,15 +1,16 @@
 import express from 'express';
 import passport from "passport";
 import "./middleware/passport-middleware";
-import connectdb from './config/connectdb';
+import connectdb from './config/databases/connectdb';
 import { morganMongoLogger } from "./middleware/morgan-logger-middleware";
 import { errorHandler } from "./middleware/error-handler-midddleware";
 import routes from "./routes/routes";
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './swagger-output.json';
+import { env } from "./config/env.config";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = env.DB.PORT;
 
 (async () => {
   try {
@@ -24,8 +25,8 @@ const PORT = process.env.PORT || 3000;
 
     app.use('/', routes);
 
-    
-   
+
+
 
     app.use(errorHandler);
 

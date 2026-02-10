@@ -1,11 +1,11 @@
-import db from "../config/sqldbconnnect";
+import db from "../config/databases/sqldbconnnect";
 
-const createPost = async(
+const createPost = async (
     title:string,
     content:string,
     image:string,
     user_id:number,
-)=>{
+) => {
     const post = await db.Post.create({
     title,
     content,
@@ -15,9 +15,9 @@ const createPost = async(
   return post;
 };
 
-const PostData =async(
+const PostData = async (
     postId
-)=>{
+) => {
     const data = await db.Post.findOne({
     where: {
       post_id: postId,
@@ -39,23 +39,23 @@ const PostData =async(
   return data;
 }
 
-const findPostById =async(
+const findPostById = async (
     postId
-)=>{
+) => {
     return await db.Post.findByPk(postId);
 }
 
-const deletePost =async(
+const deletePost = async (
   postId
-)=>{
+) => {
 
    const comments = await db.Comment.findAll({
     where: {
       post_id: postId
     }
   });
-  const commentId= comments.map(item => item.id);
-  const deteledComment=await db.Comment.destroy({
+  const commentId = comments.map(item => item.id);
+  const deteledComment = await db.Comment.destroy({
     where: {
       id: commentId
     }
@@ -65,15 +65,16 @@ const deletePost =async(
       post_id: postId
     }
   });
-  return {deletePost,deteledComment};
+  return { deletePost, deteledComment };
 }
 
-const updatePost = async(
+const updatePost = async (
     data,
     Post
-)=>{
+) => {
   return  await Post.update(data);
 }
+
 export {
     createPost,
     PostData,

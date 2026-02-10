@@ -1,23 +1,24 @@
 import { Router } from "express";
-import passport from "passport";
+import { authenticate } from '../middleware/passport-middleware';
 import {
-    register,
-    login,
     deleteuser,
+    getuser,
+    update,
 } from '../controller/user-controller'
-import { validate } from '../middleware/validate-middleware';
-import { createUserSchema } from '../validation/user-validation';
+
 
 
 const router = Router();
 
 
-router.post('/register', validate(createUserSchema), register);
 
 
-router.post('/login', login);
+router.delete('/:id', authenticate, deleteuser);
+
+router.get('/:id', authenticate, getuser);
+
+router.patch('/:id', authenticate, update);
 
 
-router.get('/delete/:id', passport.authenticate("jwt", { session: false }), deleteuser);
 
 export default router;

@@ -1,14 +1,14 @@
 import { Model, Sequelize, DataTypes } from "sequelize";
 import bcrypt from "bcrypt";
-import { Models } from "../../types/models.types";
-
+import { Models } from "../../../types/models.types";
+import { ENUMS } from  "../../../const/enum-model";
 export default (sequelize: Sequelize) => {
   class User extends Model {
     declare user_id: number;
     declare user_name: string;
     declare email: string;
     declare password: string;
-    declare role: "Admin" | "user";
+    declare role: typeof ENUMS.role[number];
 
     // Properly typed association method
     static associate(models: Models): void {
@@ -53,9 +53,9 @@ export default (sequelize: Sequelize) => {
         allowNull: false,
       },
       role: {
-        type: DataTypes.ENUM("Admin", "user"),
+        type: DataTypes.ENUM(...ENUMS.role),
         allowNull: false,
-        defaultValue: "user",
+        defaultValue: ENUMS.role[1],
       },
     },
     {

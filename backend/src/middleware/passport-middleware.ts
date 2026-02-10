@@ -1,30 +1,45 @@
-import passport from "passport";
-import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
-import db from "../config/sqldbconnnect";
-import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+import type { Request, Response, NextFunction } from "express";
 
-dotenv.config();
+import { env } from "../config/env.config";
 
-const options = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.JWT_SECRET as string,
-};
+type AuthUser = {
+  user_id: number;
+  email?: string;
+  role: string;
+} & jwt.JwtPayload;
 
+export const authenticate = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const authHeader = req.headers.authorization;
 
-passport.use(
-  new JwtStrategy(options, async (payload, done) => {
-    try {
-      const user = await db.User.findByPk(payload.user_id);
+  if (!authHeader || !/^Bearer\s+/i.test(authHeader)) {
+    return res.status(401).json({ message: "token is missing!" });
+  }
 
-      if (!user) {
-        return done(null, false);
-      }
+  const token = authHeader.split(" ")[1];
 
-      return done(null, user);
-    } catch (error) {
-      return done(error, false);
+  if (!token || typeof token !== 'string') {
+    return res.status(401).json({ message: "token is missing!" });
+  }
+
+  if (!env.DB.JWT_SECRET) {
+    return res.status(500).json({ message: "token is missing!" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, env.DB.JWT_SECRET);
+    console.log("🚀 ~ authenticate ~ decoded:", decoded)
+    if (typeof decoded === "string") {
+      return res.status(401).json({ message: "token is missing!" });
     }
-  })
-);
-
-export default passport;
+    req.user = decoded as AuthUser;
+    next();
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "token is missing!"
+    return res.status(401).json({ message });
+  }
+};

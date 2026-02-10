@@ -52,5 +52,5 @@ export interface Models {
     new(): CommentModel;
     associate?: (models: Models) => void;
   };
-  
+
 }

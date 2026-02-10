@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { env, Env } from "./env.config";
+import { env } from "../env.config";
 
 
 const url:string = env.DB.MONGODB_URL as string ;
@@ -13,7 +13,7 @@ const connectMongodb = async (): Promise<void> => {
     console.log(` MongoDB connected successfully`);
   } catch (error) {
     console.error(' MongoDB connection error:', error);
-    throw error; 
+    throw error;
   }
 };
 

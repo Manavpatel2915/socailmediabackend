@@ -1,9 +1,9 @@
 import morgan from "morgan";
-import { RequestLog } from "../config/models/requestlog-mongodbmodel";
+import { RequestLog } from "../config/models/mongodb-Models/requestlog-mongodbmodel";
 import { Request, Response } from "express";
 export const morganMongoLogger = morgan(
   (tokens, req: Request, res: Response) => {
- 
+
     if (res.statusCode >= 400) {
       return null;
     }

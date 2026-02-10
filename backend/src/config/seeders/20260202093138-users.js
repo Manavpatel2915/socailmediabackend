@@ -73,7 +73,7 @@ module.exports = {
       'SELECT email FROM user',
       { type: Sequelize.QueryTypes.SELECT }
     );
-    
+
     if (existingUsers.length === 0) {
       await queryInterface.bulkInsert('user', hashedUsers);
     } else {

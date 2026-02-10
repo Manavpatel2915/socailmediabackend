@@ -53,6 +53,18 @@ export default defineConfig([
       "@typescript-eslint/no-explicit-any": "warn",
       "no-console": "off",
       "no-debugger": "warn",
+      'keyword-spacing': ['error', { before: true, after: true }],
+      'space-before-function-paren': ['error', {
+      anonymous: 'always',
+      named: 'never',
+      asyncArrow: 'always',
+    }],
+    'space-in-parens': ['error', 'never'],
+    'object-curly-spacing': ['error', 'always'],
+    'space-infix-ops': 'error',
+    'no-trailing-spaces': 'error',
+    'comma-spacing': ['error', { before: false, after: true }],
+    'arrow-spacing': ['error', { before: true, after: true }],
     },
   },
 ]);

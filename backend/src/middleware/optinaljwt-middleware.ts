@@ -1,22 +1,49 @@
-import passport from "passport";
-import type { NextFunction, Request, Response } from "express";
+import jwt from "jsonwebtoken";
+import type { Request, Response, NextFunction } from "express";
+import { env } from "../config/env.config";
 
-const optionalJwt = (req: Request, res: Response, next: NextFunction) => {
-  passport.authenticate(
-    "jwt",
-    { session: false },
-    (err: unknown, user: Express.User | false | null | undefined) => {
-      if (err) {
-        return next(err as Error);
-      }
+type AuthUser = {
+  user_id: number;
+  email?: string;
+  role: string;
+} & jwt.JwtPayload;
 
-      if (user) {
-        req.user = user;
-      }
+export const optionalJwt = (
+  req: Request,
+  _res: Response,
+  next: NextFunction
+) => {
+  const authHeader = req.headers.authorization;
 
-      next();
+  // If no auth header, set undefined and continue
+  if (!authHeader || !/^Bearer\s+/i.test(authHeader)) {
+    req.user = undefined;
+    return next();
+  }
+
+  try {
+    const token = authHeader.split(" ")[1];
+
+    if (!token || typeof token !== 'string') {
+      req.user = undefined;
+      return next();
     }
-  )(req, res, next);
-};
 
-export default optionalJwt;
+    if (!env.DB.JWT_SECRET) {
+      req.user = undefined;
+      return next();
+    }
+
+    const decoded = jwt.verify(token, env.DB.JWT_SECRET);
+    if (typeof decoded === "string") {
+      req.user = undefined;
+      return next();
+    }
+
+    req.user = decoded as AuthUser;
+  } catch {
+    req.user = undefined;
+  }
+
+  next();
+};

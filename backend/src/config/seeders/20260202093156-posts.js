@@ -7,7 +7,7 @@ module.exports = {
       'SELECT user_id FROM user ORDER BY user_id',
       { type: Sequelize.QueryTypes.SELECT }
     );
-    
+
     if (users.length === 0) {
       throw new Error('No users found. Please run users seed first.');
     }
@@ -33,7 +33,7 @@ module.exports = {
       'SELECT post_id FROM post',
       { type: Sequelize.QueryTypes.SELECT }
     );
-    
+
     if (existingPosts.length === 0) {
       await queryInterface.bulkInsert('post', posts);
     } else {

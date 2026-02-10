@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { RequestLog } from "../config/models/requestlog-mongodbmodel";
+import { RequestLog } from "../config/models/mongodb-Models/requestlog-mongodbmodel";
 
 export const errorHandler = async (
   err: any,

@@ -2,7 +2,8 @@
 import type { Request, Response } from "express";
 import { findCommentById, createComment, updateComment, deletedComment } from "../services/comment-service";
 import { AppError } from "../utils/AppError";
-import {ERRORS,operationFailed,IdNotFound} from '../const/error-message';
+import { ERRORS, operationFailed, IdNotFound } from '../const/error-message';
+import { sendResponse } from '../utils/respones';
 
 const createcomment = async (
   req: Request,
@@ -25,16 +26,10 @@ const createcomment = async (
 
     const userId = user ? user.user_id : null;
     const commentData = await createComment(postId, userId, Comment);
-
-    return res.status(201).json({
-      message: "Comment created successfully",
-      commentData,
-    });
-  } catch (error) {
-    if (error instanceof AppError) throw error;
-    const err = operationFailed("create comment");
-    throw new AppError(err.message, err.statusCode);
-  }
+  return sendResponse(res, 201, "Comment created", commentData);
+  } catch (error){
+    operationFailed(error, "Create Comment!");
+}
 };
 
 const updatecomment = async (
@@ -70,15 +65,11 @@ const updatecomment = async (
     }
 
     await updateComment(existingComment, Comment);
+  return sendResponse(res, 200, "Comment Updated");
 
-    return res.status(200).json({
-      message: "Comment updated successfully"
-    });
-  } catch (error) {
-    if (error instanceof AppError) throw error;
-    const err =operationFailed("update comment");
-    throw new AppError(err.message, err.statusCode);
-  }
+  } catch (error){
+    operationFailed(error, "Update Comment!");
+}
 };
 
 const deletecomment = async (
@@ -93,7 +84,7 @@ const deletecomment = async (
 
     const commentId = Number(req.params.id);
     if (!commentId || isNaN(commentId)) {
-      const error =IdNotFound("comment Id not Found!!");
+      const error = IdNotFound("comment Id not Found!!");
       throw new AppError(error.message, error.statusCode);
     }
 
@@ -108,15 +99,11 @@ const deletecomment = async (
     }
 
     await deletedComment(commentId);
+    return sendResponse(res, 200, "Comment Deleted");
 
-    return res.status(200).json({
-      message: "Comment deleted successfully"
-    });
-  } catch (error) {
-    if (error instanceof AppError) throw error;
-    const err = operationFailed("delete comment");
-    throw new AppError(err.message, err.statusCode);
-  }
+  } catch (error){
+    operationFailed(error, "Delete Comment!");
+}
 };
 
 export {

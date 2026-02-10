@@ -7,16 +7,16 @@ module.exports = {
       'SELECT user_id FROM user ORDER BY user_id',
       { type: Sequelize.QueryTypes.SELECT }
     );
-    
+
     const posts = await queryInterface.sequelize.query(
       'SELECT post_id FROM post ORDER BY post_id',
       { type: Sequelize.QueryTypes.SELECT }
     );
-    
+
     if (users.length === 0) {
       throw new Error('No users found. Please run users seed first.');
     }
-    
+
     if (posts.length === 0) {
       throw new Error('No posts found. Please run posts seed first.');
     }
@@ -53,7 +53,7 @@ module.exports = {
       'SELECT id FROM comment',
       { type: Sequelize.QueryTypes.SELECT }
     );
-    
+
     if (existingComments.length === 0) {
       await queryInterface.bulkInsert('comment', comments);
     } else {

@@ -2,27 +2,32 @@ import "dotenv/config";
 
 export type Env = "development" | "test" | "production";
 
-function required(name: string): string {
-  const value = process.env[name];
-  
+const PROCESSENV = process.env;
+
+function include(name: string): string {
+  const value = PROCESSENV[name];
+
   if (!value) {
     throw new Error(`Missing environment variable: ${name}`);
   }
   return value;
 }
 
-export const ENV: Env = (process.env.NODE_ENV as Env) || "development";
+
 
 export const env = {
-  NODE_ENV: ENV,
+  NODE_ENV: (PROCESSENV.NODE_ENV as Env) || "development",
 
   DB: {
-    MONGODB_URL: required("MONGODB_URL"),
-    DB_NAME: required("DB_NAME"),
-    DB_PORT: required("DB_PORT"),
-    DB_USER: required("DB_USER"),
-    DB_PASSWORD:required("DB_PASSWORD"),
-    DB_HOST:required("DB_HOST"),
-   
+    MONGODB_URL: include("MONGODB_URL"),
+    DB_NAME: include("DB_NAME"),
+    DB_PORT: include("DB_PORT"),
+    DB_USER: include("DB_USER"),
+    DB_PASSWORD:include("DB_PASSWORD"),
+    DB_HOST:include("DB_HOST"),
+    PORT:include("PORT"),
+    JWT_SECRET:include("JWT_SECRET"),
+    TOKEN_EXPRI:include("TOKEN_EXPRI"),
+
   },
 };

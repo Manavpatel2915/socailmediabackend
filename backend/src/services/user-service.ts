@@ -1,35 +1,8 @@
-import db from "../config/sqldbconnnect";
 
 
- const createUser = async (
-  user_name: string,
-  email: string,
-  password: string,
-  role: "Admin" | "user"
-) => {
-  const user = await db.User.create({
-    user_name,
-    email,
-    password: password,
-    role,
-  });
+import db from "../config/databases/sqldbconnnect";
 
-  return user;
-};
-
-
- const findUserByEmail = async (email: string) => {
-  return await db.User.findOne({ where: { email } });
-};
-
-
-
- const findUserById = async (user_id: number) => {
-  return await db.User.findByPk(user_id);
-};
-
-
- const deleteUserById = async (user_id: number) => {
+const deleteUserById = async (user_id: number) => {
 
   const comments = await db.Comment.findAll({ where: { user_id } });
   const commentIds = comments.map((c) => c.id);
@@ -38,7 +11,7 @@ import db from "../config/sqldbconnnect";
     where: { id: commentIds },
   });
 
-  
+
   const posts = await db.Post.findAll({ where: { user_id } });
   const postIds = posts.map((p) => p.post_id);
 
@@ -46,18 +19,64 @@ import db from "../config/sqldbconnnect";
     where: { post_id: postIds },
   });
 
-  
+
   const deletedUser = await db.User.destroy({ where: { user_id } });
 
   return { deletedUser, deletedPosts, deletedComments };
 };
 
+const findUser = async (userId: number) => {
+  return await db.User.findByPk(userId);
+}
 
+const PostData = async (userId:number) => {
+  const postdata = await db.Post.findAll({
+    where:{
+      user_id:userId
+    }
+  })
+  return postdata;
+}
 
-export{
-    createUser,
-    findUserByEmail,
+const CommentData = async (userId:number) => {
+  const commentdata = await db.Comment.findAll({
+    where:{
+    user_id:userId
+    }
+  })
+  return commentdata;
+
+}
+
+const updateUser = async (
+  existingUser: any,
+  updateData: {
+    user_name?: string;
+    email?: string;
+    password?: string;
+  }
+) => {
+
+  const updatedUser = await existingUser.update(updateData);
+  return updatedUser;
+};
+
+const useremail = async (
+  email:string
+) => {
+  return email = await db.User.findOne({
+    where:{
+      email
+    }
+  });
+
+}
+export {
     deleteUserById,
-    findUserById,
+    findUser,
+    PostData,
+    CommentData,
+    updateUser,
+    useremail,
 
 }

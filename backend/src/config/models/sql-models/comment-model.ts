@@ -1,5 +1,5 @@
 import { Model, Sequelize, DataTypes } from "sequelize";
-import { Models } from "../../types/models.types";
+import { Models } from "../../../types/models.types";
 
 export default (sequelize: Sequelize) => {
   class Comment extends Model {
