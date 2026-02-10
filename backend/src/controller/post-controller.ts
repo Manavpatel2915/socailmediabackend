@@ -42,7 +42,7 @@ const getpost = async (
 
   const postData = await PostData(postId);
   if (!postData) {
-      throw new AppError(ERRORS.POST_NOT_FOUND.message, ERRORS.POST_NOT_FOUND.statusCode);
+      throw new AppError(ERRORS.NOT_FOUND("Post"), 404);
   }
   return sendResponse(res, 201, "PostData!", postData);
 
@@ -66,7 +66,7 @@ const deletepost = async (
   const postId = Number(req.params.postid);
   const Post = await findPostById(postId);
   if (!Post) {
-     throw new AppError(ERRORS.POST_NOT_FOUND.message, ERRORS.POST_NOT_FOUND.statusCode);
+     throw new AppError(ERRORS.NOT_FOUND("Post"), 404);
   }
   if (Post.user_id !== user.user_id) {
     const error = ERRORS.UNAUTHORIZED;
@@ -98,7 +98,7 @@ const updatepost = async (
   const data = req.body;
   const Post = await findPostById(postId);
   if (!Post) {
-   throw new AppError(ERRORS.POST_NOT_FOUND.message, ERRORS.POST_NOT_FOUND.statusCode);
+   throw new AppError(ERRORS.NOT_FOUND("Post"), 404);
   }
   if (Post.user_id !== user.user_id) {
      const error = ERRORS.UNAUTHORIZED;

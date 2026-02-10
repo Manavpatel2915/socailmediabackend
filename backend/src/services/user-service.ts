@@ -29,20 +29,24 @@ const findUser = async (userId: number) => {
   return await db.User.findByPk(userId);
 }
 
-const PostData = async (userId:number) => {
+const findposts = async (userId:number, offset:number, limit:number) => {
   const postdata = await db.Post.findAll({
     where:{
-      user_id:userId
-    }
+      user_id:userId,
+    },
+    offset:offset,
+    limit:limit
   })
   return postdata;
 }
 
-const CommentData = async (userId:number) => {
+const findecomments = async (userId:number, offset:number, limit:number) => {
   const commentdata = await db.Comment.findAll({
     where:{
     user_id:userId
-    }
+    },
+    offset:offset,
+    limit:limit
   })
   return commentdata;
 
@@ -74,8 +78,8 @@ const useremail = async (
 export {
     deleteUserById,
     findUser,
-    PostData,
-    CommentData,
+    findposts,
+    findecomments,
     updateUser,
     useremail,
 

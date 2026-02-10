@@ -2,24 +2,26 @@ import type { Request, Response  } from "express";
 import bcrypt from 'bcrypt';
 import { AppError } from "../utils/AppError";
 import { findUserById } from "../services/auth-service";
-import { findUser, deleteUserById, PostData, CommentData, updateUser, useremail } from "../services/user-service";
+import { findUser, deleteUserById, findposts, findecomments, updateUser, useremail } from "../services/user-service";
 import { ERRORS, operationFailed, IdNotFound } from '../const/error-message';
 import { sendResponse } from '../utils/respones';
 
-const getuser = async (
+const userdetails = async (
         req:Request,
         res:Response
 ) :Promise<Response> => {
   try {
     const userId = Number(req.params);
-    if (!userId) {
-     const error = IdNotFound("UserId");
-           throw new AppError(error.message, error.statusCode);
-    }
+    const limit = Number(req.query.limit);
+    const offset = Number(req.query.offset);
 
+    if (!userId) {
+    const error = IdNotFound("UserId");
+    throw new AppError(error.message, error.statusCode);
+    }
   const user = await findUser(userId);
-  const post = await PostData(userId);
-  const comment = await CommentData(userId);
+  const post = await findposts(userId, offset * limit, limit);
+  const comment = await findecomments(userId, offset * limit, limit);
 
   return sendResponse(res, 200, "User fetched successfully", {
       user,
@@ -38,7 +40,7 @@ const deleteuser = async (
   res:Response
 ):Promise<Response> => {
   try {
-
+    console.log(req);
 
   const user = req.user;
   if (!user) {
@@ -47,16 +49,16 @@ const deleteuser = async (
 
    const existingUser = await findUserById(user.user_id);
     if (!existingUser) {
-   throw new AppError(ERRORS.USER_NOT_FOUND.message, ERRORS.USER_NOT_FOUND.statusCode);
+   throw new AppError(ERRORS.NOT_FOUND("User"), 404);
   }
   if (existingUser.user_id !== user.user_id){
       const error = ERRORS.UNAUTHORIZED;
       throw new AppError(error.message, error.statusCode);
   }
-
       const result = await deleteUserById(user.user_id);
 
       return sendResponse(res, 201, "Delete user sucessfully!", result);
+
 } catch (error){
     operationFailed(error, "Delete User!");
 }
@@ -81,8 +83,7 @@ const update = async (
 
 
     if (!existingUser) {
-      const error = ERRORS.USER_NOT_FOUND;
-      throw new AppError(error.message, error.statusCode);
+      throw new AppError(ERRORS.NOT_FOUND("User Not Found!"), 404);
     }
 
 
@@ -101,8 +102,7 @@ const update = async (
     if (email && email !== existingUser.email) {
       const emailExists = await useremail(email);
       if (emailExists) {
-        const error = ERRORS.EMAIL_EXISTS;
-        throw new AppError(error.message, error.statusCode);
+        throw new AppError(ERRORS.EXISTS("Email"), 409);
       }
     }
 
@@ -125,6 +125,6 @@ const update = async (
 
 
 export { deleteuser,
-         getuser,
+         userdetails,
          update,
          };

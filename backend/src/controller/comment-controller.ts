@@ -56,7 +56,7 @@ const updatecomment = async (
 
     const existingComment = await findCommentById(commentId);
     if (!existingComment) {
-      throw new AppError(ERRORS.COMMENT_NOT_FOUND.message, ERRORS.COMMENT_NOT_FOUND.statusCode);
+      throw new AppError(ERRORS.NOT_FOUND("Comment"), 404);
     }
 
     if (existingComment.user_id !== user.user_id && user.role !== 'Admin') {
@@ -90,7 +90,7 @@ const deletecomment = async (
 
     const comment = await findCommentById(commentId);
     if (!comment) {
-      throw new AppError(ERRORS.COMMENT_NOT_FOUND.message, ERRORS.COMMENT_NOT_FOUND.statusCode);
+     throw new AppError(ERRORS.NOT_FOUND("Comment"), 404);
     }
 
     if (comment.user_id !== user.user_id && user.role !== "Admin") {

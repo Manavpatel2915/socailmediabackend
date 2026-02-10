@@ -7,10 +7,6 @@ export interface IRequestLog extends Document {
   responseTime?: number;
   ip?: string;
   userAgent?: string;
-  errorMessage?: string;
-  errorStack?: string;
-  errorType?: string;
-
   createdAt: Date;
 }
 
@@ -22,15 +18,11 @@ const requestLogSchema = new Schema<IRequestLog>(
     responseTime: Number,
     ip: String,
     userAgent: String,
-
-    errorMessage: String,
-    errorStack: String,
-    errorType: String,
   },
   { timestamps: true }
 );
 
-// Prevent OverwriteModelError in dev/hot reload
+
 export const RequestLog: Model<IRequestLog> =
   (models.RequestLog as Model<IRequestLog>) ||
   model<IRequestLog>("RequestLog", requestLogSchema);

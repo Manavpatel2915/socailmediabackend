@@ -12,9 +12,6 @@ function include(name: string): string {
   }
   return value;
 }
-
-
-
 export const env = {
   NODE_ENV: (PROCESSENV.NODE_ENV as Env) || "development",
 

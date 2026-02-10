@@ -27,8 +27,7 @@ const register = async (
     const existingUser = await findUserByEmail(email);
 
     if (existingUser) {
-      const error = ERRORS.USER_EXISTS;
-      throw new AppError(error.message, error.statusCode);
+      throw new AppError(ERRORS.EXISTS("User"), 404);
     }
 
    const user = await createUser(user_name, email, password, role);
@@ -55,7 +54,7 @@ const login = async (
 
 
   if (!user) {
-      throw new AppError(ERRORS.INVALID_EMAIL.message, ERRORS.INVALID_EMAIL.statusCode);
+      throw new AppError(ERRORS.INVALID("Email"), 401);
   }
 
   const isMatch = await bcrypt.compare(
@@ -63,7 +62,7 @@ const login = async (
     user.password
   );
   if (!isMatch) {
-    throw new AppError(ERRORS.INVALID_PASSWORD.message, ERRORS.INVALID_PASSWORD.statusCode);
+    throw new AppError(ERRORS.INVALID("Password"), 401);
   }
 
   const token = jwt.sign(
