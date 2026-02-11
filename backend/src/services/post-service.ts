@@ -1,24 +1,23 @@
+
 import db from "../config/databases/sqldbconnnect";
 
 const createPost = async (
-    title:string,
-    content:string,
-    image:string,
-    user_id:number,
+  title: string,
+  content: string,
+  image: string,
+  userId: number,
 ) => {
-    const post = await db.Post.create({
+  const post = await db.Post.create({
     title,
     content,
     image,
-    user_id,
+    user_id: userId,
   });
   return post;
 };
 
-const PostData = async (
-    postId
-) => {
-    const data = await db.Post.findOne({
+const getPostById = async (postId: number) => {
+  const post = await db.Post.findOne({
     where: {
       post_id: postId,
     },
@@ -34,51 +33,59 @@ const PostData = async (
         as: "comments"
       }
     ],
-
   });
-  return data;
+  return post;
 }
 
-const findPostById = async (
-    postId
-) => {
-    return await db.Post.findByPk(postId);
+const findPostById = async (postId: number) => {
+  return await db.Post.findByPk(postId);
 }
 
-const deletePost = async (
-  postId
-) => {
+const deletePostWithComments = async (postId: number) => {
 
-   const comments = await db.Comment.findAll({
+  const postComments = await db.Comment.findAll({
     where: {
       post_id: postId
     }
   });
-  const commentId = comments.map(item => item.id);
-  const deteledComment = await db.Comment.destroy({
+
+  const commentIds = postComments.map(comment => comment.id);
+
+  // Delete all comments
+  const deletedCommentsCount = await db.Comment.destroy({
     where: {
-      id: commentId
+      id: commentIds
     }
   });
-  const deletePost = await db.Post.destroy({
+
+  // Delete the post
+  const deletedPostCount = await db.Post.destroy({
     where: {
       post_id: postId
     }
   });
-  return { deletePost, deteledComment };
+
+  return {
+    deletedPost: deletedPostCount,
+    deletedComments: deletedCommentsCount
+  };
 }
 
-const updatePost = async (
-    data,
-    Post
+const updatePostData = async (
+  existingPost: any,
+  updateData: {
+    title?: string;
+    content?: string;
+    image?: string;
+  }
 ) => {
-  return  await Post.update(data);
+  return await existingPost.update(updateData);
 }
 
 export {
-    createPost,
-    PostData,
-    findPostById,
-    deletePost,
-    updatePost,
+  createPost,
+  getPostById,
+  findPostById,
+  deletePostWithComments,
+  updatePostData,
 }

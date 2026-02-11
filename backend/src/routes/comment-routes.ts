@@ -1,21 +1,19 @@
+// comment-routes.ts
 import { Router } from "express";
-import  { authenticate }   from '../middleware/passport-middleware';
+import { authenticate } from '../middleware/passport-middleware';
 import {
-    createcomment,
-    updatecomment,
-    deletecomment,
-
+  createComment,
+  updateComment,
+  deleteComment,
 } from '../controller/comment-controller'
 import { optionalJwt } from "../middleware/optinaljwt-middleware";
+
 const router = Router();
 
+router.post("/create_comment/:postId", optionalJwt, createComment);
 
-router.post("/create_comment/:postId"/*
-    #swagger.tags = ['Comment']*/, optionalJwt, createcomment);
+router.patch('/update_comment/:commentId', authenticate, updateComment);
 
-router.patch('/update_comment/:commentId'/*
-    #swagger.tags = ['Comment']*/, authenticate, updatecomment);
+router.delete('/:id', authenticate, deleteComment);
 
-router.get('/delete_comment/:id'/*
-    #swagger.tags = ['Comment']*/, authenticate, deletecomment);
 export default router;

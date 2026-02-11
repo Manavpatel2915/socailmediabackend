@@ -1,58 +1,60 @@
 
-
 import db from "../config/databases/sqldbconnnect";
 
-const deleteUserById = async (user_id: number) => {
+const deleteUser = async (userId: number) => {
 
-  const comments = await db.Comment.findAll({ where: { user_id } });
-  const commentIds = comments.map((c) => c.id);
+  const userComments = await db.Comment.findAll({ where: { user_id: userId } });
+  const commentIds = userComments.map((comment) => comment.id);
 
-  const deletedComments = await db.Comment.destroy({
+  const deletedCommentsCount = await db.Comment.destroy({
     where: { id: commentIds },
   });
 
 
-  const posts = await db.Post.findAll({ where: { user_id } });
-  const postIds = posts.map((p) => p.post_id);
+  const userPosts = await db.Post.findAll({ where: { user_id: userId } });
+  const postIds = userPosts.map((post) => post.post_id);
 
-  const deletedPosts = await db.Post.destroy({
+  const deletedPostsCount = await db.Post.destroy({
     where: { post_id: postIds },
   });
 
 
-  const deletedUser = await db.User.destroy({ where: { user_id } });
+  const deletedUserCount = await db.User.destroy({ where: { user_id: userId } });
 
-  return { deletedUser, deletedPosts, deletedComments };
+  return {
+    deletedUser: deletedUserCount,
+    deletedPosts: deletedPostsCount,
+    deletedComments: deletedCommentsCount
+  };
 };
 
-const findUser = async (userId: number) => {
+const getUserById = async (userId: number) => {
   return await db.User.findByPk(userId);
 }
 
-const findposts = async (userId:number, offset:number, limit:number) => {
-  const postdata = await db.Post.findAll({
-    where:{
-      user_id:userId,
+const getUserPosts = async (userId: number, offset: number, limit: number) => {
+  const posts = await db.Post.findAll({
+    where: {
+      user_id: userId,
     },
-    offset:offset,
-    limit:limit
-  })
-  return postdata;
+    offset: offset,
+    limit: limit
+  });
+  return posts;
 }
 
-const findecomments = async (userId:number, offset:number, limit:number) => {
-  const commentdata = await db.Comment.findAll({
-    where:{
-    user_id:userId
+const getUserComments = async (userId: number, offset: number, limit: number) => {
+  const comments = await db.Comment.findAll({
+    where: {
+      user_id: userId
     },
-    offset:offset,
-    limit:limit
-  })
-  return commentdata;
-
+    offset: offset,
+    limit: limit
+  });
+  return comments;
 }
 
-const updateUser = async (
+const updateUserData = async (
   existingUser: any,
   updateData: {
     user_name?: string;
@@ -60,27 +62,23 @@ const updateUser = async (
     password?: string;
   }
 ) => {
-
   const updatedUser = await existingUser.update(updateData);
   return updatedUser;
 };
 
-const useremail = async (
-  email:string
-) => {
-  return email = await db.User.findOne({
-    where:{
+const findUserByEmail = async (email: string) => {
+  return await db.User.findOne({
+    where: {
       email
     }
   });
-
 }
-export {
-    deleteUserById,
-    findUser,
-    findposts,
-    findecomments,
-    updateUser,
-    useremail,
 
+export {
+  deleteUser,
+  getUserById,
+  getUserPosts,
+  getUserComments,
+  updateUserData,
+  findUserByEmail,
 }

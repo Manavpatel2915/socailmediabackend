@@ -1,16 +1,21 @@
 
 import type { Request, Response } from "express";
-import { findCommentById, createComment, updateComment, deletedComment } from "../services/comment-service";
+import {
+  findCommentById,
+  createNewComment,
+  updateCommentText,
+  deleteCommentById
+} from "../services/comment-service";
 import { AppError } from "../utils/AppError";
 import { ERRORS, operationFailed, IdNotFound } from '../const/error-message';
 import { sendResponse } from '../utils/respones';
 
-const createcomment = async (
+const createComment = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
   try {
-    const user = req.user;
+    const authenticatedUser = req.user;
     const { Comment } = req.body;
 
     if (!Comment) {
@@ -20,31 +25,33 @@ const createcomment = async (
 
     const postId = Number(req.params.postId);
     if (!postId || isNaN(postId)) {
-      const error = IdNotFound("PostId Not Found!!")
+      const error = IdNotFound("PostId");
       throw new AppError(error.message, error.statusCode);
     }
 
-    const userId = user ? user.user_id : null;
-    const commentData = await createComment(postId, userId, Comment);
-  return sendResponse(res, 201, "Comment created", commentData);
-  } catch (error){
+    const userId = authenticatedUser ? authenticatedUser.user_id : null;
+    const newComment = await createNewComment(postId, userId, Comment);
+
+    return sendResponse(res, 201, "Comment created successfully!", newComment);
+  } catch (error) {
     operationFailed(error, "Create Comment!");
-}
+  }
 };
 
-const updatecomment = async (
+const updateComment = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
   try {
-    const user = req.user;
-    if (!user) {
+    const authenticatedUser = req.user;
+
+    if (!authenticatedUser) {
       throw new AppError(ERRORS.UNAUTHORIZED.message, ERRORS.UNAUTHORIZED.statusCode);
     }
 
     const commentId = Number(req.params.commentId);
     if (!commentId || isNaN(commentId)) {
-      const error = IdNotFound("Comment Id not Found");
+      const error = IdNotFound("CommentId");
       throw new AppError(error.message, error.statusCode);
     }
 
@@ -59,55 +66,56 @@ const updatecomment = async (
       throw new AppError(ERRORS.NOT_FOUND("Comment"), 404);
     }
 
-    if (existingComment.user_id !== user.user_id && user.role !== 'Admin') {
+    if (existingComment.user_id !== authenticatedUser.user_id && authenticatedUser.role !== 'Admin') {
       const error = ERRORS.UNAUTHORIZED;
       throw new AppError(error.message, error.statusCode);
     }
 
-    await updateComment(existingComment, Comment);
-  return sendResponse(res, 200, "Comment Updated");
+    const updatedComment = await updateCommentText(existingComment, Comment);
+    return sendResponse(res, 200, "Comment updated successfully!", updatedComment);
 
-  } catch (error){
+  } catch (error) {
     operationFailed(error, "Update Comment!");
-}
+  }
 };
 
-const deletecomment = async (
+const deleteComment = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
   try {
-    const user = req.user;
-    if (!user) {
+    const authenticatedUser = req.user;
+
+    if (!authenticatedUser) {
       throw new AppError(ERRORS.UNAUTHORIZED.message, ERRORS.UNAUTHORIZED.statusCode);
     }
 
     const commentId = Number(req.params.id);
     if (!commentId || isNaN(commentId)) {
-      const error = IdNotFound("comment Id not Found!!");
+      const error = IdNotFound("CommentId");
       throw new AppError(error.message, error.statusCode);
     }
 
-    const comment = await findCommentById(commentId);
-    if (!comment) {
-     throw new AppError(ERRORS.NOT_FOUND("Comment"), 404);
+    const commentToDelete = await findCommentById(commentId);
+    if (!commentToDelete) {
+      throw new AppError(ERRORS.NOT_FOUND("Comment"), 404);
     }
 
-    if (comment.user_id !== user.user_id && user.role !== "Admin") {
+    if (commentToDelete.user_id !== authenticatedUser.user_id && authenticatedUser.role !== "Admin") {
       const error = ERRORS.UNAUTHORIZED;
       throw new AppError(error.message, error.statusCode);
     }
 
-    await deletedComment(commentId);
-    return sendResponse(res, 200, "Comment Deleted");
+    const deletionResult = await deleteCommentById(commentId);
+    return sendResponse(res, 200, "Comment deleted successfully!", { deletedCount: deletionResult });
 
-  } catch (error){
+  } catch (error) {
     operationFailed(error, "Delete Comment!");
-}
+  }
 };
 
 export {
-  createcomment,
-  updatecomment,
-  deletecomment
+  createComment,
+  updateComment,
+  deleteComment
 };

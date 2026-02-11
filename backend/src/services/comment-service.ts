@@ -1,50 +1,43 @@
+
 import db from "../config/databases/sqldbconnnect";
 
-
-const findCommentById = async (
-    commentId
-) => {
-    const comment = await db.Comment.findByPk(commentId);
+const findCommentById = async (commentId: number) => {
+  const comment = await db.Comment.findByPk(commentId);
   return comment;
-
 }
 
-const createComment = async (
-    postId,
-    userId,
-    Comment
+const createNewComment = async (
+  postId: number,
+  userId: number | null,
+  commentText: string
 ) => {
-
-    const commentData = await db.Comment.create({
-      Comment:Comment,
-      post_id: postId,
-      user_id: userId
-    });
-    return commentData;
+  const newComment = await db.Comment.create({
+    Comment: commentText,
+    post_id: postId,
+    user_id: userId
+  });
+  return newComment;
 }
 
-const updateComment = async (
-    existingComment,
-    comment
+const updateCommentText = async (
+  existingComment: any,
+  commentText: string
 ) => {
- return await existingComment.update({ Comment: comment });
+  return await existingComment.update({ Comment: commentText });
 }
 
-const deletedComment = async (
-  commentId
-) => {
-
-   const deteledcomment = await db.Comment.destroy({
-  where: {
-    id: commentId
-  }
-});
-return deteledcomment;
+const deleteCommentById = async (commentId: number) => {
+  const deletedCount = await db.Comment.destroy({
+    where: {
+      id: commentId
+    }
+  });
+  return deletedCount;
 }
+
 export {
-    findCommentById,
-    createComment,
-    updateComment,
-    deletedComment,
-
+  findCommentById,
+  createNewComment,
+  updateCommentText,
+  deleteCommentById,
 }

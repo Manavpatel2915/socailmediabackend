@@ -1,29 +1,22 @@
 import { Router } from "express";
 import { authenticate } from '../middleware/passport-middleware';
 import {
-    creatpost,
-    getpost,
-    deletepost,
-    updatepost,
+    createNewPost,
+    getPostDetails,
+    deletePostById,
+    updatePostById,
 } from '../controller/post-controller'
 import { validate } from '../middleware/validate-middleware'
 import { createPostSchema, updatePostSchema } from '../validation/post-validation'
 
-
 const router = Router();
 
-router.post('/createpost'/*
-    #swagger.tags = ['Post']*/, authenticate, validate(createPostSchema), creatpost);
+router.post('/createpost', authenticate, validate(createPostSchema), createNewPost);
 
-router.get('/:postid'/*
-    #swagger.tags = ['Post']*/, getpost);
+router.get('/:postid', getPostDetails);
 
+router.delete('/:postid', authenticate, deletePostById);
 
-router.get('/delete/:postid'/*
-    #swagger.tags = ['Post']*/, authenticate, deletepost);
-
-router.patch('/updatepost/:postid'/*
-    #swagger.tags = ['Post']*/, authenticate, validate(updatePostSchema), updatepost);
-
+router.patch('/updatepost/:postid', authenticate, validate(updatePostSchema), updatePostById);
 
 export default router;

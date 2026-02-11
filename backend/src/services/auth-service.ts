@@ -1,38 +1,32 @@
+
 import db from "../config/databases/sqldbconnnect";
 
-
- const createUser = async (
-  user_name: string,
+const createUser = async (
+  userName: string,
   email: string,
   password: string,
   role: "Admin" | "user"
 ) => {
-  const user = await db.User.create({
-    user_name,
+  const newUser = await db.User.create({
+    user_name: userName,
     email,
-    password: password,
+    password,
     role,
   });
 
-  return user;
+  return newUser;
 };
 
-
- const findUserByEmail = async (email: string) => {
+const findUserByEmail = async (email: string) => {
   return await db.User.findOne({ where: { email } });
 };
 
-
-
- const findUserById = async (user_id: number) => {
-  return await db.User.findByPk(user_id);
+const findUserById = async (userId: number) => {
+  return await db.User.findByPk(userId);
 };
 
-
-
 export {
-    createUser,
-    findUserByEmail,
-    findUserById,
-
+  createUser,
+  findUserByEmail,
+  findUserById,
 }
