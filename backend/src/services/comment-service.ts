@@ -3,7 +3,7 @@ import db from "../config/databases/sqldbconnnect";
 
 const findCommentById = async (commentId: number) => {
   const comment = await db.Comment.findByPk(commentId);
-  return comment;
+  return comment.toJSON();
 }
 
 const createNewComment = async (
@@ -16,23 +16,36 @@ const createNewComment = async (
     post_id: postId,
     user_id: userId
   });
-  return newComment;
+  return newComment.toJSON();
 }
 
 const updateCommentText = async (
   existingComment: any,
   commentText: string
 ) => {
-  return await existingComment.update({ Comment: commentText });
+  await existingComment.update({ Comment: commentText });
+  return existingComment.toJSON();
 }
 
 const deleteCommentById = async (commentId: number) => {
   const deletedCount = await db.Comment.destroy({
     where: {
       id: commentId
-    }
+    },
   });
   return deletedCount;
+}
+
+const findCommentByPostId = async (postId: number, offset: number, limit: number) => {
+  const comments = await db.Comment.findAll({
+    where: {
+      user_id: postId
+    },
+    offset: offset,
+    limit: limit,
+    raw: true
+  });
+  return comments;
 }
 
 export {
@@ -40,4 +53,5 @@ export {
   createNewComment,
   updateCommentText,
   deleteCommentById,
+  findCommentByPostId
 }

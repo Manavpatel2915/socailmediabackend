@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
 import type { Request, Response, NextFunction } from "express";
-
+import { ERRORS } from "../const/error-message";
 import { env } from "../config/env.config";
+import { AppError } from "../utils/AppError";
 
 type AuthUser = {
   user_id: number;
@@ -25,16 +26,10 @@ export const authenticate = (
   if (!token || typeof token !== 'string') {
     return res.status(401).json({ message: "token is missing!" });
   }
-
-  if (!env.DB.JWT_SECRET) {
-    return res.status(500).json({ message: "token is missing!" });
-  }
-
   try {
-    const decoded = jwt.verify(token, env.DB.JWT_SECRET);
-    console.log("🚀 ~ authenticate ~ decoded:", decoded)
+    const decoded = jwt.verify(token, env.JWT.JWT_SECRET);
     if (typeof decoded === "string") {
-      return res.status(401).json({ message: "token is missing!" });
+      throw new AppError(ERRORS.message.UNAUTHORIZED, ERRORS.statuscode.UNAUTHORIZED);
     }
     req.user = decoded as AuthUser;
     next();

@@ -7,7 +7,7 @@ import {
   deleteCommentById
 } from "../services/comment-service";
 import { AppError } from "../utils/AppError";
-import { ERRORS, operationFailed, IdNotFound } from '../const/error-message';
+import { ERRORS, errorhandler } from '../const/error-message';
 import { sendResponse } from '../utils/respones';
 
 const createComment = async (
@@ -19,14 +19,12 @@ const createComment = async (
     const { Comment } = req.body;
 
     if (!Comment) {
-      const error = ERRORS.ALL_FIELDS_REQUIRED;
-      throw new AppError(error.message, error.statusCode);
+      throw new AppError(ERRORS.message.ALL_FIELDS_REQUIRED, ERRORS.statuscode.ALL_FIELDS_REQUIRED);
     }
 
     const postId = Number(req.params.postId);
-    if (!postId || isNaN(postId)) {
-      const error = IdNotFound("PostId");
-      throw new AppError(error.message, error.statusCode);
+    if (!postId) {
+      throw new AppError(ERRORS.message.NOT_FOUND("PostId"), ERRORS.statuscode.NOT_FOUND);
     }
 
     const userId = authenticatedUser ? authenticatedUser.user_id : null;
@@ -34,7 +32,7 @@ const createComment = async (
 
     return sendResponse(res, 201, "Comment created successfully!", newComment);
   } catch (error) {
-    operationFailed(error, "Create Comment!");
+    errorhandler(error, "Create Comment!");
   }
 };
 
@@ -46,36 +44,34 @@ const updateComment = async (
     const authenticatedUser = req.user;
 
     if (!authenticatedUser) {
-      throw new AppError(ERRORS.UNAUTHORIZED.message, ERRORS.UNAUTHORIZED.statusCode);
+      throw new AppError(ERRORS.message.UNAUTHORIZED, ERRORS.statuscode.UNAUTHORIZED);
     }
 
     const commentId = Number(req.params.commentId);
-    if (!commentId || isNaN(commentId)) {
-      const error = IdNotFound("CommentId");
-      throw new AppError(error.message, error.statusCode);
+    if (!commentId) {
+
+      throw new AppError(ERRORS.message.NOT_FOUND("CommentId"), ERRORS.statuscode.NOT_FOUND);
     }
 
     const { Comment } = req.body;
     if (!Comment) {
-      const error = ERRORS.ALL_FIELDS_REQUIRED;
-      throw new AppError(error.message, error.statusCode);
+      throw new AppError(ERRORS.message.ALL_FIELDS_REQUIRED, ERRORS.statuscode.ALL_FIELDS_REQUIRED);
     }
 
     const existingComment = await findCommentById(commentId);
     if (!existingComment) {
-      throw new AppError(ERRORS.NOT_FOUND("Comment"), 404);
+      throw new AppError(ERRORS.message.NOT_FOUND("Comment"), 404);
     }
 
     if (existingComment.user_id !== authenticatedUser.user_id && authenticatedUser.role !== 'Admin') {
-      const error = ERRORS.UNAUTHORIZED;
-      throw new AppError(error.message, error.statusCode);
+      throw new AppError(ERRORS.message.UNAUTHORIZED, ERRORS.statuscode.UNAUTHORIZED);
     }
 
     const updatedComment = await updateCommentText(existingComment, Comment);
     return sendResponse(res, 200, "Comment updated successfully!", updatedComment);
 
   } catch (error) {
-    operationFailed(error, "Update Comment!");
+    errorhandler(error, "Update Comment!");
   }
 };
 
@@ -87,30 +83,28 @@ const deleteComment = async (
     const authenticatedUser = req.user;
 
     if (!authenticatedUser) {
-      throw new AppError(ERRORS.UNAUTHORIZED.message, ERRORS.UNAUTHORIZED.statusCode);
+      throw new AppError(ERRORS.message.UNAUTHORIZED, ERRORS.statuscode.UNAUTHORIZED);
     }
 
-    const commentId = Number(req.params.id);
-    if (!commentId || isNaN(commentId)) {
-      const error = IdNotFound("CommentId");
-      throw new AppError(error.message, error.statusCode);
+    const commentId = Number(req.params.commentId);
+    if (!commentId) {
+      throw new AppError(ERRORS.message.NOT_FOUND("CommentId"), ERRORS.statuscode.NOT_FOUND);
     }
 
     const commentToDelete = await findCommentById(commentId);
     if (!commentToDelete) {
-      throw new AppError(ERRORS.NOT_FOUND("Comment"), 404);
+      throw new AppError(ERRORS.message.NOT_FOUND("Comment"), 404);
     }
 
     if (commentToDelete.user_id !== authenticatedUser.user_id && authenticatedUser.role !== "Admin") {
-      const error = ERRORS.UNAUTHORIZED;
-      throw new AppError(error.message, error.statusCode);
+      throw new AppError(ERRORS.message.UNAUTHORIZED, ERRORS.statuscode.UNAUTHORIZED);
     }
 
     const deletionResult = await deleteCommentById(commentId);
     return sendResponse(res, 200, "Comment deleted successfully!", { deletedCount: deletionResult });
 
   } catch (error) {
-    operationFailed(error, "Delete Comment!");
+    errorhandler(error, "Delete Comment!");
   }
 };
 

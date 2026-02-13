@@ -8,7 +8,7 @@ export const connectDatabase = async (): Promise<void> => {
     await db.sequelize.authenticate();
 
     // await db.sequelize.sync({ force: true });
-
+    // await db.sequelize.sync({ alter: true });
     console.log(' Database synced successfully');
 
   } catch (error) {

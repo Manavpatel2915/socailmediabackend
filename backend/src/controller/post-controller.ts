@@ -1,15 +1,15 @@
-
+import  { Post } from "../config/models/sql-models/post-model";
 import type { Request, Response } from "express";
 import { AppError } from "../utils/AppError";
 import {
   createPost,
-  getPostById,
   findPostById,
   deletePostWithComments,
   updatePostData
 } from "../services/post-service";
 import { sendResponse } from '../utils/respones';
-import { ERRORS, operationFailed, IdNotFound } from '../const/error-message';
+import { ERRORS, errorhandler } from '../const/error-message';
+import { authenticate } from "passport";
 
 const createNewPost = async (
   req: Request,
@@ -18,42 +18,39 @@ const createNewPost = async (
   try {
     const authenticatedUser = req.user;
 
-    if (!authenticatedUser) {
-      throw new AppError(ERRORS.UNAUTHORIZED.message, ERRORS.UNAUTHORIZED.statusCode);
-    }
-
     const { title, content, image } = req.body;
 
     const newPost = await createPost(title, content, image, authenticatedUser.user_id);
     return sendResponse(res, 201, "Post created successfully!", newPost);
 
   } catch (error) {
-    operationFailed(error, "Create Post!");
+    errorhandler(error, "Create Post!");
   }
 }
 
-const getPostDetails = async (
+const getPost = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
   try {
-    const postId = Number(req.params.postid);
+    const postId = Number(req.params.postId);
+
 
     if (!postId) {
-      const error = IdNotFound("PostId");
-      throw new AppError(error.message, error.statusCode);
+      throw new AppError(ERRORS.message.NOT_FOUND("PostId"), ERRORS.statuscode.NOT_FOUND);
     }
 
-    const post = await getPostById(postId);
+    const post = await findPostById(postId);
 
     if (!post) {
-      throw new AppError(ERRORS.NOT_FOUND("Post"), 404);
+      throw new AppError(ERRORS.message.NOT_FOUND("Post"), ERRORS.statuscode.NOT_FOUND);
     }
+
 
     return sendResponse(res, 200, "Post fetched successfully!", post);
 
   } catch (error) {
-    operationFailed(error, "Get Post!");
+    errorhandler(error, "Get Post!");
   }
 }
 
@@ -64,33 +61,28 @@ const deletePostById = async (
   try {
     const authenticatedUser = req.user;
 
-    if (!authenticatedUser) {
-      throw new AppError(ERRORS.UNAUTHORIZED.message, ERRORS.UNAUTHORIZED.statusCode);
-    }
-
-    const postId = Number(req.params.postid);
+    const postId = Number(req.params.postId);
 
     if (!postId) {
-      const error = IdNotFound("PostId");
-      throw new AppError(error.message, error.statusCode);
+      throw new AppError(ERRORS.message.NOT_FOUND("PostId"), ERRORS.statuscode.NOT_FOUND);
     }
 
     const postToDelete = await findPostById(postId);
 
     if (!postToDelete) {
-      throw new AppError(ERRORS.NOT_FOUND("Post"), 404);
+      throw new AppError(ERRORS.message.NOT_FOUND("Post"), 404);
     }
 
     if (postToDelete.user_id !== authenticatedUser.user_id) {
-      const error = ERRORS.UNAUTHORIZED;
-      throw new AppError(error.message, error.statusCode);
+      throw new AppError(ERRORS.message.UNAUTHORIZED, ERRORS.statuscode.UNAUTHORIZED);
     }
 
     const deletionResult = await deletePostWithComments(postId);
+
     return sendResponse(res, 200, "Post deleted successfully!", deletionResult);
 
   } catch (error) {
-    operationFailed(error, "Delete Post!");
+    errorhandler(error, "Delete Post!");
   }
 }
 
@@ -101,40 +93,37 @@ const updatePostById = async (
   try {
     const authenticatedUser = req.user;
 
-    if (!authenticatedUser) {
-      throw new AppError(ERRORS.UNAUTHORIZED.message, ERRORS.UNAUTHORIZED.statusCode);
-    }
+    const { title, content } = req.body;
 
-    const postId = Number(req.params.postid);
+    const postId = Number(req.params.postId);
 
     if (!postId) {
-      const error = IdNotFound("PostId");
-      throw new AppError(error.message, error.statusCode);
+      throw new AppError(ERRORS.message.INVALID("PostId"), ERRORS.statuscode.UNAUTHORIZED);
     }
 
-    const updateData = req.body;
     const postToUpdate = await findPostById(postId);
-
     if (!postToUpdate) {
-      throw new AppError(ERRORS.NOT_FOUND("Post"), 404);
+      throw new AppError(ERRORS.message.NOT_FOUND("Post"), 404);
     }
-
+    const dataToUpdate: Partial<Post> = {};
+    if (title) dataToUpdate.title = title ;
+    if (content) dataToUpdate.content = content ;
     if (postToUpdate.user_id !== authenticatedUser.user_id) {
-      const error = ERRORS.UNAUTHORIZED;
-      throw new AppError(error.message, error.statusCode);
+      throw new AppError(ERRORS.message.UNAUTHORIZED, ERRORS.statuscode.UNAUTHORIZED);
     }
 
-    const updatedPost = await updatePostData(postToUpdate, updateData);
+    const updatedPost = await updatePostData(postToUpdate, dataToUpdate);
     return sendResponse(res, 200, "Post updated successfully!", updatedPost);
 
   } catch (error) {
-    operationFailed(error, "Update Post!");
+    errorhandler(error, "Update Post!");
   }
 }
 
+
 export {
   createNewPost,
-  getPostDetails,
+  getPost,
   deletePostById,
-  updatePostById
+  updatePostById,
 }

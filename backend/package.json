@@ -11,7 +11,8 @@
     "seed-D": "npx sequelize-cli db:seed:undo:all",
     "seed-I:file": "npx sequelize-cli db:seed --seed",
     "seed-D:file": "npx sequelize-cli db:seed:undo --seed",
-    "swagger": "ts-node src/swagger.ts"
+    "swagger": "ts-node src/swagger.ts",
+    "lint:fix": "eslint src/ --fix"
   },
   "keywords": [],
   "author": "Manav_Patel",
@@ -59,10 +60,12 @@
     "@typescript-eslint/eslint-plugin": "^8.53.1",
     "@typescript-eslint/parser": "^8.53.1",
     "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-html": "^8.1.4",
     "globals": "^17.2.0",
     "jiti": "^2.6.1",
     "nodemon": "^3.1.11",
+    "prettier": "^3.8.1",
     "sequelize-cli": "^6.6.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",

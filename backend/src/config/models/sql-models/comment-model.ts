@@ -1,34 +1,47 @@
-import { Model, Sequelize, DataTypes } from "sequelize";
+import {
+  Model,
+  Sequelize,
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  CreationOptional
+} from "sequelize";
 import { Models } from "../../../types/models.types";
 
-export default (sequelize: Sequelize) => {
-  class Comment extends Model {
-    declare id: number;
-    declare Comment: string;
-    declare user_id: number | null;
-    declare post_id: number;
 
-    // Properly typed association method
-    static associate(models: Models): void {
-      // Comment -> Post (many-to-one)
-      Comment.belongsTo(models.Post, {
-        foreignKey: 'post_id',
-        as: 'post',
-        onDelete: 'CASCADE',
-      });
+export class Comment extends Model<InferAttributes<Comment>, InferCreationAttributes<Comment>> {
+  declare id: CreationOptional<number>;
+  declare Comment: string;
+  declare user_id: number | null;
+  declare post_id: number;
 
-      // Comment -> User (many-to-one, optional)
-      Comment.belongsTo(models.User, {
-        foreignKey: {
-          name: "user_id",
-          allowNull: true,
-        },
-        as: 'user',
-        onDelete: 'SET NULL',
-      });
-    }
+  // If you have timestamps
+  declare readonly createdAt: CreationOptional<Date>;
+  declare readonly updatedAt: CreationOptional<Date>;
+
+  // Properly typed association method
+  static associate(models: Models): void {
+    // Comment -> Post (many-to-one)
+    Comment.belongsTo(models.Post, {
+      foreignKey: 'post_id',
+      as: 'post',
+      onDelete: 'CASCADE',
+    });
+
+    // Comment -> User (many-to-one, optional)
+    Comment.belongsTo(models.User, {
+      foreignKey: {
+        name: "user_id",
+        allowNull: true,
+      },
+      as: 'user',
+      onDelete: 'SET NULL',
+    });
   }
+}
 
+
+export default (sequelize: Sequelize): typeof Comment => {
   Comment.init(
     {
       id: {
@@ -47,6 +60,12 @@ export default (sequelize: Sequelize) => {
       post_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
       },
     },
     {

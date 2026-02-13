@@ -1,33 +1,46 @@
-import { Model, Sequelize, DataTypes } from 'sequelize';
+import {
+  Model,
+  Sequelize,
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  CreationOptional
+} from 'sequelize';
 import { Models } from "../../../types/models.types";
 
-export default (sequelize: Sequelize) => {
-  class Post extends Model {
-    declare post_id: number;
-    declare title: string;
-    declare content: string;
-    declare image: string;
-    declare like: number;
-    declare user_id: number;
 
-    // Properly typed association method
-    static associate(models: Models): void {
-      // Post -> User (many-to-one)
-      Post.belongsTo(models.User, {
-        foreignKey: 'user_id',
-        as: 'user',
-        onDelete: 'CASCADE',
-      });
+export class Post extends Model<InferAttributes<Post>, InferCreationAttributes<Post>> {
+  declare post_id: CreationOptional<number>;
+  declare title: string | null;
+  declare content: string;
+  declare image: CreationOptional<string>;
+  declare like: CreationOptional<number>;
+  declare user_id: number;
 
-      // Post -> Comments (one-to-many)
-      Post.hasMany(models.Comment, {
-        foreignKey: 'post_id',
-        as: 'comments',
-        onDelete: 'CASCADE',
-      });
-    }
+
+  declare readonly createdAt: CreationOptional<Date>;
+  declare readonly updatedAt: CreationOptional<Date>;
+
+
+  static associate(models: Models): void {
+    // Post -> User (many-to-one)
+    Post.belongsTo(models.User, {
+      foreignKey: 'user_id',
+      as: 'user',
+      onDelete: 'CASCADE',
+    });
+
+    // Post -> Comments (one-to-many)
+    Post.hasMany(models.Comment, {
+      foreignKey: 'post_id',
+      as: 'comments',
+      onDelete: 'CASCADE',
+    });
   }
+}
 
+
+export default (sequelize: Sequelize): typeof Post => {
   Post.init(
     {
       post_id: {
@@ -58,7 +71,13 @@ export default (sequelize: Sequelize) => {
       user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-      }
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+      },
     },
     {
       sequelize,

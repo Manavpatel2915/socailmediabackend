@@ -19,8 +19,8 @@ export const errorHandler = async (
       errorType: err.name,
     });
 
-  } catch (logError) {
-    console.error("Error saving error log:", logError);
+  } catch (error) {
+    console.error("Error saving error log:", error);
   }
   res.status(err.statusCode).json({
     success: false,

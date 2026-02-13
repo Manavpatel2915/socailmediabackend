@@ -1,36 +1,37 @@
-import { Model, Sequelize, DataTypes } from "sequelize";
+import { Model, Sequelize, DataTypes, InferAttributes, InferCreationAttributes, CreationOptional } from "sequelize";
 import bcrypt from "bcrypt";
 import { Models } from "../../../types/models.types";
-import { ENUMS } from  "../../../const/enum-model";
-export default (sequelize: Sequelize) => {
-  class User extends Model {
-    declare user_id: number;
-    declare user_name: string;
-    declare email: string;
-    declare password: string;
-    declare role: typeof ENUMS.role[number];
+import { ENUMS } from "../../../const/enum-model";
+import { env } from "../../env.config";
 
-    // Properly typed association method
-    static associate(models: Models): void {
-      // User -> Posts (one-to-many)
-      User.hasMany(models.Post, {
-        foreignKey: 'user_id',
-        as: 'posts',
-        onDelete: 'CASCADE',
-      });
+export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
+  declare user_id: CreationOptional<number>;
+  declare user_name: string;
+  declare email: string;
+  declare password: string;
+  declare role: typeof ENUMS.role[number];
 
-      // User -> Comments (one-to-many, optional)
-      User.hasMany(models.Comment, {
-        foreignKey: {
-          name: "user_id",
-          allowNull: true,
-        },
-        as: 'comments',
-        onDelete: 'SET NULL',
-      });
-    }
+  declare readonly createdAt: CreationOptional<Date>;
+  declare readonly updatedAt: CreationOptional<Date>;
+
+  static associate(models: Models): void {
+    User.hasMany(models.Post, {
+      foreignKey: 'user_id',
+      as: 'posts',
+      onDelete: 'CASCADE',
+    });
+    User.hasMany(models.Comment, {
+      foreignKey: {
+        name: "user_id",
+        allowNull: true,
+      },
+      as: 'comments',
+      onDelete: 'SET NULL',
+    });
   }
+}
 
+export default (sequelize: Sequelize): typeof User => {
   User.init(
     {
       user_id: {
@@ -57,6 +58,12 @@ export default (sequelize: Sequelize) => {
         allowNull: false,
         defaultValue: ENUMS.role[1],
       },
+      createdAt: {
+        type: DataTypes.DATE,
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+      },
     },
     {
       sequelize,
@@ -67,12 +74,12 @@ export default (sequelize: Sequelize) => {
   );
 
   User.beforeCreate(async (user: User) => {
-    user.password = await bcrypt.hash(user.password, 10);
+    user.password = await bcrypt.hash(user.password, env.JWT.SALT);
   });
 
   User.beforeUpdate(async (user: User) => {
     if (user.changed("password")) {
-      user.password = await bcrypt.hash(user.password, 10);
+      user.password = await bcrypt.hash(user.password, env.JWT.SALT);
     }
   });
 

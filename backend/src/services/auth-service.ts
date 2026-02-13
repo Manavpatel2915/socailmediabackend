@@ -5,7 +5,7 @@ const createUser = async (
   userName: string,
   email: string,
   password: string,
-  role: "Admin" | "user"
+  role:'Admin' | 'User'
 ) => {
   const newUser = await db.User.create({
     user_name: userName,
@@ -14,15 +14,17 @@ const createUser = async (
     role,
   });
 
-  return newUser;
+  return newUser.toJSON();
 };
 
 const findUserByEmail = async (email: string) => {
-  return await db.User.findOne({ where: { email } });
+  const user = await db.User.findOne({ where: { email } });
+  return user.toJSON();
 };
 
 const findUserById = async (userId: number) => {
-  return await db.User.findByPk(userId);
+  const user = await db.User.findByPk(userId);
+  return user.toJSON();
 };
 
 export {

@@ -1,31 +1,28 @@
 import { AppError  } from "../utils/AppError";
 export const ERRORS = {
-  INVALID: (params: string) => `${params} Invalid`,
-  UNAUTHORIZED: { message: "Unauthorized", statusCode: 401 },
-
-  ALL_FIELDS_REQUIRED: { message: "All fields are required", statusCode: 400 },
-
-  NOT_FOUND: (params: string) => `${params} Not Found`,
-  EXISTS: (params: string) => `${params} alredy exists`,
-
-
-  FORBIDDEN: { message: "Forbidden", statusCode: 403 },
-
-  SERVER_ERROR: { message: "Internal server error", statusCode: 500 },
+  message: {
+    UNAUTHORIZED: "Unauthorized",
+    ALL_FIELDS_REQUIRED: "All fields are required",
+    SERVER_ERROR: "Internal server error",
+    FORBIDDEN: "Forbidden",
+    INVALID: (params: string) => `${params} Invalid`,
+    NOT_FOUND: (params: string) => `${params} Not Found`,
+    CONFLICT: (params: string) => `${params} alredy exists`,
+  },
+  statuscode: {
+    UNAUTHORIZED: 401,
+    ALL_FIELDS_REQUIRED: 422,
+    FORBIDDEN: 403,
+    SERVER_ERROR: 500,
+    NOT_FOUND: 404,
+    CONFLICT: 409,
+  },
 };
 
-export function operationFailed(error: unknown, value: string) {
+export function errorhandler(error: unknown, value: string) {
   if (error instanceof AppError) throw error;
-
   const message = `Failed to ${value}`;
   const statusCode = 500;
   throw new AppError(message, statusCode);
 }
 
-
-export function IdNotFound(value: string) {
-  return {
-    message: `${value} Not Found!!`,
-    statusCode: 500,
-  };
-}

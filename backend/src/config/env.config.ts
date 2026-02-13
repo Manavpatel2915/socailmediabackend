@@ -20,11 +20,14 @@ export const env = {
     DB_NAME: include("DB_NAME"),
     DB_PORT: include("DB_PORT"),
     DB_USER: include("DB_USER"),
-    DB_PASSWORD:include("DB_PASSWORD"),
-    DB_HOST:include("DB_HOST"),
-    PORT:include("PORT"),
-    JWT_SECRET:include("JWT_SECRET"),
-    TOKEN_EXPRI:include("TOKEN_EXPRI"),
-
+    DB_PASSWORD: include("DB_PASSWORD"),
+    DB_HOST: include("DB_HOST"),
+    PORT: include("PORT"),
   },
+
+  JWT: {
+    JWT_SECRET: include("JWT_SECRET"),
+    TOKEN_EXPRI: include("TOKEN_EXPRI"),
+    SALT: include("SALT")
+  }
 };

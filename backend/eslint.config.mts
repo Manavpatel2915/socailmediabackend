@@ -45,14 +45,16 @@ export default defineConfig([
     },
     processor: "html/html",
   },
-
-  /* Custom backend rules */
   {
     rules: {
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
       "@typescript-eslint/no-explicit-any": "warn",
       "no-console": "off",
       "no-debugger": "warn",
+      "indent": ["error", 2],
+      "space-before-blocks": "error",
+      "brace-style": ["error", "1tbs", { allowSingleLine: false }],
+      'key-spacing': ['error', { beforeColon: false, afterColon: true }],
       'keyword-spacing': ['error', { before: true, after: true }],
       'space-before-function-paren': ['error', {
       anonymous: 'always',

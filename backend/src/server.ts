@@ -22,12 +22,7 @@ const PORT = env.DB.PORT;
     app.use(passport.initialize());
 
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
     app.use('/', routes);
-
-
-
-
     app.use(errorHandler);
 
     app.listen(PORT, () => {

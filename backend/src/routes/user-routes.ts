@@ -1,17 +1,25 @@
 import { Router } from "express";
 import { authenticate } from '../middleware/passport-middleware';
 import {
-    deleteUserAccount,
-    getUserDetails,
-    updateUserProfile,
+  deleteUserAccount,
+  getUserDetailsWithPostandComment,
+  updateUserProfile,
+  getUser,
+  allUser
 } from '../controller/user-controller'
+import { userParamsSchema, userPostCommentQuerySchema } from "../validation/params-validatiion";
+import { validate } from '../middleware/validate-middleware';
 
 const router = Router();
 
-router.delete('/:id', authenticate, deleteUserAccount);
+router.get('/', authenticate, allUser);
 
-router.get('/:id', authenticate, getUserDetails);
+router.get('/userProfile', authenticate, getUser);//need to give id here like userid?
 
-router.patch('/:id', authenticate, updateUserProfile);
+router.delete('/', authenticate, deleteUserAccount);//need to give id user ?
+
+router.patch('/', authenticate, updateUserProfile);//need to give id user here???????
+
+router.get('/user-post-comment/:userId', authenticate, validate(userParamsSchema, 'params'), validate(userPostCommentQuerySchema, 'query'), getUserDetailsWithPostandComment);
 
 export default router;

@@ -2,33 +2,62 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // Get actual user_ids from the database
+    // ── Fetch all users ordered by user_id ──────────────────────────────────
     const users = await queryInterface.sequelize.query(
       'SELECT user_id FROM user ORDER BY user_id',
       { type: Sequelize.QueryTypes.SELECT }
     );
 
     if (users.length === 0) {
-      throw new Error('No users found. Please run users seed first.');
+      throw new Error('❌ No users found. Please run the users seeder first.');
     }
 
-    const userIds = users.map((u) => u.user_id);
+    // Skip the first 2 admins; work only with the 18 regular users
+    // Index 0–1  → Admins  (no posts assigned)
+    // Index 2–11 → First 10 regular users  → 10 posts each
+    // Index 12–19 → Last  8 regular users  →  5 posts each
+    const regularUsers = users.slice(2);           // 18 regular users
+    const firstTenUsers = regularUsers.slice(0, 10); // indices 0-9  in regularUsers
+    const lastEightUsers = regularUsers.slice(10);   // indices 10-17 in regularUsers
+
     const posts = [];
+    let postId = 1;
 
-    for (let i = 1; i <= 10; i++) {
-      posts.push({
-        post_id: i,
-        title: `Post Title ${i}`,
-        content: `This is the content of post ${i}`,
-        image: 'https://justdemo.jpeg',
-        like: i * 3,
-        user_id: userIds[((i - 1) % userIds.length)], // rotate through available users
-        created_at: new Date(),
-        updated_at: new Date(),
-      });
+    // ── First 10 users → 10 posts each (100 posts total) ───────────────────
+    for (const user of firstTenUsers) {
+      for (let p = 1; p <= 10; p++) {
+        posts.push({
+          post_id: postId,
+          title: `Post ${postId} by User ${user.user_id}`,
+          content: `This is the content of post ${postId} written by user ${user.user_id}. Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
+          image: 'https://justdemo.jpeg',
+          like: postId * 3,
+          user_id: user.user_id,
+          created_at: new Date(),
+          updated_at: new Date(),
+        });
+        postId++;
+      }
     }
 
-    // Check if posts already exist
+    // ── Last 8 users → 5 posts each (40 posts total) ────────────────────────
+    for (const user of lastEightUsers) {
+      for (let p = 1; p <= 5; p++) {
+        posts.push({
+          post_id: postId,
+          title: `Post ${postId} by User ${user.user_id}`,
+          content: `This is the content of post ${postId} written by user ${user.user_id}. Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
+          image: 'https://justdemo.jpeg',
+          like: postId * 2,
+          user_id: user.user_id,
+          created_at: new Date(),
+          updated_at: new Date(),
+        });
+        postId++;
+      }
+    }
+
+    // ── Check if posts already exist ────────────────────────────────────────
     const existingPosts = await queryInterface.sequelize.query(
       'SELECT post_id FROM post',
       { type: Sequelize.QueryTypes.SELECT }
@@ -36,8 +65,13 @@ module.exports = {
 
     if (existingPosts.length === 0) {
       await queryInterface.bulkInsert('post', posts);
+      console.log(
+        `✅ Seeded ${posts.length} posts:` +
+        ` ${firstTenUsers.length * 10} posts for first 10 users,` +
+        ` ${lastEightUsers.length * 5} posts for last 8 users.`
+      );
     } else {
-      console.log('Posts already exist, skipping seed.');
+      console.log('⚠️  Posts already exist, skipping seed.');
     }
   },
 

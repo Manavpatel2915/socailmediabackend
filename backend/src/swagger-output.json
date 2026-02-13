@@ -29,6 +29,36 @@
     "http"
   ],
   "paths": {
+    "/user/": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
     "/user/{id}": {
       "delete": {
         "tags": [
@@ -51,46 +81,6 @@
         "responses": {
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "User"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "offset",
-            "in": "query",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       },
@@ -133,50 +123,76 @@
         "responses": {
           "401": {
             "description": "Unauthorized"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
           },
-          "500": {
-            "description": "Internal Server Error"
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
     },
-    "/post/createpost": {
-      "post": {
+    "/user/user-post-comment/{id}": {
+      "get": {
         "tags": [
-          "Post"
+          "User"
         ],
         "description": "",
         "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "authorization",
             "in": "header",
             "type": "string"
           },
           {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "example": "any"
-                },
-                "content": {
-                  "example": "any"
-                },
-                "image": {
-                  "example": "any"
-                }
-              }
-            }
+            "name": "postLimit",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "postOffset",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "commentLimit",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "commentOffset",
+            "in": "query",
+            "type": "string"
           }
         ],
         "responses": {
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       }
@@ -222,14 +238,9 @@
         "responses": {
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/post/updatepost/{postid}": {
+      },
       "patch": {
         "tags": [
           "Post"
@@ -246,19 +257,69 @@
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "any"
+                },
+                "content": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       }
     },
-    "/comment/create_comment/{postId}": {
+    "/post/": {
+      "post": {
+        "tags": [
+          "Post"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "any"
+                },
+                "content": {
+                  "example": "any"
+                },
+                "image": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/comment/{postId}": {
       "post": {
         "tags": [
           "Comment"
@@ -296,7 +357,7 @@
         }
       }
     },
-    "/comment/update_comment/{commentId}": {
+    "/comment/{commentId}": {
       "patch": {
         "tags": [
           "Comment"
@@ -330,14 +391,11 @@
         "responses": {
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       }
     },
-    "/comment/delete_comment/{id}": {
+    "/comment/{id}": {
       "delete": {
         "tags": [
           "Comment"
@@ -359,9 +417,6 @@
         "responses": {
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       }

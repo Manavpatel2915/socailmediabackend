@@ -4,11 +4,11 @@ import bcrypt from "bcrypt";
 import { env } from '../config/env.config';
 import { AppError } from "../utils/AppError";
 import { createUser, findUserByEmail } from "../services/auth-service";
-import { ERRORS, operationFailed } from '../const/error-message';
+import { ERRORS, errorhandler } from '../const/error-message';
 import { sendResponse } from '../utils/respones';
 
-const JWT_SECRET = env.DB.JWT_SECRET as string;
-const TOKEN_EXPIRY = env.DB.TOKEN_EXPRI as string;
+const JWT_SECRET = env.JWT.JWT_SECRET as string;
+const TOKEN_EXPIRY = env.JWT.TOKEN_EXPRI as string;
 
 const registerUser = async (
   req: Request,
@@ -18,14 +18,13 @@ const registerUser = async (
     const { user_name, email, password, role } = req.body;
 
     if (!user_name || !email || !password) {
-      const error = ERRORS.ALL_FIELDS_REQUIRED;
-      throw new AppError(error.message, error.statusCode);
+      throw new AppError(ERRORS.message.ALL_FIELDS_REQUIRED, ERRORS.statuscode.ALL_FIELDS_REQUIRED);
     }
 
     const existingUser = await findUserByEmail(email);
 
     if (existingUser) {
-      throw new AppError(ERRORS.EXISTS("User"), 409);
+      throw new AppError(ERRORS.message.CONFLICT("User"), ERRORS.statuscode.CONFLICT);
     }
 
     const newUser = await createUser(user_name, email, password, role);
@@ -38,7 +37,7 @@ const registerUser = async (
 
     return sendResponse(res, 201, "User registered successfully!", { token });
   } catch (error) {
-    operationFailed(error, "Register!");
+    errorhandler(error, "Register!");
   }
 }
 
@@ -52,13 +51,13 @@ const loginUser = async (
     const user = await findUserByEmail(email);
 
     if (!user) {
-      throw new AppError(ERRORS.INVALID("Email"), 401);
+      throw new AppError(ERRORS.message.INVALID("Email"), 401);
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      throw new AppError(ERRORS.INVALID("Password"), 401);
+      throw new AppError(ERRORS.message.INVALID("Password"), 401);
     }
 
     const token = jwt.sign(
@@ -69,7 +68,7 @@ const loginUser = async (
 
     return sendResponse(res, 200, "Login successful!", { token });
   } catch (error) {
-    operationFailed(error, "Login!");
+    errorhandler(error, "Login!");
   }
 };
 

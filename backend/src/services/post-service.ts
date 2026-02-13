@@ -13,32 +13,32 @@ const createPost = async (
     image,
     user_id: userId,
   });
-  return post;
+  return post.toJSON();
 };
 
-const getPostById = async (postId: number) => {
-  const post = await db.Post.findOne({
-    where: {
-      post_id: postId,
-    },
-    include: [
-      {
-        model: db.User,
-        attributes: ["user_name"],
-        as: "user"
-      },
-      {
-        model: db.Comment,
-        attributes: ["Comment"],
-        as: "comments"
-      }
-    ],
-  });
-  return post;
-}
+// const getPostByIdWithUserAndComment = async (postId: number) => {
+//   const post = await db.Post.findOne({
+//     where: {
+//       post_id: postId,
+//     },
+//     include: [
+//       {
+//         model: db.User,
+//         attributes: ["user_name"],
+//         as: "user"
+//       },
+//       {
+//         model: db.Comment,
+//         attributes: ["Comment"],
+//         as: "comments"
+//       }
+//     ],
+//   });
+//   return post;
+// }
 
 const findPostById = async (postId: number) => {
-  return await db.Post.findByPk(postId);
+  return await db.Post.findByPk(postId, { raw: true });
 }
 
 const deletePostWithComments = async (postId: number) => {
@@ -51,14 +51,12 @@ const deletePostWithComments = async (postId: number) => {
 
   const commentIds = postComments.map(comment => comment.id);
 
-  // Delete all comments
   const deletedCommentsCount = await db.Comment.destroy({
     where: {
       id: commentIds
     }
   });
 
-  // Delete the post
   const deletedPostCount = await db.Post.destroy({
     where: {
       post_id: postId
@@ -82,10 +80,46 @@ const updatePostData = async (
   return await existingPost.update(updateData);
 }
 
+const findPostsAndCommentByUserId = async (
+  userId: number,
+  postOffset: number,
+  postLimit: number,
+  commentLimit: number,
+  commentOffset: number,
+) => {
+
+  const posts = await db.Post.findAll({
+    where: { user_id: userId },
+    offset: postOffset,
+    limit: postLimit,
+    raw: true
+  });
+
+  const postsWithComments = await Promise.all(
+    posts.map(async (post) => {
+      const comments = await db.Comment.findAll({
+        where: { post_id: post.post_id },
+        offset: commentOffset,
+        limit: commentLimit,
+        raw: true
+      });
+
+      return {
+        ...post,
+        comments,
+      };
+    })
+  );
+
+  return postsWithComments
+};
+
+
 export {
   createPost,
-  getPostById,
+  // getPostByIdWithUserAndComment,
   findPostById,
   deletePostWithComments,
   updatePostData,
+  findPostsAndCommentByUserId
 }
