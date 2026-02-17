@@ -29,5 +29,11 @@ export const env = {
     JWT_SECRET: include("JWT_SECRET"),
     TOKEN_EXPRI: include("TOKEN_EXPRI"),
     SALT: include("SALT")
+  },
+
+  CLOUDINARY: {
+    CLOUDINARY_NAME: include("CLOUDINARY_NAME"),
+    CLOUDINARY_API_KEY: include("CLOUDINARY_API_KEY"),
+    CLOUDINARY_SECRET: include("CLOUDINARY_SECRET")
   }
 };

@@ -1,4 +1,4 @@
-import db, { initModels } from '../models/sql-models';
+import db, { initModels } from './index';
 
 export const connectDatabase = async (): Promise<void> => {
   try {

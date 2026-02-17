@@ -18,8 +18,8 @@
   "author": "Manav_Patel",
   "license": "ISC",
   "dependencies": {
-    "@tsoa/runtime": "^7.0.0-alpha.0",
     "bcrypt": "^6.0.0",
+    "cloudinary": "^1.41.0",
     "dotenv": "^17.2.3",
     "ejs": "^4.0.1",
     "express": "^5.2.1",
@@ -29,6 +29,8 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.1.5",
     "morgan": "^1.10.1",
+    "multer": "^2.0.2",
+    "multer-storage-cloudinary": "^4.0.0",
     "mysql2": "^3.16.1",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
@@ -38,8 +40,7 @@
     "sequelize": "^6.37.7",
     "swagger-autogen": "^2.23.7",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.1",
-    "tsoa": "^7.0.0-alpha.0"
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
@@ -51,6 +52,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/mongoose": "^5.11.96",
     "@types/morgan": "^1.9.10",
+    "@types/multer": "^2.0.0",
     "@types/node": "^25.2.0",
     "@types/passport": "^1.0.17",
     "@types/passport-jwt": "^4.0.1",

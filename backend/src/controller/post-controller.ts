@@ -9,7 +9,8 @@ import {
 } from "../services/post-service";
 import { sendResponse } from '../utils/respones';
 import { ERRORS, errorhandler } from '../const/error-message';
-import { authenticate } from "passport";
+
+
 
 const createNewPost = async (
   req: Request,
@@ -17,10 +18,9 @@ const createNewPost = async (
 ): Promise<Response> => {
   try {
     const authenticatedUser = req.user;
-
-    const { title, content, image } = req.body;
-
-    const newPost = await createPost(title, content, image, authenticatedUser.user_id);
+    const { title, content } = req.body;
+    const image = req.file as Express.Multer.File;
+    const newPost = await createPost(title, content, image.path, authenticatedUser.user_id);
     return sendResponse(res, 201, "Post created successfully!", newPost);
 
   } catch (error) {
@@ -94,7 +94,7 @@ const updatePostById = async (
     const authenticatedUser = req.user;
 
     const { title, content } = req.body;
-
+    const image = req.file as Express.Multer.File;
     const postId = Number(req.params.postId);
 
     if (!postId) {
@@ -108,6 +108,7 @@ const updatePostById = async (
     const dataToUpdate: Partial<Post> = {};
     if (title) dataToUpdate.title = title ;
     if (content) dataToUpdate.content = content ;
+    if (image) dataToUpdate.image = image.path;
     if (postToUpdate.user_id !== authenticatedUser.user_id) {
       throw new AppError(ERRORS.message.UNAUTHORIZED, ERRORS.statuscode.UNAUTHORIZED);
     }

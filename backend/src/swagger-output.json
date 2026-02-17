@@ -57,21 +57,13 @@
             "description": "Unauthorized"
           }
         }
-      }
-    },
-    "/user/{id}": {
+      },
       "delete": {
         "tags": [
           "User"
         ],
         "description": "",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "authorization",
             "in": "header",
@@ -90,12 +82,6 @@
         ],
         "description": "",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "authorization",
             "in": "header",
@@ -125,19 +111,15 @@
             "description": "Unauthorized"
           }
         }
-      },
+      }
+    },
+    "/user/userProfile": {
       "get": {
         "tags": [
           "User"
         ],
         "description": "",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "authorization",
             "in": "header",
@@ -151,7 +133,7 @@
         }
       }
     },
-    "/user/user-post-comment/{id}": {
+    "/user/user-post-comment/{userId}": {
       "get": {
         "tags": [
           "User"
@@ -159,7 +141,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "id",
+            "name": "userId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -197,7 +179,7 @@
         }
       }
     },
-    "/post/{postid}": {
+    "/post/{postId}": {
       "get": {
         "tags": [
           "Post"
@@ -205,7 +187,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "postid",
+            "name": "postId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -224,7 +206,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "postid",
+            "name": "postId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -248,7 +230,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "postid",
+            "name": "postId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -303,9 +285,6 @@
                   "example": "any"
                 },
                 "content": {
-                  "example": "any"
-                },
-                "image": {
                   "example": "any"
                 }
               }
@@ -393,9 +372,7 @@
             "description": "Unauthorized"
           }
         }
-      }
-    },
-    "/comment/{id}": {
+      },
       "delete": {
         "tags": [
           "Comment"
@@ -403,7 +380,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "id",
+            "name": "commentId",
             "in": "path",
             "required": true,
             "type": "string"
