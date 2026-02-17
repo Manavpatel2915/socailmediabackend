@@ -2,12 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import { pathToFileURL } from 'url';
 import { Sequelize, DataTypes, ModelStatic } from 'sequelize';
-import { env } from "../../env.config";
-
-
-import { User } from './user-model';
-import { Post } from './post-model';
-import { Comment } from './comment-model';
+import { env } from "../env.config";
+import { User } from "../models/sql-models/user-model";
+import { Post } from "../models/sql-models/post-model";
+import { Comment } from "../models/sql-models/comment-model";
 
 const basename = path.basename(__filename);
 
@@ -56,8 +54,8 @@ const db = {
 } as DbInterface;
 
 const initModels = async (): Promise<void> => {
-  const files = fs
-    .readdirSync(__dirname)
+  const modelsPath = path.join(__dirname, '../models/sql-models');
+  const files = fs.readdirSync(modelsPath)
     .filter(file => {
       return (
         file.indexOf('.') !== 0 &&
@@ -68,7 +66,7 @@ const initModels = async (): Promise<void> => {
 
   for (const file of files) {
     try {
-      const filePath = path.join(__dirname, file);
+      const filePath = path.join(modelsPath, file);
       const fileUrl = pathToFileURL(filePath).href;
 
       const modelModule = await import(fileUrl);
