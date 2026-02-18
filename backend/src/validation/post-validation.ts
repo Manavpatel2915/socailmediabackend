@@ -17,5 +17,3 @@ export const updatePostSchema = Joi.object({
   like: Joi.forbidden(),
 });
 
-
-

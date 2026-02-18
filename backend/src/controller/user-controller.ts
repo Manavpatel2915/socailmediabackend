@@ -1,4 +1,3 @@
-
 import type { Request, Response  } from "express";
 import bcrypt from 'bcrypt';
 import { AppError } from "../utils/AppError";
@@ -49,7 +48,6 @@ const getUserDetailsWithPostandComment = async (
     errorhandler(error, "Get User!");
   }
 };
-
 
 const deleteUserAccount = async (
   req: Request,

@@ -7,7 +7,6 @@ import { Router } from "express";
 
 const router = Router();
 
-
 router.use('/user'/*
     #swagger.tags = ['User']*/, userRouter);
 
@@ -19,6 +18,5 @@ router.use('/comment'/*
 
 router.use('/auth'/*
     #swagger.tags = ['Auth']*/, authRouter);
-
 
 export default router;

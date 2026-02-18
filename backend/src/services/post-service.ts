@@ -1,4 +1,3 @@
-
 import db from "../config/databases/sqldbconnnect";
 
 const createPost = async (
@@ -113,7 +112,6 @@ const findPostsAndCommentByUserId = async (
 
   return postsWithComments
 };
-
 
 export {
   createPost,

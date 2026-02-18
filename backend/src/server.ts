@@ -1,5 +1,4 @@
 import express from 'express';
-import passport from "passport";
 import "./middleware/passport-middleware";
 import connectdb from './config/databases/connectdb';
 import { morganMongoLogger } from "./middleware/morgan-logger-middleware";
@@ -19,7 +18,6 @@ const PORT = env.DB.PORT;
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(morganMongoLogger);
-    app.use(passport.initialize());
 
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
     app.use('/', routes);

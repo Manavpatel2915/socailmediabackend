@@ -12,9 +12,7 @@ import { postParamsSchema } from '../validation/params-validatiion'
 import upload  from "../middleware/uplod";
 const router = Router();
 
-
 router.get('/:postId', validate(postParamsSchema, 'params'), getPost);// this is correct api need auth middleware here?
-
 
 router.post('/', authenticate, upload.single("image"), validate(createPostSchema, 'body'), createNewPost);
 

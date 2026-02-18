@@ -22,7 +22,6 @@ const requestLogSchema = new Schema<IRequestLog>(
   { timestamps: true }
 );
 
-
 export const RequestLog: Model<IRequestLog> =
   (models.RequestLog as Model<IRequestLog>) ||
   model<IRequestLog>("RequestLog", requestLogSchema);

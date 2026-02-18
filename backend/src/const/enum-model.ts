@@ -1,4 +1,3 @@
-
 export const ENUMS = {
   role: ['Admin', 'User'] as const
 } as const;

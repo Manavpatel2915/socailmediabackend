@@ -9,7 +9,6 @@ import { Comment } from "../models/sql-models/comment-model";
 
 const basename = path.basename(__filename);
 
-
 export interface DbInterface {
   sequelize: Sequelize;
   Sequelize: typeof Sequelize;

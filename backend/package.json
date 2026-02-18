@@ -12,7 +12,7 @@
     "seed-I:file": "npx sequelize-cli db:seed --seed",
     "seed-D:file": "npx sequelize-cli db:seed:undo --seed",
     "swagger": "ts-node src/swagger.ts",
-    "lint:fix": "eslint src/ --fix"
+    "eslint": "eslint src/ --fix"
   },
   "keywords": [],
   "author": "Manav_Patel",

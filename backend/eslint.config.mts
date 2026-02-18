@@ -1,7 +1,7 @@
 import js from "@eslint/js";
 import globals from "globals";
 import tseslint from "typescript-eslint";
-import html from "eslint-plugin-html";
+import html from "./src/types/eslint-plugin-html";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
@@ -57,16 +57,21 @@ export default defineConfig([
       'key-spacing': ['error', { beforeColon: false, afterColon: true }],
       'keyword-spacing': ['error', { before: true, after: true }],
       'space-before-function-paren': ['error', {
-      anonymous: 'always',
-      named: 'never',
-      asyncArrow: 'always',
+       anonymous: 'always',
+       named: 'never',
+       asyncArrow: 'always',
     }],
-    'space-in-parens': ['error', 'never'],
-    'object-curly-spacing': ['error', 'always'],
-    'space-infix-ops': 'error',
-    'no-trailing-spaces': 'error',
-    'comma-spacing': ['error', { before: false, after: true }],
-    'arrow-spacing': ['error', { before: true, after: true }],
+      'space-in-parens': ['error', 'never'],
+      'object-curly-spacing': ['error', 'always'],
+      'space-infix-ops': 'error',
+      'no-trailing-spaces': 'error',
+      'comma-spacing': ['error', { before: false, after: true }],
+      'arrow-spacing': ['error', { before: true, after: true }],
+      "no-multiple-empty-lines": ["error", {
+      max: 1,
+      maxEOF: 1,
+      maxBOF: 0
+    }]
     },
   },
 ]);

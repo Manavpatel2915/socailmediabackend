@@ -35,5 +35,9 @@ export const env = {
     CLOUDINARY_NAME: include("CLOUDINARY_NAME"),
     CLOUDINARY_API_KEY: include("CLOUDINARY_API_KEY"),
     CLOUDINARY_SECRET: include("CLOUDINARY_SECRET")
+  },
+
+  LOG: {
+    LOG_PLACE: include("LOG_PLACE")
   }
 };

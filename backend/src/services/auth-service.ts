@@ -1,4 +1,3 @@
-
 import db from "../config/databases/sqldbconnnect";
 
 const createUser = async (

@@ -8,7 +8,6 @@ import {
 } from 'sequelize';
 import { Models } from "../../../types/models.types";
 
-
 export class Post extends Model<InferAttributes<Post>, InferCreationAttributes<Post>> {
   declare post_id: CreationOptional<number>;
   declare title: string | null;
@@ -17,10 +16,8 @@ export class Post extends Model<InferAttributes<Post>, InferCreationAttributes<P
   declare like: CreationOptional<number>;
   declare user_id: number;
 
-
   declare readonly createdAt: CreationOptional<Date>;
   declare readonly updatedAt: CreationOptional<Date>;
-
 
   static associate(models: Models): void {
     // Post -> User (many-to-one)
@@ -38,7 +35,6 @@ export class Post extends Model<InferAttributes<Post>, InferCreationAttributes<P
     });
   }
 }
-
 
 export default (sequelize: Sequelize): typeof Post => {
   Post.init(

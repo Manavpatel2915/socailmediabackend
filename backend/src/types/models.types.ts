@@ -24,9 +24,6 @@ export interface CommentAttributes {
   post_id: number;
 }
 
-
-
-
 export interface UserModel extends Model<UserAttributes>, UserAttributes {
   associate?: (models: Models) => void;
 }

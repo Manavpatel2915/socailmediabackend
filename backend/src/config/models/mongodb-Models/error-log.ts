@@ -28,7 +28,6 @@ const ErrorLogSchema = new Schema<ErrorLog>(
   { timestamps: true }
 );
 
-
 export const ErrorLog: Model<ErrorLog> =
   (models.ErrorLog as Model<ErrorLog>) ||
   model<ErrorLog>("ErrorLog", ErrorLogSchema);

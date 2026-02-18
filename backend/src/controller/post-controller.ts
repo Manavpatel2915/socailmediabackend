@@ -10,8 +10,6 @@ import {
 import { sendResponse } from '../utils/respones';
 import { ERRORS, errorhandler } from '../const/error-message';
 
-
-
 const createNewPost = async (
   req: Request,
   res: Response
@@ -35,7 +33,6 @@ const getPost = async (
   try {
     const postId = Number(req.params.postId);
 
-
     if (!postId) {
       throw new AppError(ERRORS.message.NOT_FOUND("PostId"), ERRORS.statuscode.NOT_FOUND);
     }
@@ -45,7 +42,6 @@ const getPost = async (
     if (!post) {
       throw new AppError(ERRORS.message.NOT_FOUND("Post"), ERRORS.statuscode.NOT_FOUND);
     }
-
 
     return sendResponse(res, 200, "Post fetched successfully!", post);
 
@@ -120,7 +116,6 @@ const updatePostById = async (
     errorhandler(error, "Update Post!");
   }
 }
-
 
 export {
   createNewPost,

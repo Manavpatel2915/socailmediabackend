@@ -8,7 +8,6 @@ import {
 } from "sequelize";
 import { Models } from "../../../types/models.types";
 
-
 export class Comment extends Model<InferAttributes<Comment>, InferCreationAttributes<Comment>> {
   declare id: CreationOptional<number>;
   declare Comment: string;
@@ -39,7 +38,6 @@ export class Comment extends Model<InferAttributes<Comment>, InferCreationAttrib
     });
   }
 }
-
 
 export default (sequelize: Sequelize): typeof Comment => {
   Comment.init(
