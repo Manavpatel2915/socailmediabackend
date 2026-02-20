@@ -16,3 +16,18 @@ export type PostBody = {
   like:number;
 };
 
+export interface CommentWithUser {
+  user: {
+    user_name: string;
+  };
+  [key: string]: unknown;
+}
+
+export interface postdatwithUser {
+  user: {
+    user_name: string,
+  };
+  [key: string]: unknown;
+};
+
+export type orderBytype = [['createdAt', 'ASC']] | [['createdAt', 'DESC']];

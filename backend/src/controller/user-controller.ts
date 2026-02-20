@@ -10,7 +10,7 @@ import {
   allUsers,
 } from "../services/user-service";
 import { defultvalues } from "../const/defult-limit";
-import { findPostsAndCommentByUserId } from '../services/post-service';
+import { findPostsAndCommentByUserId, postOrderByLeastestCreate } from '../services/post-service';
 import { ERRORS, errorhandler } from '../const/error-message';
 import { sendResponse } from '../utils/respones';
 import { User } from '../config/models/sql-models/user-model';
@@ -24,23 +24,19 @@ const getUserDetailsWithPostandComment = async (
     const userId = Number(req.params.userId);
     const postLimit = Number(req.query.postLimit) || defultvalues.DEFULT_LIMIT;
     const postOffset = Number(req.query.postOffset) || defultvalues.DEFULT_OFFSET;
-    const commentLimit = Number(req.query.commentLimit) || defultvalues.DEFULT_LIMIT;
-    const commentOffset = Number(req.query.commentOffset) || defultvalues.DEFULT_OFFSET;
-
+    const comment = req.query.comment_required === 'true';
     if (!userId) {
-      throw new AppError(ERRORS.message.NOT_FOUND("UserId"), ERRORS.statuscode.NOT_FOUND);
+      throw new AppError(ERRORS.MESSAGE.NOT_FOUND("UserId"), ERRORS.STATUSCODE.NOT_FOUND);
     }
 
     const user = await getUserById(userId);
-    const { password, ...userWithoutPassword } = user.toJSON();
     if (!user) {
-      throw new AppError(ERRORS.message.NOT_FOUND("User"), ERRORS.statuscode.NOT_FOUND);
+      throw new AppError(ERRORS.MESSAGE.NOT_FOUND("User"), ERRORS.STATUSCODE.NOT_FOUND);
     }
 
-    const posts = await findPostsAndCommentByUserId(userId, postOffset, postLimit, commentLimit, commentOffset);
-
+    const posts = await findPostsAndCommentByUserId(userId, postOffset, postLimit, comment);
     return sendResponse(res, 200, "User fetched successfully", {
-      userWithoutPassword,
+      user,
       posts,
     });
 
@@ -57,17 +53,17 @@ const deleteUserAccount = async (
     const authenticatedUser = req.user;
 
     if (!authenticatedUser) {
-      throw new AppError(ERRORS.message.UNAUTHORIZED, ERRORS.statuscode.UNAUTHORIZED);
+      throw new AppError(ERRORS.MESSAGE.UNAUTHORIZED, ERRORS.STATUSCODE.UNAUTHORIZED);
     }
 
     const userToDelete = await findUserById(authenticatedUser.user_id);
 
     if (!userToDelete) {
-      throw new AppError(ERRORS.message.NOT_FOUND("User"), ERRORS.statuscode.NOT_FOUND);
+      throw new AppError(ERRORS.MESSAGE.NOT_FOUND("User"), ERRORS.STATUSCODE.NOT_FOUND);
     }
 
     if (userToDelete.user_id !== authenticatedUser.user_id) {
-      throw new AppError(ERRORS.message.UNAUTHORIZED, ERRORS.statuscode.UNAUTHORIZED);
+      throw new AppError(ERRORS.MESSAGE.UNAUTHORIZED, ERRORS.STATUSCODE.UNAUTHORIZED);
     }
 
     const deletionResult = await deleteUser(authenticatedUser.user_id);
@@ -93,7 +89,7 @@ const updateUserProfile = async (
     if (email && email !== existingUser.email) {
       const emailAlreadyExists = await findUserByEmail(email);
       if (emailAlreadyExists) {
-        throw new AppError(ERRORS.message.CONFLICT("Email"), ERRORS.statuscode.CONFLICT);
+        throw new AppError(ERRORS.MESSAGE.CONFLICT("Email"), ERRORS.STATUSCODE.CONFLICT);
       }
     }
 
@@ -103,11 +99,8 @@ const updateUserProfile = async (
     if (password) {
       dataToUpdate.password = await bcrypt.hash(password, env.JWT.SALT);
     }
-
     const updatedUser = await updateUserData(existingUser, dataToUpdate);
-
-    const { password: _, ...userWithoutPassword } = updatedUser;
-    return sendResponse(res, 200, "User updated successfully!", userWithoutPassword);
+    return sendResponse(res, 200, "User updated successfully!", updatedUser);
 
   } catch (error) {
     errorhandler(error, "Update User!");
@@ -122,7 +115,6 @@ const getUser = async (
     const authenticatedUser = req.user;
     const userData = await getUserById(Number(authenticatedUser.user_id));
     return sendResponse(res, 200, "User Data Fetch SucessFully!", userData);
-
   } catch (error) {
     errorhandler(error, "Fetch Data!");
   }
@@ -135,10 +127,11 @@ const allUser = async (
   try {
     const limit = Number(req.query.limit) || 10;
     const offset = Number(req.query.offset) || 0;
+
     const authenticatedAdmin = req.user;
 
     if (authenticatedAdmin.role !== "Admin") {
-      throw new AppError(ERRORS.message.UNAUTHORIZED, ERRORS.statuscode.UNAUTHORIZED);
+      throw new AppError(ERRORS.MESSAGE.UNAUTHORIZED, ERRORS.STATUSCODE.UNAUTHORIZED);
     }
     const users = await allUsers(offset, limit);
     return sendResponse(res, 200, `Fetched ${users.length} users`, users);
@@ -147,10 +140,26 @@ const allUser = async (
   }
 
 }
+
+const homepage = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const postLimit = Number(req.query.postLimit) || defultvalues.DEFULT_LIMIT;
+  const postOffset = Number(req.query.postOffset) || defultvalues.DEFULT_OFFSET;
+  const orderBy = String(req.query.orderBy) || 'DESC';
+  try {
+    const postdata = await postOrderByLeastestCreate(postLimit, postOffset, orderBy);
+    return sendResponse(res, 200, `All Data Fetch`, postdata);
+  } catch (error) {
+    errorhandler(error, "Fetch Data!");
+  }
+}
 export {
   deleteUserAccount,
   getUserDetailsWithPostandComment,
   updateUserProfile,
   getUser,
-  allUser
+  allUser,
+  homepage
 };

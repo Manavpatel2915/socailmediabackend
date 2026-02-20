@@ -6,8 +6,8 @@ const connectdb = async (): Promise<void> => {
   try {
     await mongodbconnect();
     await connectDatabase();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const db = await dbPromise;
-
   } catch (error) {
     console.error(' Database connection failed:', error);
     throw error;

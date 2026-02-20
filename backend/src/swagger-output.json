@@ -37,24 +37,24 @@
         "description": "",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "limit",
+            "name": "postLimit",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "offset",
+            "name": "postOffset",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "orderBy",
             "in": "query",
             "type": "string"
           }
         ],
         "responses": {
-          "401": {
-            "description": "Unauthorized"
+          "default": {
+            "description": ""
           }
         }
       },
@@ -113,6 +113,36 @@
         }
       }
     },
+    "/user/alluser": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
     "/user/userProfile": {
       "get": {
         "tags": [
@@ -162,12 +192,7 @@
             "type": "string"
           },
           {
-            "name": "commentLimit",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "commentOffset",
+            "name": "comment_required",
             "in": "query",
             "type": "string"
           }
@@ -332,6 +357,40 @@
         "responses": {
           "default": {
             "description": ""
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Comment"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "commentLimit",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "commentOffset",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }

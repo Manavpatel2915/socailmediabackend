@@ -10,7 +10,7 @@ import { Models } from "../../../types/models.types";
 
 export class Comment extends Model<InferAttributes<Comment>, InferCreationAttributes<Comment>> {
   declare id: CreationOptional<number>;
-  declare Comment: string;
+  declare comment: string;
   declare user_id: number | null;
   declare post_id: number;
 
@@ -47,7 +47,7 @@ export default (sequelize: Sequelize): typeof Comment => {
         autoIncrement: true,
         primaryKey: true,
       },
-      Comment: {
+      comment: {
         type: DataTypes.STRING,
         allowNull: false,
       },

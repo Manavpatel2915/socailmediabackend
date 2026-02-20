@@ -23,10 +23,6 @@ module.exports = {
     const userIds = users.map((u) => u.user_id);
     const postIds = posts.map((p) => p.post_id);
 
-    // ── Comment templates ───────────────────────────────────────────────────
-    // 10 comment texts per post:
-    //   • Comments at index 0–5  → have a user_id  (authenticated users)
-    //   • Comments at index 6–9  → user_id is NULL  (anonymous / guest)
     const commentTemplates = [
       // ── Authenticated comments (indices 0–5) ───────────────────────────
       (postId) => `Great post #${postId}! Really enjoyed reading this.`,

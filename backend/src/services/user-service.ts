@@ -28,20 +28,18 @@ const deleteUser = async (userId: number) => {
 const getUserById = async (userId: number) => {
   return await db.User.findByPk(userId, {
     raw: true,
-    attributes: { exclude: ['password'] }
+    attributes: { exclude: ['password', 'user_id'] }
   }) ;
 }
 
 const updateUserData = async (
   existingUser: User,
-  updateData: {
-    user_name?: string;
-    email?: string;
-    password?: string;
-  }
+  updateData: Partial<User>
 ) => {
   await existingUser.update(updateData);
-  return existingUser.toJSON();
+  const userData = existingUser.toJSON() as Record<string, unknown>;
+  delete userData.password;
+  return userData;
 };
 
 const findUserByEmail = async (email: string) => {
@@ -57,7 +55,21 @@ const allUsers = async (offset: number, limit: number) => {
   return await db.User.findAll({
     offset: offset,
     limit: limit,
-    raw: true
+    attributes: {
+      exclude: ['password'],
+      include: [
+        [db.sequelize.fn('COUNT', db.sequelize.col('posts.post_id')), 'post_count']
+      ]
+    },
+    include: [
+      {
+        model: db.Post,
+        as: 'posts',
+        attributes: [],
+      }
+    ],
+    group: ['User.user_id'],
+    subQuery: false,
   });
 }
 

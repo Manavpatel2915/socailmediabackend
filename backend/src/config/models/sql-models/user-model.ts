@@ -68,7 +68,7 @@ export default (sequelize: Sequelize): typeof User => {
     {
       sequelize,
       underscored: true,
-      tableName: "user",
+      tableName: "User",
       modelName: "User",
     }
   );

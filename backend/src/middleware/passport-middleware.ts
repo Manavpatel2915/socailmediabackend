@@ -29,7 +29,7 @@ export const authenticate = (
   try {
     const decoded = jwt.verify(token, env.JWT.JWT_SECRET);
     if (typeof decoded === "string") {
-      throw new AppError(ERRORS.message.UNAUTHORIZED, ERRORS.statuscode.UNAUTHORIZED);
+      throw new AppError(ERRORS.MESSAGE.UNAUTHORIZED, ERRORS.STATUSCODE.UNAUTHORIZED);
     }
     req.user = decoded as AuthUser;
     next();

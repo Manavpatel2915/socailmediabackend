@@ -18,13 +18,13 @@ const registerUser = async (
     const { user_name, email, password, role } = req.body;
 
     if (!user_name || !email || !password) {
-      throw new AppError(ERRORS.message.ALL_FIELDS_REQUIRED, ERRORS.statuscode.ALL_FIELDS_REQUIRED);
+      throw new AppError(ERRORS.MESSAGE.ALL_FIELDS_REQUIRED, ERRORS.STATUSCODE.ALL_FIELDS_REQUIRED);
     }
 
     const existingUser = await findUserByEmail(email);
 
     if (existingUser) {
-      throw new AppError(ERRORS.message.CONFLICT("User"), ERRORS.statuscode.CONFLICT);
+      throw new AppError(ERRORS.MESSAGE.CONFLICT("User"), ERRORS.STATUSCODE.CONFLICT);
     }
 
     const newUser = await createUser(user_name, email, password, role);
@@ -51,13 +51,13 @@ const loginUser = async (
     const user = await findUserByEmail(email);
 
     if (!user) {
-      throw new AppError(ERRORS.message.INVALID("Email"), 401);
+      throw new AppError(ERRORS.MESSAGE.INVALID("Email"), 401);
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      throw new AppError(ERRORS.message.INVALID("Password"), 401);
+      throw new AppError(ERRORS.MESSAGE.INVALID("Password"), 401);
     }
 
     const token = jwt.sign(

@@ -5,12 +5,12 @@ import path from 'path';
 import fs from 'fs';
 import fsPromises from "fs/promises";
 import { mounth } from "../const/mounth";
-
+import { AppError } from "../utils/AppError";
 export const errorHandler = async (
-  err: any,
+  err: AppError,
   req: Request,
   res: Response,
-  next: NextFunction,
+  _next: NextFunction,
 ) => {
   const LOG_PLACE = env.LOG.LOG_PLACE;
   const data = {

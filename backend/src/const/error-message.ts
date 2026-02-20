@@ -1,6 +1,6 @@
 import { AppError  } from "../utils/AppError";
 export const ERRORS = {
-  message: {
+  MESSAGE: {
     UNAUTHORIZED: "Unauthorized",
     ALL_FIELDS_REQUIRED: "All fields are required",
     SERVER_ERROR: "Internal server error",
@@ -9,7 +9,7 @@ export const ERRORS = {
     NOT_FOUND: (params: string) => `${params} Not Found`,
     CONFLICT: (params: string) => `${params} alredy exists`,
   },
-  statuscode: {
+  STATUSCODE: {
     UNAUTHORIZED: 401,
     ALL_FIELDS_REQUIRED: 422,
     FORBIDDEN: 403,

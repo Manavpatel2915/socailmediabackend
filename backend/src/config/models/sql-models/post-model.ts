@@ -78,7 +78,7 @@ export default (sequelize: Sequelize): typeof Post => {
     {
       sequelize,
       underscored: true,
-      tableName: 'Post',
+      tableName: 'post',
       modelName: 'Post',
     }
   );

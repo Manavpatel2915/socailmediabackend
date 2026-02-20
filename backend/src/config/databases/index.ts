@@ -15,9 +15,10 @@ export interface DbInterface {
   User: typeof User;
   Post: typeof Post;
   Comment: typeof Comment;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ModelWithAssociate = ModelStatic<any> & {
   associate?: (db: DbInterface) => void;
 };

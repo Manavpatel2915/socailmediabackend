@@ -1,6 +1,8 @@
-user_id :3
-Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJyb2xlIjoiVXNlciIsImlhdCI6MTc3MDk2MDQ5NiwiZXhwIjoxNzcxMzkyNDk2fQ.tJdIIghG0j9FIfDNu5Otx6lSHOBqxE9bd3NyqFx0lxc
-
-
-
+admin user id :1 
+Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3NzE0MTAwNjMsImV4cCI6MTc3MTg0MjA2M30.0LDcYlkCETYHu0y9NOvBrEm7A9rQZvEykVQceUEupto
 //router.get('/:postid', getPostDetails); extra data get
+
+
+user id :3
+
+Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJyb2xlIjoiVXNlciIsImlhdCI6MTc3MTQ4MTM0MSwiZXhwIjoxNzcxOTEzMzQxfQ.vyxsvQMq6C33etU2Mg0RcZ-0Q5AT8og_528LXm9sWloxx

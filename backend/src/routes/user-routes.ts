@@ -5,21 +5,25 @@ import {
   getUserDetailsWithPostandComment,
   updateUserProfile,
   getUser,
-  allUser
+  allUser,
+  homepage
 } from '../controller/user-controller'
 import { userParamsSchema, userPostCommentQuerySchema } from "../validation/params-validatiion";
 import { validate } from '../middleware/validate-middleware';
 
 const router = Router();
 
-router.get('/', authenticate, allUser);
+router.get('/', homepage);
 
-router.get('/userProfile', authenticate, getUser);//need to give id here like userid?
+router.get('/alluser', authenticate, allUser);
 
-router.delete('/', authenticate, deleteUserAccount);//need to give id user ?
+router.get('/userProfile', authenticate, getUser);
 
-router.patch('/', authenticate, updateUserProfile);//need to give id user here???????
+router.delete('/', authenticate, deleteUserAccount);
+
+router.patch('/', authenticate, updateUserProfile);
 
 router.get('/user-post-comment/:userId', authenticate, validate(userParamsSchema, 'params'), validate(userPostCommentQuerySchema, 'query'), getUserDetailsWithPostandComment);
 
 export default router;
+

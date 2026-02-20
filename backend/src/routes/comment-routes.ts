@@ -5,6 +5,7 @@ import {
   createComment,
   updateComment,
   deleteComment,
+  getcomment,
 } from '../controller/comment-controller'
 import { optionalJwt } from "../middleware/optinaljwt-middleware";
 import { postParamsSchema, commentParamsSchema } from '../validation/params-validatiion'
@@ -17,5 +18,7 @@ router.post("/:postId", optionalJwt, validate(postParamsSchema, 'params'), creat
 router.patch('/:commentId', authenticate, validate(commentParamsSchema, 'params'), updateComment);
 
 router.delete('/:commentId', authenticate, validate(commentParamsSchema, 'params'), deleteComment);
+
+router.get("/:postId", authenticate, validate(postParamsSchema, 'params'), getcomment)
 
 export default router;

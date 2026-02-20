@@ -2,7 +2,6 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // ── Fetch all users ordered by user_id ──────────────────────────────────
     const users = await queryInterface.sequelize.query(
       'SELECT user_id FROM user ORDER BY user_id',
       { type: Sequelize.QueryTypes.SELECT }
@@ -12,18 +11,13 @@ module.exports = {
       throw new Error('❌ No users found. Please run the users seeder first.');
     }
 
-    // Skip the first 2 admins; work only with the 18 regular users
-    // Index 0–1  → Admins  (no posts assigned)
-    // Index 2–11 → First 10 regular users  → 10 posts each
-    // Index 12–19 → Last  8 regular users  →  5 posts each
-    const regularUsers = users.slice(2);           // 18 regular users
-    const firstTenUsers = regularUsers.slice(0, 10); // indices 0-9  in regularUsers
-    const lastEightUsers = regularUsers.slice(10);   // indices 10-17 in regularUsers
+    const regularUsers = users.slice(2);
+    const firstTenUsers = regularUsers.slice(0, 10);
+    const lastEightUsers = regularUsers.slice(10);
 
     const posts = [];
     let postId = 1;
 
-    // ── First 10 users → 10 posts each (100 posts total) ───────────────────
     for (const user of firstTenUsers) {
       for (let p = 1; p <= 10; p++) {
         posts.push({
@@ -33,14 +27,13 @@ module.exports = {
           image: 'https://justdemo.jpeg',
           like: postId * 3,
           user_id: user.user_id,
-          created_at: new Date(),
-          updated_at: new Date(),
+          created_at: new Date(Date.now() - postId * 60 * 60 * 1000),
+          updated_at: new Date(Date.now() - postId * 60 * 60 * 1000),
         });
         postId++;
       }
     }
 
-    // ── Last 8 users → 5 posts each (40 posts total) ────────────────────────
     for (const user of lastEightUsers) {
       for (let p = 1; p <= 5; p++) {
         posts.push({
@@ -50,14 +43,13 @@ module.exports = {
           image: 'https://justdemo.jpeg',
           like: postId * 2,
           user_id: user.user_id,
-          created_at: new Date(),
-          updated_at: new Date(),
+          created_at: new Date(Date.now() - postId * 60 * 60 * 1000),
+          updated_at: new Date(Date.now() - postId * 60 * 60 * 1000),
         });
         postId++;
       }
     }
 
-    // ── Check if posts already exist ────────────────────────────────────────
     const existingPosts = await queryInterface.sequelize.query(
       'SELECT post_id FROM post',
       { type: Sequelize.QueryTypes.SELECT }
