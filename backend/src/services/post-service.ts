@@ -1,8 +1,8 @@
 import db from "../config/databases/sqldbconnnect";
 import { postdatwithUser } from "../types/type"
 import { Post } from "../config/models/sql-models/post-model"
-import { orderBytype } from "../types/type";
-
+import { orderBytype, filterOptions } from "../types/type";
+import { Op, WhereOptions } from "sequelize";
 const createPost = async (
   title: string,
   content: string,
@@ -97,7 +97,13 @@ const updatePostData = async (
     image?: string;
   }
 ) => {
-  return await existingPost.update(updateData);
+  console.log("🚀 ~ updatePostData ~ updateData:", updateData)
+  console.log("🚀 ~ updatePostData ~ existingPost:", existingPost)
+
+  await existingPost.update(updateData);
+  return existingPost.toJSON();
+  //   await existingComment.update({ comment: commentText });
+  // return existingComment.toJSON();
 }
 
 const findPostsAndCommentByUserId = async (
@@ -108,6 +114,7 @@ const findPostsAndCommentByUserId = async (
 ) => {
   const posts = await db.Post.findAll({
     where: { user_id: userId },
+
     offset: postOffset,
     limit: postLimit,
     attributes: {
@@ -116,7 +123,7 @@ const findPostsAndCommentByUserId = async (
     raw: true
   });
 
-  if (!comment) return posts;
+  if (comment) return posts;
 
   const postsWithComments = await Promise.all(
     posts.map(async (post: Post) => {
@@ -137,14 +144,34 @@ const findPostsAndCommentByUserId = async (
   return postsWithComments;
 };
 
-const postOrderByLeastestCreate = async (
+const getallpost = async (
   postLimit: number,
   postOffset: number,
-  orderBy: string
+  orderBy: string,
+  filter: filterOptions
 ) => {
   const order: orderBytype = orderBy === 'ASC' ? [['createdAt', 'ASC']] : [['createdAt', 'DESC']];
+  const where: WhereOptions = {};
+  console.log(orderBy);
+  if (filter?.likecount) {
+    const { maxlike, minlike } = filter.likecount;
+    console.log("🚀 ~ getallpost ~ minlike:", minlike)
+    console.log("🚀 ~ getallpost ~ maxlike:", maxlike)
+
+    if (maxlike && minlike) {
+
+      where.like = { [Op.between]: [Number(minlike), Number(maxlike)] };
+    } else if (maxlike) {
+
+      where.like = { [Op.lte]: Number(maxlike) };
+    } else if (minlike) {
+
+      where.like = { [Op.gte]: Number(minlike) };
+    }
+  }
+  console.log(where);
   const postdata = await db.Post.findAll({
-    order: order,
+    where,
     attributes: {
       exclude: ['post_id', 'user_id'],
     },
@@ -157,9 +184,11 @@ const postOrderByLeastestCreate = async (
     ],
     offset: postOffset,
     limit: postLimit,
+    order: order,
     raw: true,
     nest: true,
   });
+  console.log("🚀 ~ getallpost ~ postdata:", postdata)
 
   return (postdata as unknown as postdatwithUser[]).map((post: postdatwithUser) => ({
     ...post,
@@ -184,6 +213,6 @@ export {
   deletePostWithComments,
   updatePostData,
   findPostsAndCommentByUserId,
-  postOrderByLeastestCreate,
+  getallpost,
   findPostById,
 }

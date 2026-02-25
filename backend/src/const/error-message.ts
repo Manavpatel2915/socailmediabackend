@@ -5,8 +5,8 @@ export const ERRORS = {
     ALL_FIELDS_REQUIRED: "All fields are required",
     SERVER_ERROR: "Internal server error",
     FORBIDDEN: "Forbidden",
-    INVALID: (params: string) => `${params} Invalid`,
-    NOT_FOUND: (params: string) => `${params} Not Found`,
+    invalid: (params: string) => `${params} invalid`,
+    not_found: (params: string) => `${params} Not Found`,
     CONFLICT: (params: string) => `${params} alredy exists`,
   },
   STATUSCODE: {

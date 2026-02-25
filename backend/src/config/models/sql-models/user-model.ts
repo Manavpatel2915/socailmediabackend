@@ -74,12 +74,12 @@ export default (sequelize: Sequelize): typeof User => {
   );
 
   User.beforeCreate(async (user: User) => {
-    user.password = await bcrypt.hash(user.password, env.JWT.SALT);
+    user.password = await bcrypt.hash(user.password, Number(env.JWT.SALT));
   });
 
   User.beforeUpdate(async (user: User) => {
     if (user.changed("password")) {
-      user.password = await bcrypt.hash(user.password, env.JWT.SALT);
+      user.password = await bcrypt.hash(user.password, Number(env.JWT.SALT));
     }
   });
 

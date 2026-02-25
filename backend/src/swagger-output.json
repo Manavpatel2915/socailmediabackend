@@ -45,11 +45,6 @@
             "name": "postOffset",
             "in": "query",
             "type": "string"
-          },
-          {
-            "name": "orderBy",
-            "in": "query",
-            "type": "string"
           }
         ],
         "responses": {

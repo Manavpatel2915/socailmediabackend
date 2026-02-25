@@ -31,3 +31,14 @@ export interface postdatwithUser {
 };
 
 export type orderBytype = [['createdAt', 'ASC']] | [['createdAt', 'DESC']];
+
+export interface filterOptions {
+  likecount?: {
+    maxlike?: string;
+    minlike?: string;
+  };
+}
+export interface requestBody {
+  orderBy?: 'ASC' | 'DESC';
+  filter?: filterOptions;
+}

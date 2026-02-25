@@ -2,18 +2,11 @@ import { User } from '../config/models/sql-models/user-model';
 import db from "../config/databases/sqldbconnnect";
 
 const deleteUser = async (userId: number) => {
-
-  const userComments = await db.Comment.findAll({ where: { user_id: userId } });
-  const commentIds = userComments.map((comment) => comment.id);
   const deletedCommentsCount = await db.Comment.destroy({
-    where: { id: commentIds },
+    where: { user_id: userId },
   });
-
-  const userPosts = await db.Post.findAll({ where: { user_id: userId } });
-  const postIds = userPosts.map((post) => post.post_id);
-
   const deletedPostsCount = await db.Post.destroy({
-    where: { post_id: postIds },
+    where: { user_id: userId },
   });
 
   const deletedUserCount = await db.User.destroy({ where: { user_id: userId } });
@@ -26,10 +19,7 @@ const deleteUser = async (userId: number) => {
 };
 
 const getUserById = async (userId: number) => {
-  return await db.User.findByPk(userId, {
-    raw: true,
-    attributes: { exclude: ['password', 'user_id'] }
-  }) ;
+  return await db.User.findByPk(userId) ;
 }
 
 const updateUserData = async (
@@ -40,6 +30,7 @@ const updateUserData = async (
   const userData = existingUser.toJSON() as Record<string, unknown>;
   delete userData.password;
   return userData;
+
 };
 
 const findUserByEmail = async (email: string) => {

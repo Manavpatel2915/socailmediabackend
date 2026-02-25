@@ -10,6 +10,9 @@ import { AppError } from "../utils/AppError";
 import { ERRORS, errorhandler } from '../const/error-message';
 import { sendResponse } from '../utils/respones';
 import { defultvalues } from "../const/defult-limit";
+import redis from "../config/databases/redis";
+import { env } from "../config/env.config";
+
 const createComment = async (
   req: Request,
   res: Response
@@ -24,7 +27,7 @@ const createComment = async (
 
     const postId = Number(req.params.postId);
     if (!postId) {
-      throw new AppError(ERRORS.MESSAGE.NOT_FOUND("PostId"), ERRORS.STATUSCODE.NOT_FOUND);
+      throw new AppError(ERRORS.MESSAGE.not_found("PostId"), ERRORS.STATUSCODE.NOT_FOUND);
     }
 
     const userId = authenticatedUser ? authenticatedUser.user_id : null;
@@ -50,7 +53,7 @@ const updateComment = async (
     const commentId = Number(req.params.commentId);
     if (!commentId) {
 
-      throw new AppError(ERRORS.MESSAGE.NOT_FOUND("CommentId"), ERRORS.STATUSCODE.NOT_FOUND);
+      throw new AppError(ERRORS.MESSAGE.not_found("CommentId"), ERRORS.STATUSCODE.NOT_FOUND);
     }
 
     const { Comment } = req.body;
@@ -60,7 +63,7 @@ const updateComment = async (
 
     const existingComment = await findCommentById(commentId);
     if (!existingComment) {
-      throw new AppError(ERRORS.MESSAGE.NOT_FOUND("Comment"), 404);
+      throw new AppError(ERRORS.MESSAGE.not_found("Comment"), 404);
     }
 
     if (existingComment.user_id !== authenticatedUser.user_id && authenticatedUser.role !== 'Admin') {
@@ -88,12 +91,12 @@ const deleteComment = async (
 
     const commentId = Number(req.params.commentId);
     if (!commentId) {
-      throw new AppError(ERRORS.MESSAGE.NOT_FOUND("CommentId"), ERRORS.STATUSCODE.NOT_FOUND);
+      throw new AppError(ERRORS.MESSAGE.not_found("CommentId"), ERRORS.STATUSCODE.NOT_FOUND);
     }
 
     const commentToDelete = await findCommentById(commentId);
     if (!commentToDelete) {
-      throw new AppError(ERRORS.MESSAGE.NOT_FOUND("Comment"), 404);
+      throw new AppError(ERRORS.MESSAGE.not_found("Comment"), 404);
     }
 
     if (commentToDelete.user_id !== authenticatedUser.user_id && authenticatedUser.role !== "Admin") {
@@ -116,11 +119,12 @@ const getcomment = async (
     const postId = Number(req.params.postId);
     const commentLimit = Number(req.query.commentLimit) || defultvalues.DEFULT_LIMIT;
     const commentOffset = Number(req.query.commentOffset) || defultvalues.DEFULT_OFFSET;
-
+    const rediskey = req.rediskey;
     if (!postId) {
-      throw new AppError(ERRORS.MESSAGE.NOT_FOUND("post Id"), ERRORS.STATUSCODE.NOT_FOUND);
+      throw new AppError(ERRORS.MESSAGE.not_found("post Id"), ERRORS.STATUSCODE.NOT_FOUND);
     }
     const comments = await findCommentByPostId(postId, commentOffset, commentLimit);
+    await redis.set(rediskey, JSON.stringify(comments), "EX", Number(env.RATELIMIT.REAT_TIMER))
     return sendResponse(res, 200, "sucess", comments);
   } catch (error) {
     errorhandler(error, "getcomments");

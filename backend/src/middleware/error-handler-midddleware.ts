@@ -13,6 +13,7 @@ export const errorHandler = async (
   _next: NextFunction,
 ) => {
   const LOG_PLACE = env.LOG.LOG_PLACE;
+
   const data = {
     method: req.method,
     url: req.originalUrl,
@@ -42,7 +43,7 @@ export const errorHandler = async (
       console.error("Error saving error log:", error);
     }
   }
-  res.status(err.statusCode).json({
+  res.status(Number(err.statusCode) || 500).json({
     success: false,
     message: err.message
   });

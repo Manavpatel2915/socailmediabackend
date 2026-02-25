@@ -5,14 +5,19 @@ import {
   getPost,
   deletePostById,
   updatePostById,
+  allpost
 } from '../controller/post-controller'
 import { validate } from '../middleware/validate-middleware'
 import { createPostSchema } from '../validation/post-validation'
 import { postParamsSchema } from '../validation/params-validatiion'
 import upload  from "../middleware/uplod";
+import { ratelimmiter } from "../middleware/ratelimiter";
+import { getCachedData } from "../middleware/getchacedata";
 const router = Router();
 
-router.get('/:postId', validate(postParamsSchema, 'params'), getPost);// this is correct api need auth middleware here?
+router.post('/allpost', ratelimmiter, getCachedData, allpost);
+
+router.get('/:postId', validate(postParamsSchema, 'params'), ratelimmiter, getCachedData, getPost);// this is correct api need auth middleware here?
 
 router.post('/', authenticate, upload.single("image"), validate(createPostSchema, 'body'), createNewPost);
 

@@ -5,7 +5,8 @@ declare global {
         user_id: number;
         email?: string;
         role: string;
-      };
+      } & JwtPayload;
+      rediskey?: string;
     }
   }
 }

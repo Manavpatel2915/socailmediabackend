@@ -14,26 +14,34 @@ const registerUser = async (
   req: Request,
   res: Response,
 ): Promise<Response> => {
+  console.log("hheelo")
   try {
     const { user_name, email, password, role } = req.body;
+    console.log("🚀 ~ registerUser ~ role:", role)
+    console.log("🚀 ~ registerUser ~ password:", password)
+    console.log("🚀 ~ registerUser ~ email:", email)
+    console.log("🚀 ~ registerUser ~ user_name:", user_name)
 
     if (!user_name || !email || !password) {
       throw new AppError(ERRORS.MESSAGE.ALL_FIELDS_REQUIRED, ERRORS.STATUSCODE.ALL_FIELDS_REQUIRED);
     }
 
     const existingUser = await findUserByEmail(email);
+    console.log("🚀 ~ registerUser ~ existingUser:", existingUser)
 
     if (existingUser) {
       throw new AppError(ERRORS.MESSAGE.CONFLICT("User"), ERRORS.STATUSCODE.CONFLICT);
     }
 
     const newUser = await createUser(user_name, email, password, role);
+    console.log("🚀 ~ registerUser ~ newUser:", newUser)
 
     const token = jwt.sign(
       { user_id: newUser.user_id, role: newUser.role },
       JWT_SECRET,
       { expiresIn: TOKEN_EXPIRY as "5d" }
     );
+    console.log("🚀 ~ registerUser ~ token:", token)
 
     return sendResponse(res, 201, "User registered successfully!", { token });
   } catch (error) {
@@ -51,13 +59,13 @@ const loginUser = async (
     const user = await findUserByEmail(email);
 
     if (!user) {
-      throw new AppError(ERRORS.MESSAGE.INVALID("Email"), 401);
+      throw new AppError(ERRORS.MESSAGE.invalid("Email"), 401);
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      throw new AppError(ERRORS.MESSAGE.INVALID("Password"), 401);
+      throw new AppError(ERRORS.MESSAGE.invalid("Password"), 401);
     }
 
     const token = jwt.sign(

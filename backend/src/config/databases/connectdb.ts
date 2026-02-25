@@ -1,5 +1,6 @@
 import mongodbconnect from './mongodbconnect';
 import { connectDatabase } from './sqldbconnnect';
+import  './redis';
 import dbPromise from './sqldbconnnect';
 
 const connectdb = async (): Promise<void> => {

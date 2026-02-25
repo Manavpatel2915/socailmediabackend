@@ -23,6 +23,9 @@ export const env = {
     DB_PASSWORD: include("DB_PASSWORD"),
     DB_HOST: include("DB_HOST"),
     PORT: include("PORT"),
+    REDIS_HOST: include("REDIS_HOST"),
+    REDIS_PORT: include("REDIS_PORT"),
+    REDIS_PASSWORD: include("REDIS_PASSWORD"),
   },
 
   JWT: {
@@ -39,5 +42,10 @@ export const env = {
 
   LOG: {
     LOG_PLACE: include("LOG_PLACE")
+  },
+
+  RATELIMIT: {
+    REAT_LIMIT: include("REAT_LIMIT"),
+    REAT_TIMER: include("REAT_TIMER")
   }
-};
+}

@@ -18,7 +18,6 @@ const PORT = env.DB.PORT;
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(morganMongoLogger);
-
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
     app.use('/', routes);
     app.use(errorHandler);
