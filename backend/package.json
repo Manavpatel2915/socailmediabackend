@@ -18,6 +18,8 @@
   "author": "Manav_Patel",
   "license": "ISC",
   "dependencies": {
+    "@bull-board/api": "^6.20.2",
+    "@bull-board/express": "^6.20.2",
     "bcrypt": "^6.0.0",
     "bullmq": "^5.70.1",
     "cloudinary": "^1.41.0",

@@ -1524,3 +1524,255 @@
 
 {"method":"DELETE","url":"/comment/1401","status":200,"responseTime":12.616,"ip":"::1","userAgent":"PostmanRuntime/7.51.1"}
 
+{"method":"GET","url":"/api-docs","status":301,"responseTime":32.322,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/api-docs/","status":200,"responseTime":21.712,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/api-docs/swagger-ui-init.js","status":200,"responseTime":1.171,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/api-docs/swagger-ui.css","status":200,"responseTime":32.646,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/api-docs/swagger-ui-standalone-preset.js","status":200,"responseTime":16.971,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/api-docs/swagger-ui-bundle.js","status":200,"responseTime":31.87,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues","status":200,"responseTime":25.456,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/css/main.c5f0cbbe.css","status":200,"responseTime":3.04,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/lib-router.d467d5aa.js","status":200,"responseTime":8.027,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/lib-axios.9f8e84b3.js","status":200,"responseTime":9.897,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/lib-react.f1fbffc9.js","status":200,"responseTime":15.491,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/main.41e88b42.js","status":200,"responseTime":12.049,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/6693.47a4f9db.js","status":200,"responseTime":11.212,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/async/9441.b8cb842b.js","status":200,"responseTime":2.443,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/locales/en-US/messages.json","status":200,"responseTime":2.442,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/css/async/58730.61bd49ee.css","status":200,"responseTime":4.086,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/async/58730.5295cf75.js","status":200,"responseTime":10.074,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/images/logo.svg","status":200,"responseTime":4.848,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/images/logo.svg","status":304,"responseTime":1.78,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":200,"responseTime":104.45,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/favicon-32x32.png","status":200,"responseTime":4.075,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":70.666,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":70.074,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":66.762,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":70.357,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":64.672,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/css/async/82384.02ed5810.css","status":200,"responseTime":4.842,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/async/82863.be3fc5ab.js","status":200,"responseTime":8.392,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/async/82384.e5b8aa9f.js","status":200,"responseTime":10.581,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/async/66030.baa9f0df.js","status":200,"responseTime":14.972,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/async/2833.30dcb9ba.js","status":200,"responseTime":20.702,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/async/highlight.edaa6176.js","status":200,"responseTime":16.933,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/async/45627.813980a7.js","status":200,"responseTime":11.922,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=latest&page=1&jobsPerPage=10","status":200,"responseTime":169.694,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=latest&page=1&jobsPerPage=10","status":304,"responseTime":91.292,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=active&page=1&jobsPerPage=10","status":200,"responseTime":93.684,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=waiting&page=1&jobsPerPage=10","status":200,"responseTime":89.519,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=waiting-children&page=1&jobsPerPage=10","status":200,"responseTime":96.695,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=prioritized&page=1&jobsPerPage=10","status":200,"responseTime":93.828,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":200,"responseTime":92.885,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=failed&page=1&jobsPerPage=10","status":200,"responseTime":92.495,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=delayed&page=1&jobsPerPage=10","status":200,"responseTime":107.99,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=paused&page=1&jobsPerPage=10","status":200,"responseTime":88.005,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=latest&page=1&jobsPerPage=10","status":304,"responseTime":89.452,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=latest&page=1&jobsPerPage=10","status":null,"responseTime":null,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/api-docs/","status":304,"responseTime":38.998,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/api-docs/swagger-ui-init.js","status":304,"responseTime":0.346,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/api-docs/swagger-ui-bundle.js","status":304,"responseTime":15.469,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/api-docs/swagger-ui.css","status":304,"responseTime":14.025,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/api-docs/swagger-ui-standalone-preset.js","status":304,"responseTime":80.705,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues","status":304,"responseTime":5.399,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/css/main.c5f0cbbe.css","status":304,"responseTime":2.013,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/lib-router.d467d5aa.js","status":304,"responseTime":13.056,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/lib-react.f1fbffc9.js","status":304,"responseTime":19.807,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/main.41e88b42.js","status":304,"responseTime":13.392,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/lib-axios.9f8e84b3.js","status":304,"responseTime":8.68,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/6693.47a4f9db.js","status":304,"responseTime":41.754,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/async/9441.b8cb842b.js","status":304,"responseTime":4.994,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/locales/en-US/messages.json","status":304,"responseTime":1.138,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/async/58730.5295cf75.js","status":304,"responseTime":0.925,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/css/async/58730.61bd49ee.css","status":304,"responseTime":2.819,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/images/logo.svg","status":304,"responseTime":17.119,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":196.765,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":113.013,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":70.145,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":68.183,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":332.618,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":134.639,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":249.445,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":278.937,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":297.651,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":203.936,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":328.647,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":71.196,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":257.503,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":95.775,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":84.718,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":325.838,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":232.593,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":201.574,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/test-queue","status":200,"responseTime":2355.301,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/favicon.ico","status":404,"responseTime":2.217,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":200,"responseTime":263.884,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":167.858,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":299.98,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":210.139,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":332.66,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":244.092,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":271.035,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?page=1&jobsPerPage=10","status":304,"responseTime":178.814,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/async/82863.be3fc5ab.js","status":304,"responseTime":9.095,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/async/66030.baa9f0df.js","status":304,"responseTime":12.957,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/async/2833.30dcb9ba.js","status":304,"responseTime":10.553,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/async/45627.813980a7.js","status":304,"responseTime":23.828,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/css/async/82384.02ed5810.css","status":304,"responseTime":18.527,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/async/82384.e5b8aa9f.js","status":304,"responseTime":18.481,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/static/js/async/highlight.edaa6176.js","status":304,"responseTime":5.48,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":200,"responseTime":378.728,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":275.706,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":467.024,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":376.595,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":293.433,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":163.861,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":194.716,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":386.905,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":262.947,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":215.957,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":264.983,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":440.676,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":624.456,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":143.845,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":236.393,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":294.184,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":284.038,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":270.698,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":165.88,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":339.51,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":160.307,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":270.823,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":185.755,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":132.966,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":355.755,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":314.085,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":120.541,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":117.017,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+
+{"method":"GET","url":"/admin/queues/api/queues?activeQueue=email&status=completed&page=1&jobsPerPage=10","status":304,"responseTime":139.024,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"}
+

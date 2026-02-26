@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import { env } from "../env.config";
 
 const url:string = env.DB.MONGODB_URL as string ;
+console.log("🚀 ~ url:", url)
 
 const connectMongodb = async (): Promise<void> => {
   try {
