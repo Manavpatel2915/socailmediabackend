@@ -6,7 +6,8 @@ import {
   updateUserProfile,
   getUser,
   allUser,
-
+  userAllData,
+  getNotfication,
 } from '../controller/user-controller'
 import { userParamsSchema, userPostCommentQuerySchema } from "../validation/params-validatiion";
 import { validate } from '../middleware/validate-middleware';
@@ -23,6 +24,10 @@ router.delete('/', authenticate, deleteUserAccount);
 router.patch('/', authenticate, updateUserProfile);
 
 router.get('/user-post-comment/:userId', authenticate, validate(userParamsSchema, 'params'), validate(userPostCommentQuerySchema, 'query'), ratelimmiter, getCachedData, getUserDetailsWithPostandComment);
+
+router.get('/UserAllData', authenticate, ratelimmiter, userAllData);
+
+router.get('/notification', authenticate, ratelimmiter, getCachedData, getNotfication);
 
 export default router;
 

@@ -6,8 +6,8 @@ export const ERRORS = {
     SERVER_ERROR: "Internal server error",
     FORBIDDEN: "Forbidden",
     invalid: (params: string) => `${params} invalid`,
-    not_found: (params: string) => `${params} Not Found`,
-    CONFLICT: (params: string) => `${params} alredy exists`,
+    notFound: (params: string) => `${params} Not Found`,
+    conflict: (params: string) => `${params} alredy exists`,
   },
   STATUSCODE: {
     UNAUTHORIZED: 401,

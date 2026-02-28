@@ -1,5 +1,5 @@
 import type { Request, Response  } from "express";
-import bcrypt from 'bcrypt';
+
 import { AppError } from "../utils/AppError";
 import { findUserById } from "../services/auth-service";
 import {
@@ -16,6 +16,8 @@ import { sendResponse } from '../utils/respones';
 import { User } from '../config/models/sql-models/user-model';
 import { env } from "../config/env.config";
 import redis from "../config/databases/redis";
+import { userDetailsQueues } from "../queues/userdetailsQueues";
+import { notificationget } from "../services/notification-service";
 
 const getUserDetailsWithPostandComment = async (
   req: Request,
@@ -28,12 +30,12 @@ const getUserDetailsWithPostandComment = async (
     const comment = req.query.comment_required === 'false';
     const cacheKey = req.rediskey;
     if (!userId) {
-      throw new AppError(ERRORS.MESSAGE.not_found("UserId"), ERRORS.STATUSCODE.NOT_FOUND);
+      throw new AppError(ERRORS.MESSAGE.notFound("UserId"), ERRORS.STATUSCODE.NOT_FOUND);
     }
 
     const user = await getUserById(userId);
     if (!user) {
-      throw new AppError(ERRORS.MESSAGE.not_found("User"), ERRORS.STATUSCODE.NOT_FOUND);
+      throw new AppError(ERRORS.MESSAGE.notFound("User"), ERRORS.STATUSCODE.NOT_FOUND);
     }
 
     const posts = await findPostsAndCommentByUserId(userId, postOffset, postLimit, comment);
@@ -62,7 +64,7 @@ const deleteUserAccount = async (
     const userToDelete = await findUserById(authenticatedUser.user_id);
 
     if (!userToDelete) {
-      throw new AppError(ERRORS.MESSAGE.not_found("User"), ERRORS.STATUSCODE.NOT_FOUND);
+      throw new AppError(ERRORS.MESSAGE.notFound("User"), ERRORS.STATUSCODE.NOT_FOUND);
     }
 
     if (userToDelete.user_id !== authenticatedUser.user_id) {
@@ -91,7 +93,7 @@ const updateUserProfile = async (
       const emailAlreadyExists = await findUserByEmail(email);
 
       if (emailAlreadyExists) {
-        throw new AppError(ERRORS.MESSAGE.CONFLICT("Email"), ERRORS.STATUSCODE.CONFLICT);
+        throw new AppError(ERRORS.MESSAGE.conflict("Email"), ERRORS.STATUSCODE.CONFLICT);
       }
     }
 
@@ -99,7 +101,7 @@ const updateUserProfile = async (
     if (user_name) dataToUpdate.user_name = user_name;
     if (email) dataToUpdate.email = email;
     if (password) {
-      dataToUpdate.password = await bcrypt.hash(password, env.JWT.SALT);
+      dataToUpdate.password = password;
     }
     const updatedUser = await updateUserData(existingUser, dataToUpdate);
     return sendResponse(res, 200, "User updated successfully!", updatedUser);
@@ -108,6 +110,7 @@ const updateUserProfile = async (
     errorhandler(error, "Update User!");
   }
 };
+
 const getUser = async (
   req: Request,
   res: Response
@@ -118,7 +121,6 @@ const getUser = async (
     const userData = await getUserById(
       Number(authenticatedUser.user_id)
     );
-
     await redis.set(cacheKey, JSON.stringify(userData), "EX", env.RATELIMIT.REAT_TIMER);
 
     return sendResponse(
@@ -154,10 +156,38 @@ const allUser = async (
 
 }
 
+const userAllData = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const authenticate = req.user;
+    const userId = Number(authenticate.user_id);
+    await userDetailsQueues.add('userDetails', { user_id: userId });
+    return sendResponse(res, 200, `user data downloaded successfully`);
+
+  } catch (error) {
+    errorhandler(error, "DownloadData!");
+  }
+};
+
+const getNotfication = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+    const authenticate = req.user;
+    const user_id = authenticate.user_id;
+    const data = await  notificationget(user_id);
+    return sendResponse(res, 200, "allNotification", data);
+  } catch (error) {
+    errorhandler(error, "Fetch notification");
+  }
+}
+
 export {
   deleteUserAccount,
   getUserDetailsWithPostandComment,
   updateUserProfile,
   getUser,
   allUser,
+  userAllData,
+  getNotfication
 };

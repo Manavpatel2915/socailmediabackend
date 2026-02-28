@@ -1,7 +1,6 @@
 import { Queue } from "bullmq";
 import redis from "../config/databases/redis";
 
-export const emailQueue = new Queue('email', {
+export const userDetailsQueues = new Queue('userDetails', {
   connection: redis,
 });
-

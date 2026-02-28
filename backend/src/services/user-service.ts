@@ -5,6 +5,7 @@ const deleteUser = async (userId: number) => {
   const deletedCommentsCount = await db.Comment.destroy({
     where: { user_id: userId },
   });
+
   const deletedPostsCount = await db.Post.destroy({
     where: { user_id: userId },
   });
@@ -19,7 +20,9 @@ const deleteUser = async (userId: number) => {
 };
 
 const getUserById = async (userId: number) => {
-  return await db.User.findByPk(userId) ;
+  return await db.User.findByPk(userId, {
+    raw: false
+  }) ;
 }
 
 const updateUserData = async (

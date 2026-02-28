@@ -6,7 +6,7 @@ import { env } from "../env.config";
 import { User } from "../models/sql-models/user-model";
 import { Post } from "../models/sql-models/post-model";
 import { Comment } from "../models/sql-models/comment-model";
-
+import { Notification } from '../models/sql-models/notification-model';
 const basename = path.basename(__filename);
 
 export interface DbInterface {
@@ -15,6 +15,7 @@ export interface DbInterface {
   User: typeof User;
   Post: typeof Post;
   Comment: typeof Comment;
+  Notification: typeof Notification
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }

@@ -12,6 +12,7 @@ import { postParamsSchema, commentParamsSchema } from '../validation/params-vali
 import { validate } from "../middleware/validate-middleware";
 import { ratelimmiter } from "../middleware/ratelimiter";
 import { getCachedData } from "../middleware/getchacedata";
+
 const router = Router();
 
 router.post("/:postId", optionalJwt, validate(postParamsSchema, 'params'), createComment);

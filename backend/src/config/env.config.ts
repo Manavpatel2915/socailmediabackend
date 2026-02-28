@@ -4,7 +4,7 @@ export type Env = "development" | "test" | "production";
 
 const PROCESSENV = process.env;
 
-function include(name: string): string {
+function getEnvVaule(name: string): string {
   const value = PROCESSENV[name];
 
   if (!value) {
@@ -16,36 +16,43 @@ export const env = {
   NODE_ENV: (PROCESSENV.NODE_ENV as Env) || "development",
 
   DB: {
-    MONGODB_URL: include("MONGODB_URL"),
-    DB_NAME: include("DB_NAME"),
-    DB_PORT: include("DB_PORT"),
-    DB_USER: include("DB_USER"),
-    DB_PASSWORD: include("DB_PASSWORD"),
-    DB_HOST: include("DB_HOST"),
-    PORT: include("PORT"),
-    REDIS_HOST: include("REDIS_HOST"),
-    REDIS_PORT: include("REDIS_PORT"),
-    REDIS_PASSWORD: include("REDIS_PASSWORD"),
+    MONGODB_URL: getEnvVaule("MONGODB_URL"),
+    DB_NAME: getEnvVaule("DB_NAME"),
+    DB_PORT: getEnvVaule("DB_PORT"),
+    DB_USER: getEnvVaule("DB_USER"),
+    DB_PASSWORD: getEnvVaule("DB_PASSWORD"),
+    DB_HOST: getEnvVaule("DB_HOST"),
+    PORT: getEnvVaule("PORT"),
+    REDIS_HOST: getEnvVaule("REDIS_HOST"),
+    REDIS_PORT: getEnvVaule("REDIS_PORT"),
+    REDIS_PASSWORD: getEnvVaule("REDIS_PASSWORD"),
   },
 
   JWT: {
-    JWT_SECRET: include("JWT_SECRET"),
-    TOKEN_EXPRI: include("TOKEN_EXPRI"),
-    SALT: include("SALT")
+    JWT_SECRET: getEnvVaule("JWT_SECRET"),
+    TOKEN_EXPRI: getEnvVaule("TOKEN_EXPRI"),
+    SALT: getEnvVaule("SALT")
   },
 
   CLOUDINARY: {
-    CLOUDINARY_NAME: include("CLOUDINARY_NAME"),
-    CLOUDINARY_API_KEY: include("CLOUDINARY_API_KEY"),
-    CLOUDINARY_SECRET: include("CLOUDINARY_SECRET")
+    CLOUDINARY_NAME: getEnvVaule("CLOUDINARY_NAME"),
+    CLOUDINARY_API_KEY: getEnvVaule("CLOUDINARY_API_KEY"),
+    CLOUDINARY_SECRET: getEnvVaule("CLOUDINARY_SECRET")
   },
 
   LOG: {
-    LOG_PLACE: include("LOG_PLACE")
+    LOG_PLACE: getEnvVaule("LOG_PLACE")
   },
 
   RATELIMIT: {
-    REAT_LIMIT: include("REAT_LIMIT"),
-    REAT_TIMER: include("REAT_TIMER")
+    REAT_LIMIT: getEnvVaule("REAT_LIMIT"),
+    REAT_TIMER: getEnvVaule("REAT_TIMER")
+  },
+
+  MAILER: {
+    MAIL_HOST: getEnvVaule("MAIL_HOST"),
+    MAIL_PORT: getEnvVaule("MAIL_PORT"),
+    MAIL_USER: getEnvVaule("MAIL_USER"),
+    MAIL_PASS: getEnvVaule("MAIL_PASS")
   }
 }

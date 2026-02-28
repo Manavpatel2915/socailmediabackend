@@ -9,5 +9,7 @@ import { createUserSchema } from '../validation/user-validation';
 const router = Router();
 
 router.post('/register', validate(createUserSchema), registerUser);
+
 router.post('/login', loginUser);
+
 export default router;

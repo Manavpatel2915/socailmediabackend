@@ -1,9 +1,10 @@
 import db from "../config/databases/sqldbconnnect";
 import { CommentWithUser } from "../types/type"
 import { Comment } from '../config/models/sql-models/comment-model';
+
 const findCommentById = async (commentId: number) => {
   const comment = await db.Comment.findByPk(commentId);
-  return comment.toJSON();
+  return comment;
 }
 
 const createNewComment = async (
@@ -64,10 +65,25 @@ const findCommentByPostId = async (postId: number, offset: number, limit: number
   }));
 }
 
+const findAllComment = async (
+  userId: number
+) => {
+  const commentData = await db.Comment.findAll({
+    where: {
+      user_id: userId
+    },
+    attributes: {
+      exclude: ['id']
+    }
+  })
+  return commentData;
+}
+
 export {
   findCommentById,
   createNewComment,
   updateCommentText,
   deleteCommentById,
-  findCommentByPostId
+  findCommentByPostId,
+  findAllComment
 }

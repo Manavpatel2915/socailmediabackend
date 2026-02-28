@@ -3,6 +3,7 @@ import { postdatwithUser } from "../types/type"
 import { Post } from "../config/models/sql-models/post-model"
 import { orderBytype, filterOptions } from "../types/type";
 import { Op, WhereOptions } from "sequelize";
+
 const createPost = async (
   title: string,
   content: string,
@@ -97,8 +98,6 @@ const updatePostData = async (
     image?: string;
   }
 ) => {
-  console.log("🚀 ~ updatePostData ~ updateData:", updateData)
-  console.log("🚀 ~ updatePostData ~ existingPost:", existingPost)
 
   await existingPost.update(updateData);
   return existingPost.toJSON();
@@ -152,12 +151,8 @@ const getallpost = async (
 ) => {
   const order: orderBytype = orderBy === 'ASC' ? [['createdAt', 'ASC']] : [['createdAt', 'DESC']];
   const where: WhereOptions = {};
-  console.log(orderBy);
   if (filter?.likecount) {
     const { maxlike, minlike } = filter.likecount;
-    console.log("🚀 ~ getallpost ~ minlike:", minlike)
-    console.log("🚀 ~ getallpost ~ maxlike:", maxlike)
-
     if (maxlike && minlike) {
 
       where.like = { [Op.between]: [Number(minlike), Number(maxlike)] };
@@ -169,7 +164,6 @@ const getallpost = async (
       where.like = { [Op.gte]: Number(minlike) };
     }
   }
-  console.log(where);
   const postdata = await db.Post.findAll({
     where,
     attributes: {
@@ -188,7 +182,6 @@ const getallpost = async (
     raw: true,
     nest: true,
   });
-  console.log("🚀 ~ getallpost ~ postdata:", postdata)
 
   return (postdata as unknown as postdatwithUser[]).map((post: postdatwithUser) => ({
     ...post,
@@ -200,10 +193,22 @@ const getallpost = async (
 const findPostById = async (
   postId: number
 ) => {
-  const postdata = await db.Post.findByPk(postId, {
-    raw: true,
-  });
+  const postdata = await db.Post.findByPk(postId);
   return postdata;
+}
+
+const getAllPostByUserId = async (
+  userId: number
+) => {
+  const allpost = await db.Post.findAll({
+    where: {
+      user_id: userId
+    },
+    attributes: {
+      exclude: ['post_id', 'user_id' ]
+    }
+  });
+  return allpost;
 }
 
 export {
@@ -215,4 +220,5 @@ export {
   findPostsAndCommentByUserId,
   getallpost,
   findPostById,
+  getAllPostByUserId
 }
