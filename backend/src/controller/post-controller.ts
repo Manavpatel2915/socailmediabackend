@@ -14,6 +14,7 @@ import { ERRORS, errorhandler } from '../const/error-message';
 import { defultvalues } from "../const/defult-limit";
 import { env } from "../config/env.config";
 import redis from "../config/databases/redis";
+import { creatPostQueues } from "../queues/createPostQueues";
 
 const createNewPost = async (
   req: Request,
@@ -123,7 +124,7 @@ const updatePostById = async (
   }
 }
 
-const allpost = async (
+const allPost = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
@@ -140,10 +141,36 @@ const allpost = async (
   }
 }
 
+const createNewPostAtSepicficTime = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+    const time = req.query.time as string;
+    const authenticatedUser = req.user;
+    const userId = authenticatedUser.user_id;
+    const { title, content } = req.body;
+    const images = req.file as Express.Multer.File;
+    const image = images.path;
+    const scheduledTime = new Date(time).getTime();
+    const now = Date.now();
+    console.log(`${scheduledTime - now}`);
+    creatPostQueues.add('creatPost', { title, content, image, userId }, {
+      delay: scheduledTime - now,
+      // repeat: {
+      //   pattern: '* * * * *'
+      // }
+    });
+    return sendResponse(res, 200, `post created at ${scheduledTime - now}`);
+  } catch (error) {
+    errorhandler(error, "CreatePost");
+  }
+}
 export {
   createNewPost,
   getPost,
   deletePostById,
   updatePostById,
-  allpost,
+  allPost as allpost,
+  createNewPostAtSepicficTime
 }

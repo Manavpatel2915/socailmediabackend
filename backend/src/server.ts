@@ -10,6 +10,7 @@ import { env } from "./config/env.config";
 import { serverAdapter } from './config/bullBoard';
 import './workers/notificationWorker';
 import './workers/userDetailsWorker';
+import './workers/creatPostWorker';
 const app = express();
 const PORT = env.DB.PORT;
 
