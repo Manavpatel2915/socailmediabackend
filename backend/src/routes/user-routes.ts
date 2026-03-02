@@ -1,33 +1,33 @@
 import { Router } from "express";
 import { authenticate } from '../middleware/passport-middleware';
 import {
-  deleteUserAccount,
-  getUserDetailsWithPostandComment,
+  deleteUser,
+  getUserWithPostAndComment,
   updateUserProfile,
   getUser,
   allUser,
   userAllData,
-  getNotfication,
+  getNotifications,
 } from '../controller/user-controller'
-import { userParamsSchema, userPostCommentQuerySchema } from "../validation/params-validatiion";
+import { userParamsSchema, userPostCommentQuerySchema } from "../validation/params-validation";
 import { validate } from '../middleware/validate-middleware';
-import { ratelimmiter } from "../middleware/ratelimiter";
-import { getCachedData } from "../middleware/getchacedata";
+import { rateLimiter } from "../middleware/rate-limiter";
+import { getCachedData } from "../middleware/get-cached-data";
 const router = Router();
 //admin routes
-router.get('/', authenticate, getCachedData, ratelimmiter, allUser);
+router.get('/', authenticate, getCachedData, rateLimiter, allUser);
 
-router.get('/userProfile', authenticate, ratelimmiter, getCachedData, getUser);
+router.get('/userProfile', authenticate, rateLimiter, getCachedData, getUser);
 
-router.delete('/', authenticate, deleteUserAccount);
+router.delete('/', authenticate, deleteUser);
 
 router.patch('/', authenticate, updateUserProfile);
 
-router.get('/user-post-comment/:userId', authenticate, validate(userParamsSchema, 'params'), validate(userPostCommentQuerySchema, 'query'), ratelimmiter, getCachedData, getUserDetailsWithPostandComment);
+router.get('/user-post-comment/:userId', authenticate, validate(userParamsSchema, 'params'), validate(userPostCommentQuerySchema, 'query'), rateLimiter, getCachedData, getUserWithPostAndComment);
 
-router.get('/UserAllData', authenticate, ratelimmiter, userAllData);
+router.get('/UserAllData', authenticate, rateLimiter, userAllData);
 
-router.get('/notification', authenticate, ratelimmiter, getCachedData, getNotfication);
+router.get('/notification', authenticate, rateLimiter, getCachedData, getNotifications);
 
 export default router;
 

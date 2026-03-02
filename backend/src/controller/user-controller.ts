@@ -4,29 +4,29 @@ import { AppError } from "../utils/AppError";
 import { findUserById } from "../services/auth-service";
 import {
   getUserById,
-  deleteUser,
+  deleteUserData,
   updateUserData,
   findUserByEmail,
   allUsers,
 } from "../services/user-service";
-import { defultvalues } from "../const/defult-limit";
+import { defaultValues } from "../const/const-value";
 import { findPostsAndCommentByUserId } from '../services/post-service';
 import { ERRORS, errorhandler } from '../const/error-message';
-import { sendResponse } from '../utils/respones';
+import { sendResponse } from '../utils/response';
 import { User } from '../config/models/sql-models/user-model';
 import { env } from "../config/env.config";
-import redis from "../config/databases/redis";
-import { userDetailsQueues } from "../queues/userdetailsQueues";
-import { notificationget } from "../services/notification-service";
+import redis from "../config/databases/redis-connect";
+import { userDetailsQueues } from "../queues/user-details-queues";
+import { getNotification } from "../services/notification-service";
 
-const getUserDetailsWithPostandComment = async (
+const getUserWithPostAndComment = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
   try {
     const userId = Number(req.params.userId);
-    const postLimit = Number(req.query.postLimit) || defultvalues.DEFULT_LIMIT;
-    const postOffset = Number(req.query.postOffset) || defultvalues.DEFULT_OFFSET;
+    const postLimit = Number(req.query.postLimit) || defaultValues.DEFAULT_LIMIT;
+    const postOffset = Number(req.query.postOffset) || defaultValues.DEFAULT_OFFSET;
     const comment = req.query.comment_required === 'false';
     const cacheKey = req.rediskey;
     if (!userId) {
@@ -39,7 +39,7 @@ const getUserDetailsWithPostandComment = async (
     }
 
     const posts = await findPostsAndCommentByUserId(userId, postOffset, postLimit, comment);
-    await redis.set(cacheKey, JSON.stringify({ user, posts }), "EX", Number(env.RATELIMIT.REAT_TIMER));
+    await redis.set(cacheKey, JSON.stringify({ user, posts }), "EX", Number(env.RATELIMIT.RATE_TIMER));
     return sendResponse(res, 200, "User fetched successfully", {
       user,
       posts,
@@ -50,7 +50,7 @@ const getUserDetailsWithPostandComment = async (
   }
 };
 
-const deleteUserAccount = async (
+const deleteUser = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
@@ -71,7 +71,7 @@ const deleteUserAccount = async (
       throw new AppError(ERRORS.MESSAGE.UNAUTHORIZED, ERRORS.STATUSCODE.UNAUTHORIZED);
     }
 
-    const deletionResult = await deleteUser(authenticatedUser.user_id);
+    const deletionResult = await deleteUserData(authenticatedUser.user_id);
 
     return sendResponse(res, 200, "User deleted successfully!", deletionResult);
 
@@ -121,7 +121,7 @@ const getUser = async (
     const userData = await getUserById(
       Number(authenticatedUser.user_id)
     );
-    await redis.set(cacheKey, JSON.stringify(userData), "EX", env.RATELIMIT.REAT_TIMER);
+    await redis.set(cacheKey, JSON.stringify(userData), "EX", env.RATELIMIT.RATE_TIMER);
 
     return sendResponse(
       res,
@@ -148,7 +148,7 @@ const allUser = async (
       throw new AppError(ERRORS.MESSAGE.UNAUTHORIZED, ERRORS.STATUSCODE.UNAUTHORIZED);
     }
     const users = await allUsers(offset, limit);
-    await redis.set(rediskey, JSON.stringify(users), "EX", env.RATELIMIT.REAT_TIMER)
+    await redis.set(rediskey, JSON.stringify(users), "EX", env.RATELIMIT.RATE_TIMER)
     return sendResponse(res, 200, `Fetched ${users.length} users`, users);
   } catch (error) {
     errorhandler(error, "Fetch Data!")
@@ -161,21 +161,21 @@ const userAllData = async (req: Request, res: Response): Promise<Response> => {
     const authenticate = req.user;
     const userId = Number(authenticate.user_id);
     await userDetailsQueues.add('userDetails', { user_id: userId });
-    return sendResponse(res, 200, `user data downloaded successfully`);
+    return sendResponse(res, 200, `user data download successfully`);
 
   } catch (error) {
-    errorhandler(error, "DownloadData!");
+    errorhandler(error, "download!");
   }
 };
 
-const getNotfication = async (
+const getNotifications = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
   try {
     const authenticate = req.user;
     const user_id = authenticate.user_id;
-    const data = await  notificationget(user_id);
+    const data = await  getNotification(user_id);
     return sendResponse(res, 200, "allNotification", data);
   } catch (error) {
     errorhandler(error, "Fetch notification");
@@ -183,11 +183,11 @@ const getNotfication = async (
 }
 
 export {
-  deleteUserAccount,
-  getUserDetailsWithPostandComment,
+  deleteUser,
+  getUserWithPostAndComment,
   updateUserProfile,
   getUser,
   allUser,
   userAllData,
-  getNotfication
+  getNotifications
 };

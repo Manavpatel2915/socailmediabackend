@@ -23,14 +23,14 @@ export interface CommentWithUser {
   [key: string]: unknown;
 }
 
-export interface postdatwithUser {
+export interface postDataWithUser {
   user: {
     user_name: string,
   };
   [key: string]: unknown;
 };
 
-export type orderBytype = [['createdAt', 'ASC']] | [['createdAt', 'DESC']];
+export type orderByType = [['createdAt', 'ASC']] | [['createdAt', 'DESC']];
 
 export interface filterOptions {
   likecount?: {

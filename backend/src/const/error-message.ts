@@ -7,7 +7,7 @@ export const ERRORS = {
     FORBIDDEN: "Forbidden",
     invalid: (params: string) => `${params} invalid`,
     notFound: (params: string) => `${params} Not Found`,
-    conflict: (params: string) => `${params} alredy exists`,
+    conflict: (params: string) => `${params} already exists`,
   },
   STATUSCODE: {
     UNAUTHORIZED: 401,

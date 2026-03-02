@@ -1,5 +1,5 @@
 import { Worker } from 'bullmq';
-import redis from "../config/databases/redis";
+import redis from "../config/databases/redis-connect";
 import { getUserById } from "../services/user-service";
 import { getAllPostByUserId } from "../services/post-service";
 import { findAllComment } from "../services/comment-service";

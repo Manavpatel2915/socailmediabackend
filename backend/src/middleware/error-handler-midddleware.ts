@@ -4,7 +4,7 @@ import { env } from "../config/env.config";
 import path from 'path';
 import fs from 'fs';
 import fsPromises from "fs/promises";
-import { mounth } from "../const/mounth";
+import { month } from "../const/const-value";
 import { AppError } from "../utils/AppError";
 export const errorHandler = async (
   err: AppError,
@@ -28,8 +28,8 @@ export const errorHandler = async (
   if (LOG_PLACE) {
     try {
       const year = new Date().getFullYear().toString();
-      const month = mounth[(new Date().getMonth() + 1)].toString();
-      const dirname = path.resolve("src", "log", year, month);
+      const months = month[(new Date().getMonth() + 1)].toString();
+      const dirname = path.resolve("src", "log", year, months);
       fs.mkdirSync(dirname, { recursive: true });
       await fsPromises.appendFile(path.join(dirname, "error-log.txt"), JSON.stringify(data) +  '\n', 'utf8');
     } catch (error) {

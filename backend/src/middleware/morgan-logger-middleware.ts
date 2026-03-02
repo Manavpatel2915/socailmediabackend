@@ -5,7 +5,7 @@ import { env } from "../config/env.config";
 import path from 'path';
 import fs from 'fs';
 import fsPromises from "fs/promises";
-import { mounth } from "../const/mounth";
+import { month } from "../const/const-value";
 const LOG_PLACE = env.LOG.LOG_PLACE;
 
 export const morganMongoLogger = morgan(
@@ -26,12 +26,12 @@ export const morganMongoLogger = morgan(
         if (LOG_PLACE) {
           try {
             const year = new Date().getFullYear().toString();
-            const month = mounth[(new Date().getMonth() + 1)];
-            const dirname = path.resolve("src", "log", year, month);
+            const months = month[(new Date().getMonth() + 1)];
+            const dirname = path.resolve("src", "log", year, months);
             fs.mkdirSync(dirname, { recursive: true });
             await fsPromises.appendFile(path.join(dirname, "request-log.txt"), message + "\n", 'utf8');
           } catch (error) {
-            console.error("Failed to save log into FILEMODULE", error);
+            console.error("Failed to save log into FileModule", error);
           }
         } else {
           try {

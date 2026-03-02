@@ -5,7 +5,7 @@ import { env } from "../env.config";
 const url:string = env.DB.MONGODB_URL as string ;
 console.log("🚀 ~ url:", url)
 
-const connectMongodb = async (): Promise<void> => {
+const connectMongo = async (): Promise<void> => {
   try {
     if (!url) {
       throw new Error('MONGODB_URL is not found in environment variables');
@@ -18,4 +18,4 @@ const connectMongodb = async (): Promise<void> => {
   }
 };
 
-export default connectMongodb;
+export default connectMongo;

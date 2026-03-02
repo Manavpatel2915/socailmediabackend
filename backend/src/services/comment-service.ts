@@ -1,4 +1,4 @@
-import db from "../config/databases/sqldbconnnect";
+import db from "../config/databases/sql-connect";
 import { CommentWithUser } from "../types/type"
 import { Comment } from '../config/models/sql-models/comment-model';
 
@@ -7,7 +7,7 @@ const findCommentById = async (commentId: number) => {
   return comment;
 }
 
-const createNewComment = async (
+const createcomments = async (
   postId: number,
   userId: number | null,
   commentText: string
@@ -81,7 +81,7 @@ const findAllComment = async (
 
 export {
   findCommentById,
-  createNewComment,
+  createcomments,
   updateCommentText,
   deleteCommentById,
   findCommentByPostId,

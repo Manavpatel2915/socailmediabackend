@@ -1,8 +1,8 @@
 import { Worker } from "bullmq";
 import { createPost } from "../services/post-service";
-import redis from "../config/databases/redis";
+import redis from "../config/databases/redis-connect";
 
-export const creatPostWorker = new Worker('creatPost', async (job) => {
+export const createPostWorker = new Worker('createPost', async (job) => {
   const data = job.data;
   const { title, content, image, userId } = data;
   await createPost(title, content, image, userId);
@@ -12,11 +12,11 @@ export const creatPostWorker = new Worker('creatPost', async (job) => {
   concurrency: 1,
 });
 
-creatPostWorker.on('completed', (job) => {
+createPostWorker.on('completed', (job) => {
   console.log(`Job ${job.id} completed`);
 });
 
-creatPostWorker.on('failed', (job, err) => {
+createPostWorker.on('failed', (job, err) => {
   console.error(`Job ${job.id} failed:`, err.message);
 });
 

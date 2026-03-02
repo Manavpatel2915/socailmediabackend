@@ -1,7 +1,7 @@
 import { User } from '../config/models/sql-models/user-model';
-import db from "../config/databases/sqldbconnnect";
+import db from "../config/databases/sql-connect";
 
-const deleteUser = async (userId: number) => {
+const deleteUserData = async (userId: number) => {
   const deletedCommentsCount = await db.Comment.destroy({
     where: { user_id: userId },
   });
@@ -68,7 +68,7 @@ const allUsers = async (offset: number, limit: number) => {
 }
 
 export {
-  deleteUser,
+  deleteUserData,
   getUserById,
   updateUserData,
   findUserByEmail,

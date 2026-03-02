@@ -1,6 +1,6 @@
-import db from '../config/databases/sqldbconnnect';
+import db from '../config/databases/sql-connect';
 
-const notificationget = async (
+const getNotification = async (
   user_id: number
 ) => {
   const notification = await db.Notification.findAll({
@@ -30,6 +30,6 @@ const createNotification = async (
 }
 
 export {
-  notificationget,
+  getNotification,
   createNotification
 }

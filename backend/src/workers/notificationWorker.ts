@@ -1,5 +1,5 @@
 import { Worker } from 'bullmq';
-import redis from "../config/databases/redis";
+import redis from "../config/databases/redis-connect";
 import { createNotification } from "../services/notification-service";
 import { findPostById } from "../services/post-service"
 

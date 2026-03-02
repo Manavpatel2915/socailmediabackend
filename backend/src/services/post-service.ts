@@ -1,7 +1,7 @@
-import db from "../config/databases/sqldbconnnect";
-import { postdatwithUser } from "../types/type"
+import db from "../config/databases/sql-connect";
+import { postDataWithUser } from "../types/type"
 import { Post } from "../config/models/sql-models/post-model"
-import { orderBytype, filterOptions } from "../types/type";
+import { orderByType, filterOptions } from "../types/type";
 import { Op, WhereOptions } from "sequelize";
 
 const createPost = async (
@@ -54,7 +54,7 @@ const findPostByIdWithUsername = async (postId: number) => {
     }
   });
   if (!postdata) return null;
-  const post = postdata as unknown as postdatwithUser;
+  const post = postdata as unknown as postDataWithUser;
   return {
     ...post,
     user_name: post.user.user_name,
@@ -143,13 +143,13 @@ const findPostsAndCommentByUserId = async (
   return postsWithComments;
 };
 
-const getallpost = async (
+const getAllPost = async (
   postLimit: number,
   postOffset: number,
   orderBy: string,
   filter: filterOptions
 ) => {
-  const order: orderBytype = orderBy === 'ASC' ? [['createdAt', 'ASC']] : [['createdAt', 'DESC']];
+  const order: orderByType = orderBy === 'ASC' ? [['createdAt', 'ASC']] : [['createdAt', 'DESC']];
   const where: WhereOptions = {};
   if (filter?.likecount) {
     const { maxlike, minlike } = filter.likecount;
@@ -183,7 +183,7 @@ const getallpost = async (
     nest: true,
   });
 
-  return (postdata as unknown as postdatwithUser[]).map((post: postdatwithUser) => ({
+  return (postdata as unknown as postDataWithUser[]).map((post: postDataWithUser) => ({
     ...post,
     user_name: post.user.user_name,
     user: undefined
@@ -218,7 +218,7 @@ export {
   deletePostWithComments,
   updatePostData,
   findPostsAndCommentByUserId,
-  getallpost,
+  getAllPost,
   findPostById,
   getAllPostByUserId
 }

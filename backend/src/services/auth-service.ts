@@ -1,4 +1,4 @@
-import db from "../config/databases/sqldbconnnect";
+import db from "../config/databases/sql-connect";
 import { errorhandler } from '../const/error-message';
 
 const createUser = async (

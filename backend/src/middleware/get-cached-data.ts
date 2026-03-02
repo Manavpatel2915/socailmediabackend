@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import redis from "../config/databases/redis";
-import { sendResponse } from "../utils/respones";
+import redis from "../config/databases/redis-connect";
+import { sendResponse } from "../utils/response";
 
 export const getCachedData = async (
   req: Request,

@@ -7,14 +7,14 @@ import {
   deletePostWithComments,
   updatePostData,
   findPostById,
-  getallpost
+  getAllPost
 } from "../services/post-service";
-import { sendResponse } from '../utils/respones';
+import { sendResponse } from '../utils/response';
 import { ERRORS, errorhandler } from '../const/error-message';
-import { defultvalues } from "../const/defult-limit";
+import { defaultValues } from "../const/const-value";
 import { env } from "../config/env.config";
-import redis from "../config/databases/redis";
-import { creatPostQueues } from "../queues/createPostQueues";
+import redis from "../config/databases/redis-connect";
+import { createPostQueues } from "../queues/post-queues";
 
 const createNewPost = async (
   req: Request,
@@ -38,7 +38,7 @@ const getPost = async (
 ): Promise<Response> => {
   try {
     const postId = Number(req.params.postId);
-    const rediskey = req.rediskey;
+    const redisKey = req.rediskey;
     if (!postId) {
       throw new AppError(ERRORS.MESSAGE.notFound("PostId"), ERRORS.STATUSCODE.NOT_FOUND);
     }
@@ -48,7 +48,7 @@ const getPost = async (
     if (!post) {
       throw new AppError(ERRORS.MESSAGE.notFound("Post"), ERRORS.STATUSCODE.NOT_FOUND);
     }
-    await redis.set(rediskey, JSON.stringify(post), "EX", Number(env.RATELIMIT.REAT_TIMER))
+    await redis.set(redisKey, JSON.stringify(post), "EX", Number(env.RATELIMIT.RATE_TIMER))
     return sendResponse(res, 200, "Post fetched successfully!", post);
 
   } catch (error) {
@@ -128,20 +128,22 @@ const allPost = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const postLimit = Number(req.query.postLimit) || defultvalues.DEFULT_LIMIT;
-  const postOffset = Number(req.query.postOffset) || defultvalues.DEFULT_OFFSET;
+  const postLimit = Number(req.query.postLimit) || defaultValues.DEFAULT_LIMIT;
+  const postOffset = Number(req.query.postOffset) || defaultValues.DEFAULT_OFFSET;
   const { orderBy, filter } = req.body;
   const rediskey = req.rediskey;
   try {
-    const postdata = await getallpost(postLimit, postOffset, orderBy, filter);
-    await redis.set(rediskey, JSON.stringify(postdata), "EX", Number(env.RATELIMIT.REAT_TIMER));
+
+    const postdata = await getAllPost(postLimit, postOffset, orderBy, filter);
+    await redis.set(rediskey, JSON.stringify(postdata), "EX", Number(env.RATELIMIT.RATE_TIMER));
     return sendResponse(res, 200, `All Data Fetch`, postdata);
+
   } catch (error) {
     errorhandler(error, "Fetch Data!");
   }
 }
 
-const createNewPostAtSepicficTime = async (
+const createPostAtSpecificTime = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
@@ -155,7 +157,7 @@ const createNewPostAtSepicficTime = async (
     const scheduledTime = new Date(time).getTime();
     const now = Date.now();
     console.log(`${scheduledTime - now}`);
-    creatPostQueues.add('creatPost', { title, content, image, userId }, {
+    createPostQueues.add('createPost', { title, content, image, userId }, {
       delay: scheduledTime - now,
       // repeat: {
       //   pattern: '* * * * *'
@@ -171,6 +173,6 @@ export {
   getPost,
   deletePostById,
   updatePostById,
-  allPost as allpost,
-  createNewPostAtSepicficTime
+  allPost,
+  createPostAtSpecificTime
 }

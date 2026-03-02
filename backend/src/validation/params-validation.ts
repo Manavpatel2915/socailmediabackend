@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { defultvalues } from "../const/defult-limit";
+import { defaultValues } from "../const/const-value";
 export const userParamsSchema = Joi.object({
   userId: Joi.number()
     .integer()
@@ -12,20 +12,20 @@ export const userPostCommentQuerySchema = Joi.object({
     .integer()
     .min(1)
     .max(100)
-    .default(defultvalues.DEFULT_LIMIT),
+    .default(defaultValues.DEFAULT_LIMIT),
   postOffset: Joi.number()
     .integer()
     .min(0)
-    .default(defultvalues.DEFULT_OFFSET),
+    .default(defaultValues.DEFAULT_OFFSET),
   commentLimit: Joi.number()
     .integer()
     .min(1)
     .max(50)
-    .default(defultvalues.DEFULT_LIMIT),
+    .default(defaultValues.DEFAULT_LIMIT),
   commentOffset: Joi.number()
     .integer()
     .min(0)
-    .default(defultvalues.DEFULT_OFFSET)
+    .default(defaultValues.DEFAULT_OFFSET)
 });
 
 export const postParamsSchema = Joi.object({

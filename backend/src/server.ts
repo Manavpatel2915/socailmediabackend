@@ -1,13 +1,13 @@
 import express from 'express';
 import "./middleware/passport-middleware";
-import connectdb from './config/databases/connectdb';
+import connectDatabase from './config/databases/connect-database';
 import { morganMongoLogger } from "./middleware/morgan-logger-middleware";
 import { errorHandler } from "./middleware/error-handler-midddleware";
 import routes from "./routes/routes";
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './swagger-output.json';
 import { env } from "./config/env.config";
-import { serverAdapter } from './config/bullBoard';
+import { serverAdapter } from './config/bull-board';
 import './workers/notificationWorker';
 import './workers/userDetailsWorker';
 import './workers/creatPostWorker';
@@ -16,7 +16,7 @@ const PORT = env.DB.PORT;
 
 (async () => {
   try {
-    await connectdb();
+    await connectDatabase();
 
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));

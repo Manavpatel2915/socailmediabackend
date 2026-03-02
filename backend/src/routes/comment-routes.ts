@@ -5,13 +5,13 @@ import {
   createComment,
   updateComment,
   deleteComment,
-  getcomment,
+  getComment,
 } from '../controller/comment-controller'
 import { optionalJwt } from "../middleware/optinaljwt-middleware";
-import { postParamsSchema, commentParamsSchema } from '../validation/params-validatiion'
+import { postParamsSchema, commentParamsSchema } from '../validation/params-validation'
 import { validate } from "../middleware/validate-middleware";
-import { ratelimmiter } from "../middleware/ratelimiter";
-import { getCachedData } from "../middleware/getchacedata";
+import { rateLimiter } from "../middleware/rate-limiter";
+import { getCachedData } from "../middleware/get-cached-data";
 
 const router = Router();
 
@@ -21,6 +21,6 @@ router.patch('/:commentId', authenticate, validate(commentParamsSchema, 'params'
 
 router.delete('/:commentId', authenticate, validate(commentParamsSchema, 'params'), deleteComment);
 
-router.get("/:postId", authenticate, validate(postParamsSchema, 'params'),  ratelimmiter, getCachedData, getcomment)
+router.get("/:postId", authenticate, validate(postParamsSchema, 'params'),  rateLimiter, getCachedData, getComment)
 
 export default router;

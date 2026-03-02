@@ -1,18 +1,18 @@
 import type { Request, Response } from "express";
 import {
   findCommentById,
-  createNewComment,
+  createcomments,
   updateCommentText,
   deleteCommentById,
   findCommentByPostId
 } from "../services/comment-service";
 import { AppError } from "../utils/AppError";
 import { ERRORS, errorhandler } from '../const/error-message';
-import { sendResponse } from '../utils/respones';
-import { defultvalues } from "../const/defult-limit";
-import redis from "../config/databases/redis";
+import { sendResponse } from '../utils/response';
+import { defaultValues } from "../const/const-value";
+import redis from "../config/databases/redis-connect";
 import { env } from "../config/env.config";
-import { notificationQueues } from "../queues/notificationQueues";
+import { notificationQueues } from "../queues/notification-queues";
 
 const createComment = async (
   req: Request,
@@ -32,7 +32,7 @@ const createComment = async (
     }
 
     const userId = authenticatedUser ? authenticatedUser.user_id : null;
-    const newComment = await createNewComment(postId, userId, Comment);
+    const newComment = await createcomments(postId, userId, Comment);
     const notification_data = {
       data: newComment,
       title: "CREATE-COMMENT"
@@ -116,23 +116,23 @@ const deleteComment = async (
   }
 };
 
-const getcomment = async (
+const getComment = async (
   req: Request,
   res: Response,
 ): Promise<Response> => {
   try {
     const postId = Number(req.params.postId);
-    const commentLimit = Number(req.query.commentLimit) || defultvalues.DEFULT_LIMIT;
-    const commentOffset = Number(req.query.commentOffset) || defultvalues.DEFULT_OFFSET;
+    const commentLimit = Number(req.query.commentLimit) || defaultValues.DEFAULT_LIMIT;
+    const commentOffset = Number(req.query.commentOffset) || defaultValues.DEFAULT_OFFSET;
     const rediskey = req.rediskey;
     if (!postId) {
       throw new AppError(ERRORS.MESSAGE.notFound("post Id"), ERRORS.STATUSCODE.NOT_FOUND);
     }
     const comments = await findCommentByPostId(postId, commentOffset, commentLimit);
-    await redis.set(rediskey, JSON.stringify(comments), "EX", Number(env.RATELIMIT.REAT_TIMER))
-    return sendResponse(res, 200, "sucess", comments);
+    await redis.set(rediskey, JSON.stringify(comments), "EX", Number(env.RATELIMIT.RATE_TIMER))
+    return sendResponse(res, 200, "successfully", comments);
   } catch (error) {
-    errorhandler(error, "getcomments");
+    errorhandler(error, "getComments");
   }
 
 }
@@ -141,5 +141,5 @@ export {
   createComment,
   updateComment,
   deleteComment,
-  getcomment
+  getComment
 };

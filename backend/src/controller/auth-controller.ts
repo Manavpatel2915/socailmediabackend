@@ -5,10 +5,10 @@ import { env } from '../config/env.config';
 import { AppError } from "../utils/AppError";
 import { createUser, findUserByEmail } from "../services/auth-service";
 import { ERRORS, errorhandler } from '../const/error-message';
-import { sendResponse } from '../utils/respones';
+import { sendResponse } from '../utils/response';
 import { sendMail } from '../services/mail-service';
 const JWT_SECRET = env.JWT.JWT_SECRET as string;
-const TOKEN_EXPIRY = env.JWT.TOKEN_EXPRI as string;
+const TOKEN_EXPIRY = env.JWT.TOKEN_EXPIRY as string;
 
 const registerUser = async (
   req: Request,
@@ -38,7 +38,7 @@ const registerUser = async (
     await sendMail({
       to: `${email}`,
       subject: "Welcome!",
-      text: `Welcome ${user_name} your account created Suceesfully`
+      text: `Welcome ${user_name} your account created Successfully`
     })
     return sendResponse(res, 201, "User registered successfully!", { token });
   } catch (error) {
