@@ -3,10 +3,11 @@ import path from 'path';
 import { pathToFileURL } from 'url';
 import { Sequelize, DataTypes, ModelStatic } from 'sequelize';
 import { env } from "../env.config";
-import { User } from "../models/sql-models/user-model";
-import { Post } from "../models/sql-models/post-model";
-import { Comment } from "../models/sql-models/comment-model";
-import { Notification } from '../models/sql-models/notification-model';
+import { User } from "./models/sql-models/user-model";
+import { Post } from "./models/sql-models/post-model";
+import { Comment } from "./models/sql-models/comment-model";
+import { Notification } from './models/sql-models/notification-model';
+
 const basename = path.basename(__filename);
 
 export interface DbInterface {
@@ -55,7 +56,7 @@ const db = {
 } as DbInterface;
 
 const initModels = async (): Promise<void> => {
-  const modelsPath = path.join(__dirname, '../models/sql-models');
+  const modelsPath = path.join(__dirname, './models/sql-models');
   const files = fs.readdirSync(modelsPath)
     .filter(file => {
       return (
@@ -98,4 +99,5 @@ const initModels = async (): Promise<void> => {
 };
 
 export { initModels };
+
 export default db;

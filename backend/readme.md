@@ -12,3 +12,6 @@ Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJyb2xlIjoiVXNlciIs
 //is it required to store : who create notification like if c user create notification then need to store it user_id into db ?
 
 //create post middelware after login that middleware run and get all notification from the db according to user_id
+
+
+direct_logs

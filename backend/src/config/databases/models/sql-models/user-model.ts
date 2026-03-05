@@ -1,8 +1,8 @@
 import { Model, Sequelize, DataTypes, InferAttributes, InferCreationAttributes, CreationOptional } from "sequelize";
 import bcrypt from "bcrypt";
-import { Models } from "../../../types/models.types";
-import { ENUMS } from "../../../const/enum-model";
-import { env } from "../../env.config";
+import { Models } from "../../../../types/models.types";
+import { ENUMS } from "../../../../const/enum-model";
+import { env } from "../../../env.config";
 
 export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare user_id: CreationOptional<number>;

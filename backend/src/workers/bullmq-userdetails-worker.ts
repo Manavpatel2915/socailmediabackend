@@ -15,32 +15,8 @@ export const userDetailsWorker = new Worker('userDetails', async (job) => {
     user_name,
     email
   }
-  // const userData = await db.User.findOne({
-  //   where: {
-  //     user_id: user_id
-  //   },
-  //   attributes: {
-  //     exclude: ['user_id', 'password', 'role']
-  //   }
-  // });
   const postData = await getAllPostByUserId(userId);
-  // const postData = await db.Post.findAll({
-  //   where: {
-  //     user_id: user_id
-  //   },
-  //   attributes: {
-  //     exclude: ['post_id', 'user_id' ]
-  //   } });
   const commentData = await findAllComment(userId)
-  // const commentdata = await db.Comment.findAll({
-  //   where: {
-  //     user_id: user_id
-  //   },
-  //   attributes: {
-  //     exclude: ['id']
-  //   }
-  // });
-
   const data = {
     userData,
     userPost: postData,
@@ -49,7 +25,7 @@ export const userDetailsWorker = new Worker('userDetails', async (job) => {
 
   await sendMail({
     to: `${userData.email}`,
-    subject: "UserAllDataDowload",
+    subject: "UserAllDataDownload",
     text: JSON.stringify(data)
   })
   // const dirname = path.resolve("src", "userData");

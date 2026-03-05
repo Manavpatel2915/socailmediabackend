@@ -1,5 +1,6 @@
 import transporter from "../config/mailer";
 import { env } from "../config/env.config"
+
 interface MailOptions {
   to: string;
   subject: string;

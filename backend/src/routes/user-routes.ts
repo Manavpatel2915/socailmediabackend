@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { authenticate } from '../middleware/passport-middleware';
+import { authenticate } from '../middleware/auth-middleware';
 import {
   deleteUser,
   getUserWithPostAndComment,
@@ -13,6 +13,7 @@ import { userParamsSchema, userPostCommentQuerySchema } from "../validation/para
 import { validate } from '../middleware/validate-middleware';
 import { rateLimiter } from "../middleware/rate-limiter";
 import { getCachedData } from "../middleware/get-cached-data";
+
 const router = Router();
 //admin routes
 router.get('/', authenticate, getCachedData, rateLimiter, allUser);

@@ -12,7 +12,9 @@ import { sendResponse } from '../utils/response';
 import { defaultValues } from "../const/const-value";
 import redis from "../config/databases/redis-connect";
 import { env } from "../config/env.config";
-import { notificationQueues } from "../queues/notification-queues";
+// import { notificationQueues } from "../queues/notification-queues";
+import { sendMessage } from "../services/producer";
+import { EXCHANGE_TYPE } from "../const/const-value";
 
 const createComment = async (
   req: Request,
@@ -33,11 +35,12 @@ const createComment = async (
 
     const userId = authenticatedUser ? authenticatedUser.user_id : null;
     const newComment = await createcomments(postId, userId, Comment);
-    const notification_data = {
-      data: newComment,
-      title: "CREATE-COMMENT"
-    }
-    notificationQueues.add('notification',  notification_data);
+    // const notification_data = {
+    //   data: newComment,
+    //   title: "CREATE-COMMENT"
+    // }
+    sendMessage('notification', { msg: 'notification', title: "CREATE-COMMENT", user_id: newComment.user_id, post_id: newComment.post_id, comment: newComment.comment }, EXCHANGE_TYPE);
+    // notificationQueues.add('notification',  notification_data);
     return sendResponse(res, 201, "Comment created successfully!", newComment);
   } catch (error) {
     errorhandler(error, "Create Comment!");

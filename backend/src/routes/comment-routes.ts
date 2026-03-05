@@ -1,13 +1,13 @@
 // comment-routes.ts
 import { Router } from "express";
-import { authenticate } from '../middleware/passport-middleware';
+import { authenticate } from '../middleware/auth-middleware';
 import {
   createComment,
   updateComment,
   deleteComment,
   getComment,
 } from '../controller/comment-controller'
-import { optionalJwt } from "../middleware/optinaljwt-middleware";
+import { optionalJwt } from "../middleware/optional-auth-middleware";
 import { postParamsSchema, commentParamsSchema } from '../validation/params-validation'
 import { validate } from "../middleware/validate-middleware";
 import { rateLimiter } from "../middleware/rate-limiter";
@@ -21,6 +21,6 @@ router.patch('/:commentId', authenticate, validate(commentParamsSchema, 'params'
 
 router.delete('/:commentId', authenticate, validate(commentParamsSchema, 'params'), deleteComment);
 
-router.get("/:postId", authenticate, validate(postParamsSchema, 'params'),  rateLimiter, getCachedData, getComment)
+router.get("/:postId", authenticate, validate(postParamsSchema, 'params'), rateLimiter, getCachedData, getComment)
 
 export default router;

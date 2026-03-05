@@ -38,7 +38,26 @@ export interface filterOptions {
     minlike?: string;
   };
 }
+
 export interface requestBody {
   orderBy?: 'ASC' | 'DESC';
   filter?: filterOptions;
+}
+
+export interface notificationContent {
+   title:string,
+   post_id:number,
+   comment:string,
+   user_id:number
+}
+
+export interface schedulePostContent {
+  title:string,
+  content:string,
+  image:string,
+  userId:number,
+}
+
+export interface userDetailsContent {
+  user_id: number
 }

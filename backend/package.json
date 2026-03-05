@@ -15,7 +15,7 @@
     "eslint": "eslint src/ --fix"
   },
   "keywords": [],
-  "author": "Manav_Patel",
+  "author": "ManavPatel",
   "license": "ISC",
   "dependencies": {
     "@bull-board/api": "^6.20.2",

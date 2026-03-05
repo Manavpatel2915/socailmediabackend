@@ -1,14 +1,15 @@
 import morgan from "morgan";
-import { RequestLog } from "../config/models/mongodb-Models/request-log";
+import { RequestLog } from "../config/databases/models/mongodb-models/request-log";
 import { Request, Response } from "express";
 import { env } from "../config/env.config";
 import path from 'path';
 import fs from 'fs';
 import fsPromises from "fs/promises";
 import { month } from "../const/const-value";
-const LOG_PLACE = env.LOG.LOG_PLACE;
 
-export const morganMongoLogger = morgan(
+const LOG_PLACE = env.LOG.LOG_PLACE as string;
+
+export const logger = morgan(
   (tokens, req: Request, res: Response) => {
 
     return JSON.stringify({

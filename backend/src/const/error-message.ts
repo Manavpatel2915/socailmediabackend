@@ -1,4 +1,5 @@
-import { AppError  } from "../utils/AppError";
+import { AppError } from "../utils/AppError";
+
 export const ERRORS = {
   MESSAGE: {
     UNAUTHORIZED: "Unauthorized",

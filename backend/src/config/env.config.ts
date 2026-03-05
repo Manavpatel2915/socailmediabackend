@@ -12,6 +12,7 @@ function getEnvValue(name: string): string {
   }
   return value;
 }
+
 export const env = {
   NODE_ENV: (PROCESSENV.NODE_ENV as Env) || "development",
 
@@ -26,6 +27,7 @@ export const env = {
     REDIS_HOST: getEnvValue("REDIS_HOST"),
     REDIS_PORT: getEnvValue("REDIS_PORT"),
     REDIS_PASSWORD: getEnvValue("REDIS_PASSWORD"),
+    RABBITMQ_URL: getEnvValue("RABBITMQ_URL"),
   },
 
   JWT: {

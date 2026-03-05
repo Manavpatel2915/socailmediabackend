@@ -1,6 +1,6 @@
 import db from "../config/databases/sql-connect";
 import { CommentWithUser } from "../types/type"
-import { Comment } from '../config/models/sql-models/comment-model';
+import { Comment } from '../config/databases/models/sql-models/comment-model';
 
 const findCommentById = async (commentId: number) => {
   const comment = await db.Comment.findByPk(commentId);

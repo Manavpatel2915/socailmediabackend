@@ -1,4 +1,4 @@
-import  { Post } from "../config/models/sql-models/post-model";
+import { Post } from "../config/databases/models/sql-models/post-model";
 import type { Request, Response } from "express";
 import { AppError } from "../utils/AppError";
 import {
@@ -16,11 +16,12 @@ import { env } from "../config/env.config";
 import redis from "../config/databases/redis-connect";
 import { createPostQueues } from "../queues/post-queues";
 
-const createNewPost = async (
+const createPosts = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
   try {
+
     const authenticatedUser = req.user;
     const { title, content } = req.body;
     const image = req.file as Express.Multer.File;
@@ -143,7 +144,7 @@ const allPost = async (
   }
 }
 
-const createPostAtSpecificTime = async (
+const schedulePost = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
@@ -168,11 +169,12 @@ const createPostAtSpecificTime = async (
     errorhandler(error, "CreatePost");
   }
 }
+
 export {
-  createNewPost,
+  createPosts,
   getPost,
   deletePostById,
   updatePostById,
   allPost,
-  createPostAtSpecificTime
+  schedulePost
 }

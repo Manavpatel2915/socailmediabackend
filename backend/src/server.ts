@@ -1,16 +1,18 @@
 import express from 'express';
-import "./middleware/passport-middleware";
+import "./middleware/auth-middleware";
 import connectDatabase from './config/databases/connect-database';
-import { morganMongoLogger } from "./middleware/morgan-logger-middleware";
+import { logger } from "./middleware/logger-middleware";
 import { errorHandler } from "./middleware/error-handler-midddleware";
 import routes from "./routes/routes";
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './swagger-output.json';
 import { env } from "./config/env.config";
 import { serverAdapter } from './config/bull-board';
-import './workers/notificationWorker';
-import './workers/userDetailsWorker';
-import './workers/creatPostWorker';
+import './workers/bullmq-notificationworker';
+import './workers/bullmq-userdetails-worker';
+import './workers/bullmq-post-worker';
+import { startConsumer } from './services/consumer';
+
 const app = express();
 const PORT = env.DB.PORT;
 
@@ -20,11 +22,12 @@ const PORT = env.DB.PORT;
 
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
-    app.use(morganMongoLogger);
+    app.use(logger);
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
     app.use('/admin/queues', serverAdapter.getRouter());
     app.use('/', routes);
     app.use(errorHandler);
+    await startConsumer(['']);
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
       console.log(`Swagger UI → http://localhost:${PORT}/api-docs`);

@@ -1,5 +1,4 @@
-import type { Request, Response  } from "express";
-
+import type { Request, Response } from "express";
 import { AppError } from "../utils/AppError";
 import { findUserById } from "../services/auth-service";
 import {
@@ -13,11 +12,13 @@ import { defaultValues } from "../const/const-value";
 import { findPostsAndCommentByUserId } from '../services/post-service';
 import { ERRORS, errorhandler } from '../const/error-message';
 import { sendResponse } from '../utils/response';
-import { User } from '../config/models/sql-models/user-model';
+import { User } from '../config/databases/models/sql-models/user-model';
 import { env } from "../config/env.config";
 import redis from "../config/databases/redis-connect";
-import { userDetailsQueues } from "../queues/user-details-queues";
+// import { userDetailsQueues } from "../queues/user-details-queues";
 import { getNotification } from "../services/notification-service";
+import { sendMessage } from "../services/producer";
+import { EXCHANGE_TYPE } from '../const/const-value';
 
 const getUserWithPostAndComment = async (
   req: Request,
@@ -160,7 +161,8 @@ const userAllData = async (req: Request, res: Response): Promise<Response> => {
   try {
     const authenticate = req.user;
     const userId = Number(authenticate.user_id);
-    await userDetailsQueues.add('userDetails', { user_id: userId });
+    await sendMessage("userDetails", { msg: "for all queue", user_id: userId }, EXCHANGE_TYPE);
+    // await userDetailsQueues.add('userDetails', { user_id: userId });
     return sendResponse(res, 200, `user data download successfully`);
 
   } catch (error) {
@@ -175,7 +177,7 @@ const getNotifications = async (
   try {
     const authenticate = req.user;
     const user_id = authenticate.user_id;
-    const data = await  getNotification(user_id);
+    const data = await getNotification(user_id);
     return sendResponse(res, 200, "allNotification", data);
   } catch (error) {
     errorhandler(error, "Fetch notification");

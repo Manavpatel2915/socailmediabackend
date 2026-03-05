@@ -1,6 +1,6 @@
 import db from "../config/databases/sql-connect";
 import { postDataWithUser } from "../types/type"
-import { Post } from "../config/models/sql-models/post-model"
+import { Post } from "../config/databases/models/sql-models/post-model"
 import { orderByType, filterOptions } from "../types/type";
 import { Op, WhereOptions } from "sequelize";
 

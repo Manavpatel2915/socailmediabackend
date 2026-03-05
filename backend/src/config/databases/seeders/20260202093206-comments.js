@@ -73,10 +73,10 @@ module.exports = {
     if (existingComments.length === 0) {
       await queryInterface.bulkInsert('comment', comments);
 
-      const totalPosts     = postIds.length;
-      const totalComments  = comments.length;
-      const anonComments   = comments.filter((c) => c.user_id === null).length;
-      const authComments   = totalComments - anonComments;
+      const totalPosts = postIds.length;
+      const totalComments = comments.length;
+      const anonComments = comments.filter((c) => c.user_id === null).length;
+      const authComments = totalComments - anonComments;
 
       console.log(
         `✅ Seeded ${totalComments} comments across ${totalPosts} posts:\n` +

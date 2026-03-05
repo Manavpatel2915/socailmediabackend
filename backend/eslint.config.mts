@@ -67,6 +67,7 @@ export default defineConfig([
       "@typescript-eslint/no-explicit-any": "error",
       "no-console": "off",
       "no-debugger": "warn",
+      "no-multi-spaces": ["error"],
       "indent": ["error", 2],
       "space-before-blocks": "error",
       "brace-style": ["error", "1tbs", { allowSingleLine: false }],
@@ -83,8 +84,14 @@ export default defineConfig([
       "no-trailing-spaces": "error",
       "comma-spacing": ["error", { before: false, after: true }],
       "arrow-spacing": ["error", { before: true, after: true }],
+      "padding-line-between-statements": [
+        "error",
+        { blankLine: "always", prev: "import", next: "*" },
+        { blankLine: "never", prev: "import", next: "import" },
+        { blankLine: "always", prev: "*", next: "export" },
+      ],
       "no-multiple-empty-lines": ["error", {
-        max: 1,
+        max: 2,
         maxEOF: 1,
         maxBOF: 0
       }],

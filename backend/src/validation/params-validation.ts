@@ -1,5 +1,6 @@
 import Joi from 'joi';
 import { defaultValues } from "../const/const-value";
+
 export const userParamsSchema = Joi.object({
   userId: Joi.number()
     .integer()

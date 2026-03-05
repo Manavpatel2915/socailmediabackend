@@ -1,4 +1,4 @@
-import { User } from '../config/models/sql-models/user-model';
+import { User } from '../config/databases/models/sql-models/user-model';
 import db from "../config/databases/sql-connect";
 
 const deleteUserData = async (userId: number) => {

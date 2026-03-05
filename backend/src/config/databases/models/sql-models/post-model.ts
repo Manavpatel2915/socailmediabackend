@@ -6,7 +6,7 @@ import {
   InferCreationAttributes,
   CreationOptional
 } from 'sequelize';
-import { Models } from "../../../types/models.types";
+import { Models } from "../../../../types/models.types";
 
 export class Post extends Model<InferAttributes<Post>, InferCreationAttributes<Post>> {
   declare post_id: CreationOptional<number>;

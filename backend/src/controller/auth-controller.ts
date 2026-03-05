@@ -7,6 +7,7 @@ import { createUser, findUserByEmail } from "../services/auth-service";
 import { ERRORS, errorhandler } from '../const/error-message';
 import { sendResponse } from '../utils/response';
 import { sendMail } from '../services/mail-service';
+
 const JWT_SECRET = env.JWT.JWT_SECRET as string;
 const TOKEN_EXPIRY = env.JWT.TOKEN_EXPIRY as string;
 

@@ -9,6 +9,7 @@ export const createPostSchema = Joi.object({
   like: Joi.forbidden(),
 
 });
+
 export const updatePostSchema = Joi.object({
   title: Joi.string().max(255).optional(),
   content: Joi.string().min(1).optional(),

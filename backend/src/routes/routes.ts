@@ -2,7 +2,7 @@ import userRouter from './user-routes';
 import postRouter from './post-routes';
 import commentRouter from './comment-routes';
 import authRouter from './auth-routes';
-
+import rabbitmqRoutes from './message-routes';
 import { Router } from "express";
 
 const router = Router();
@@ -18,5 +18,7 @@ router.use('/comment'/*
 
 router.use('/auth'/*
     #swagger.tags = ['Auth']*/, authRouter);
+
+router.use('/rabbitmq', rabbitmqRoutes);
 
 export default router;
