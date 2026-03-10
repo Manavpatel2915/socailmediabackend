@@ -16,17 +16,17 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
 
   static associate(models: Models): void {
     User.hasMany(models.Post, {
-      foreignKey: 'user_id',
-      as: 'posts',
-      onDelete: 'CASCADE',
+      foreignKey: "user_id",
+      as: "posts",
+      onDelete: "CASCADE",
     });
     User.hasMany(models.Comment, {
       foreignKey: {
         name: "user_id",
         allowNull: true,
       },
-      as: 'comments',
-      onDelete: 'SET NULL',
+      as: "comments",
+      onDelete: "SET NULL",
     });
   }
 }

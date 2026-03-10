@@ -8,5 +8,10 @@ export const month = ["January", "February", "March", "April", "May", "June", "J
 
 export const EXCHANGE = "broadcast_logs"
 
-export const EXCHANGE_TYPE = "direct"
+export type ExchangeType = "direct" | "fanout" | "topic" | "headers";
 
+export const EXCHANGE_TYPE: ExchangeType = "direct"
+
+export type QueueName = "SchedulePost" | "notification" | "userDetails";
+
+export const queueArray: QueueName[] = ["SchedulePost", "notification", "userDetails"];

@@ -24,7 +24,7 @@ export const optionalJwt = (
   try {
     const token = authHeader.split(" ")[1];
 
-    if (!token || typeof token !== 'string') {
+    if (!token || typeof token !== "string") {
       req.user = undefined;
       return next();
     }

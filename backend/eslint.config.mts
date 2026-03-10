@@ -78,6 +78,7 @@ export default defineConfig([
         named: "never",
         asyncArrow: "always",
       }],
+       "quotes": ["error", "double"],
       "space-in-parens": ["error", "never"],
       "object-curly-spacing": ["error", "always"],
       "space-infix-ops": "error",
@@ -91,7 +92,7 @@ export default defineConfig([
         { blankLine: "always", prev: "*", next: "export" },
       ],
       "no-multiple-empty-lines": ["error", {
-        max: 2,
+        max: 1,
         maxEOF: 1,
         maxBOF: 0
       }],

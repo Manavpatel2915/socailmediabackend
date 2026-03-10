@@ -9,8 +9,8 @@ import {
   findPostById,
   getAllPost
 } from "../services/post-service";
-import { sendResponse } from '../utils/response';
-import { ERRORS, errorhandler } from '../const/error-message';
+import { sendResponse } from "../utils/response";
+import { ERRORS, errorhandler } from "../const/error-message";
 import { defaultValues } from "../const/const-value";
 import { env } from "../config/env.config";
 import redis from "../config/databases/redis-connect";
@@ -137,7 +137,7 @@ const allPost = async (
 
     const postdata = await getAllPost(postLimit, postOffset, orderBy, filter);
     await redis.set(rediskey, JSON.stringify(postdata), "EX", Number(env.RATELIMIT.RATE_TIMER));
-    return sendResponse(res, 200, `All Data Fetch`, postdata);
+    return sendResponse(res, 200, "All Data Fetch", postdata);
 
   } catch (error) {
     errorhandler(error, "Fetch Data!");
@@ -158,7 +158,7 @@ const schedulePost = async (
     const scheduledTime = new Date(time).getTime();
     const now = Date.now();
     console.log(`${scheduledTime - now}`);
-    createPostQueues.add('createPost', { title, content, image, userId }, {
+    createPostQueues.add("createPost", { title, content, image, userId }, {
       delay: scheduledTime - now,
       // repeat: {
       //   pattern: '* * * * *'

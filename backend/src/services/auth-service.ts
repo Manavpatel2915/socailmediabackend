@@ -1,11 +1,11 @@
 import db from "../config/databases/sql-connect";
-import { errorhandler } from '../const/error-message';
+import { errorhandler } from "../const/error-message";
 
 const createUser = async (
   user_name: string,
   email: string,
   password: string,
-  role: 'Admin' | 'User' = 'User',
+  role: "Admin" | "User" = "User",
 ) => {
   try {
     const newUser = await db.User.create({

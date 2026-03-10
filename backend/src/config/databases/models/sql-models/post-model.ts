@@ -5,7 +5,7 @@ import {
   InferAttributes,
   InferCreationAttributes,
   CreationOptional
-} from 'sequelize';
+} from "sequelize";
 import { Models } from "../../../../types/models.types";
 
 export class Post extends Model<InferAttributes<Post>, InferCreationAttributes<Post>> {
@@ -22,16 +22,16 @@ export class Post extends Model<InferAttributes<Post>, InferCreationAttributes<P
   static associate(models: Models): void {
     // Post -> User (many-to-one)
     Post.belongsTo(models.User, {
-      foreignKey: 'user_id',
-      as: 'user',
-      onDelete: 'CASCADE',
+      foreignKey: "user_id",
+      as: "user",
+      onDelete: "CASCADE",
     });
 
     // Post -> Comments (one-to-many)
     Post.hasMany(models.Comment, {
-      foreignKey: 'post_id',
-      as: 'comments',
-      onDelete: 'CASCADE',
+      foreignKey: "post_id",
+      as: "comments",
+      onDelete: "CASCADE",
     });
   }
 }
@@ -78,8 +78,8 @@ export default (sequelize: Sequelize): typeof Post => {
     {
       sequelize,
       underscored: true,
-      tableName: 'post',
-      modelName: 'Post',
+      tableName: "post",
+      modelName: "Post",
     }
   );
 

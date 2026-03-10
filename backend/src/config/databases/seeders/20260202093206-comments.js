@@ -1,23 +1,23 @@
-'use strict';
+"use strict";
 
 module.exports = {
   async up(queryInterface, Sequelize) {
     // ── Fetch users and posts ────────────────────────────────────────────────
     const users = await queryInterface.sequelize.query(
-      'SELECT user_id FROM user ORDER BY user_id',
+      "SELECT user_id FROM user ORDER BY user_id",
       { type: Sequelize.QueryTypes.SELECT }
     );
 
     const posts = await queryInterface.sequelize.query(
-      'SELECT post_id FROM post ORDER BY post_id',
+      "SELECT post_id FROM post ORDER BY post_id",
       { type: Sequelize.QueryTypes.SELECT }
     );
 
     if (users.length === 0) {
-      throw new Error('❌ No users found. Please run the users seeder first.');
+      throw new Error("❌ No users found. Please run the users seeder first.");
     }
     if (posts.length === 0) {
-      throw new Error('❌ No posts found. Please run the posts seeder first.');
+      throw new Error("❌ No posts found. Please run the posts seeder first.");
     }
 
     const userIds = users.map((u) => u.user_id);
@@ -66,12 +66,12 @@ module.exports = {
 
     // ── Check if comments already exist ────────────────────────────────────
     const existingComments = await queryInterface.sequelize.query(
-      'SELECT id FROM comment',
+      "SELECT id FROM comment",
       { type: Sequelize.QueryTypes.SELECT }
     );
 
     if (existingComments.length === 0) {
-      await queryInterface.bulkInsert('comment', comments);
+      await queryInterface.bulkInsert("comment", comments);
 
       const totalPosts = postIds.length;
       const totalComments = comments.length;
@@ -84,11 +84,11 @@ module.exports = {
         `   • ${anonComments} anonymous comments   (user_id = NULL)`
       );
     } else {
-      console.log('⚠️  Comments already exist, skipping seed.');
+      console.log("⚠️  Comments already exist, skipping seed.");
     }
   },
 
   async down(queryInterface) {
-    await queryInterface.bulkDelete('comment', null, {});
+    await queryInterface.bulkDelete("comment", null, {});
   },
 };

@@ -1,9 +1,9 @@
-import { Worker } from 'bullmq';
+import { Worker } from "bullmq";
 import redis from "../config/databases/redis-connect";
 import { createNotification } from "../services/notification-service";
 import { findPostById } from "../services/post-service"
 
-export const notificationWorker = new Worker('notification', async (job) => {
+export const notificationWorker = new Worker("notification", async (job) => {
   const data = job.data.data;
   const title = job.data.title;
   const postId = data.post_id;
@@ -18,12 +18,12 @@ export const notificationWorker = new Worker('notification', async (job) => {
   concurrency: 3,
 });
 
-notificationWorker.on('completed', (job) => {
+notificationWorker.on("completed", (job) => {
   console.log(`Job ${job.id} completed`);
 });
 
-notificationWorker.on('failed', (job, err) => {
+notificationWorker.on("failed", (job, err) => {
   console.error(`Job ${job.id} failed:`, err.message);
 });
 
-console.log('userDetails worker is running...');
+console.log("userDetails worker is running...");

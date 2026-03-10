@@ -1,12 +1,14 @@
-import fs from 'fs';
-import path from 'path';
-import { pathToFileURL } from 'url';
-import { Sequelize, DataTypes, ModelStatic } from 'sequelize';
+import fs from "fs";
+import path from "path";
+import { pathToFileURL } from "url";
+import { Sequelize, DataTypes, ModelStatic } from "sequelize";
 import { env } from "../env.config";
 import { User } from "./models/sql-models/user-model";
 import { Post } from "./models/sql-models/post-model";
 import { Comment } from "./models/sql-models/comment-model";
-import { Notification } from './models/sql-models/notification-model';
+import { Notification } from "./models/sql-models/notification-model";
+import { Conversation } from "./models/sql-models/conversation-model";
+import { Message } from "./models/sql-models/message-model";
 
 const basename = path.basename(__filename);
 
@@ -16,7 +18,9 @@ export interface DbInterface {
   User: typeof User;
   Post: typeof Post;
   Comment: typeof Comment;
-  Notification: typeof Notification
+  Notification: typeof Notification;
+  Conversations: typeof Conversation;
+  Message: typeof Message;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
@@ -38,7 +42,7 @@ const sequelize = new Sequelize(
   {
     host: DB_HOST,
     port: DB_PORT,
-    dialect: 'mysql',
+    dialect: "mysql",
     logging: false,
     pool: {
       max: 5,
@@ -56,13 +60,13 @@ const db = {
 } as DbInterface;
 
 const initModels = async (): Promise<void> => {
-  const modelsPath = path.join(__dirname, './models/sql-models');
+  const modelsPath = path.join(__dirname, "./models/sql-models");
   const files = fs.readdirSync(modelsPath)
     .filter(file => {
       return (
-        file.indexOf('.') !== 0 &&
+        file.indexOf(".") !== 0 &&
         file !== basename &&
-        (file.endsWith('-model.js') || file.endsWith('-model.ts'))
+        (file.endsWith("-model.js") || file.endsWith("-model.ts"))
       );
     });
 
@@ -84,7 +88,7 @@ const initModels = async (): Promise<void> => {
   }
 
   const modelNames = Object.keys(db).filter(
-    key => key !== 'sequelize' && key !== 'Sequelize'
+    key => key !== "sequelize" && key !== "Sequelize"
   );
 
   if (modelNames.length > 0) {

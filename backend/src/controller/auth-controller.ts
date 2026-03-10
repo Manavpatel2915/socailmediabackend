@@ -1,12 +1,12 @@
 import type { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { env } from '../config/env.config';
+import { env } from "../config/env.config";
 import { AppError } from "../utils/AppError";
 import { createUser, findUserByEmail } from "../services/auth-service";
-import { ERRORS, errorhandler } from '../const/error-message';
-import { sendResponse } from '../utils/response';
-import { sendMail } from '../services/mail-service';
+import { ERRORS, errorhandler } from "../const/error-message";
+import { sendResponse } from "../utils/response";
+import { sendMail } from "../services/mail-service";
 
 const JWT_SECRET = env.JWT.JWT_SECRET as string;
 const TOKEN_EXPIRY = env.JWT.TOKEN_EXPIRY as string;

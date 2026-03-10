@@ -22,9 +22,9 @@ export class Comment extends Model<InferAttributes<Comment>, InferCreationAttrib
   static associate(models: Models): void {
     // Comment -> Post (many-to-one)
     Comment.belongsTo(models.Post, {
-      foreignKey: 'post_id',
-      as: 'post',
-      onDelete: 'CASCADE',
+      foreignKey: "post_id",
+      as: "post",
+      onDelete: "CASCADE",
     });
 
     // Comment -> User (many-to-one, optional)
@@ -33,8 +33,8 @@ export class Comment extends Model<InferAttributes<Comment>, InferCreationAttrib
         name: "user_id",
         allowNull: true,
       },
-      as: 'user',
-      onDelete: 'SET NULL',
+      as: "user",
+      onDelete: "SET NULL",
     });
   }
 }

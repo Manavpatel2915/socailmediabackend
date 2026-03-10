@@ -1,12 +1,12 @@
-import { createBullBoard } from '@bull-board/api';
-import { BullMQAdapter } from '@bull-board/api/bullMQAdapter';
-import { ExpressAdapter } from '@bull-board/express';
+import { createBullBoard } from "@bull-board/api";
+import { BullMQAdapter } from "@bull-board/api/bullMQAdapter";
+import { ExpressAdapter } from "@bull-board/express";
 import { userDetailsQueues } from "../queues/user-details-queues";
 import { notificationQueues } from "../queues/notification-queues";
-import { createPostQueues } from '../queues/post-queues';
+import { createPostQueues } from "../queues/post-queues";
 
 const serverAdapter = new ExpressAdapter();
-serverAdapter.setBasePath('/admin/queues');
+serverAdapter.setBasePath("/admin/queues");
 
 createBullBoard({
   queues: [

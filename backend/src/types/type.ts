@@ -2,7 +2,7 @@ export type UserBody = {
   username: string;
   email: string;
   password: string;
-  role?: 'Admin' | 'user';
+  role?: "Admin" | "user";
 };
 
 export type ParamWithId = {
@@ -30,7 +30,7 @@ export interface postDataWithUser {
   [key: string]: unknown;
 };
 
-export type orderByType = [['createdAt', 'ASC']] | [['createdAt', 'DESC']];
+export type orderByType = [["createdAt", "ASC"]] | [["createdAt", "DESC"]];
 
 export interface filterOptions {
   likecount?: {
@@ -40,7 +40,7 @@ export interface filterOptions {
 }
 
 export interface requestBody {
-  orderBy?: 'ASC' | 'DESC';
+  orderBy?: "ASC" | "DESC";
   filter?: filterOptions;
 }
 

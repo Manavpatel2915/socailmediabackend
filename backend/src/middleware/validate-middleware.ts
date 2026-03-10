@@ -12,7 +12,7 @@ export const validate =
 
       if (error) {
         const details = error.details.map((d) => d.message);
-        const message = details.join(', ');
+        const message = details.join(", ");
         throw new AppError(message, 400);
       }
 

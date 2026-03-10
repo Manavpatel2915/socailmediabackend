@@ -45,7 +45,7 @@ const findPostByIdWithUsername = async (postId: number) => {
     raw: true,
     nest: true,
     attributes: {
-      exclude: ['post_id', 'user_id'],
+      exclude: ["post_id", "user_id"],
     },
     include: {
       model: db.User,
@@ -117,7 +117,7 @@ const findPostsAndCommentByUserId = async (
     offset: postOffset,
     limit: postLimit,
     attributes: {
-      exclude: ['user_id']
+      exclude: ["user_id"]
     },
     raw: true
   });
@@ -129,7 +129,7 @@ const findPostsAndCommentByUserId = async (
       const comments = await db.Comment.findAll({
         where: { post_id: post.post_id },
         attributes: {
-          exclude: ['id', 'post_id']
+          exclude: ["id", "post_id"]
         },
         raw: true
       });
@@ -149,7 +149,7 @@ const getAllPost = async (
   orderBy: string,
   filter: filterOptions
 ) => {
-  const order: orderByType = orderBy === 'ASC' ? [['createdAt', 'ASC']] : [['createdAt', 'DESC']];
+  const order: orderByType = orderBy === "ASC" ? [["createdAt", "ASC"]] : [["createdAt", "DESC"]];
   const where: WhereOptions = {};
   if (filter?.likecount) {
     const { maxlike, minlike } = filter.likecount;
@@ -167,7 +167,7 @@ const getAllPost = async (
   const postdata = await db.Post.findAll({
     where,
     attributes: {
-      exclude: ['post_id', 'user_id'],
+      exclude: ["post_id", "user_id"],
     },
     include: [
       {
@@ -205,10 +205,39 @@ const getAllPostByUserId = async (
       user_id: userId
     },
     attributes: {
-      exclude: ['post_id', 'user_id' ]
+      exclude: ["post_id", "user_id" ]
     }
   });
   return allpost;
+}
+
+const mostLikedUser = async (
+  maxlike: number,
+  minlike: number
+) => {
+  const where: WhereOptions = {};
+  if (maxlike && minlike) {
+
+    where.like = { [Op.between]: [Number(minlike), Number(maxlike)] };
+  } else if (maxlike) {
+
+    where.like = { [Op.lte]: Number(maxlike) };
+  } else if (minlike) {
+
+    where.like = { [Op.gte]: Number(minlike) };
+  }
+  const users = await db.Post.findAll({
+    where,
+    include: [
+      {
+        model: db.User,
+        attributes: ["user_name"],
+        as: "user"
+      }
+    ]
+  });
+  console.log("🚀 ~ mostLikedUser ~ users:", users)
+  return users;
 }
 
 export {
@@ -220,5 +249,6 @@ export {
   findPostsAndCommentByUserId,
   getAllPost,
   findPostById,
-  getAllPostByUserId
+  getAllPostByUserId,
+  mostLikedUser,
 }

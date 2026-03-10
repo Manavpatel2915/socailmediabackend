@@ -1,9 +1,8 @@
-import connectMongo from './mongo-connect';
-import { connectSql } from './sql-connect';
-import './redis-connect';
-import dbPromise from './sql-connect';
-import { connectRabbitMQ } from '../rabbitmq'
-
+import connectMongo from "./mongo-connect";
+import { connectSql } from "./sql-connect";
+import "./redis-connect";
+import dbPromise from "./sql-connect";
+import { connectRabbitMQ } from "../rabbitmq"
 
 const connectDatabase = async (): Promise<void> => {
   try {
@@ -13,7 +12,7 @@ const connectDatabase = async (): Promise<void> => {
     const db = await dbPromise;
     await connectRabbitMQ();
   } catch (error) {
-    console.error(' Database connection failed:', error);
+    console.error(" Database connection failed:", error);
     throw error;
   }
 };

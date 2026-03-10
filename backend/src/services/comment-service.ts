@@ -1,6 +1,6 @@
 import db from "../config/databases/sql-connect";
 import { CommentWithUser } from "../types/type"
-import { Comment } from '../config/databases/models/sql-models/comment-model';
+import { Comment } from "../config/databases/models/sql-models/comment-model";
 
 const findCommentById = async (commentId: number) => {
   const comment = await db.Comment.findByPk(commentId);
@@ -45,13 +45,13 @@ const findCommentByPostId = async (postId: number, offset: number, limit: number
     offset: offset,
     limit: limit,
     attributes: {
-      exclude: ['id', 'post_id', 'user_id']
+      exclude: ["id", "post_id", "user_id"]
     },
     include: [
       {
         model: db.User,
-        attributes: ['user_name'],
-        as: 'user'
+        attributes: ["user_name"],
+        as: "user"
       }
     ],
     raw: true,
@@ -73,7 +73,7 @@ const findAllComment = async (
       user_id: userId
     },
     attributes: {
-      exclude: ['id']
+      exclude: ["id"]
     }
   })
   return commentData;

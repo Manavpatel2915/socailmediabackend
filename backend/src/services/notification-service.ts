@@ -1,4 +1,4 @@
-import db from '../config/databases/sql-connect';
+import db from "../config/databases/sql-connect";
 
 const getNotification = async (
   user_id: number
@@ -8,7 +8,7 @@ const getNotification = async (
       notification_owner_id: user_id
     },
     attributes: {
-      exclude: ['notification_id', 'is_read']
+      exclude: ["notification_id", "is_read"]
     }
   })
   return notification;

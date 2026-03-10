@@ -23,7 +23,7 @@ export const authenticate = (
 
   const token = authHeader.split(" ")[1];
 
-  if (!token || typeof token !== 'string') {
+  if (!token || typeof token !== "string") {
     return res.status(401).json({ message: "token is missing!" });
   }
   try {

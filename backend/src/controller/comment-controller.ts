@@ -7,8 +7,8 @@ import {
   findCommentByPostId
 } from "../services/comment-service";
 import { AppError } from "../utils/AppError";
-import { ERRORS, errorhandler } from '../const/error-message';
-import { sendResponse } from '../utils/response';
+import { ERRORS, errorhandler } from "../const/error-message";
+import { sendResponse } from "../utils/response";
 import { defaultValues } from "../const/const-value";
 import redis from "../config/databases/redis-connect";
 import { env } from "../config/env.config";
@@ -39,7 +39,7 @@ const createComment = async (
     //   data: newComment,
     //   title: "CREATE-COMMENT"
     // }
-    sendMessage('notification', { msg: 'notification', title: "CREATE-COMMENT", user_id: newComment.user_id, post_id: newComment.post_id, comment: newComment.comment }, EXCHANGE_TYPE);
+    sendMessage("notification", { msg: "notification", title: "CREATE-COMMENT", user_id: newComment.user_id, post_id: newComment.post_id, comment: newComment.comment }, EXCHANGE_TYPE);
     // notificationQueues.add('notification',  notification_data);
     return sendResponse(res, 201, "Comment created successfully!", newComment);
   } catch (error) {
@@ -74,7 +74,7 @@ const updateComment = async (
       throw new AppError(ERRORS.MESSAGE.notFound("Comment"), 404);
     }
 
-    if (existingComment.user_id !== authenticatedUser.user_id && authenticatedUser.role !== 'Admin') {
+    if (existingComment.user_id !== authenticatedUser.user_id && authenticatedUser.role !== "Admin") {
       throw new AppError(ERRORS.MESSAGE.UNAUTHORIZED, ERRORS.STATUSCODE.UNAUTHORIZED);
     }
 

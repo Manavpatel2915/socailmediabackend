@@ -1,13 +1,13 @@
-import { Worker } from 'bullmq';
+import { Worker } from "bullmq";
 import redis from "../config/databases/redis-connect";
 import { getUserById } from "../services/user-service";
 import { getAllPostByUserId } from "../services/post-service";
 import { findAllComment } from "../services/comment-service";
 // import fs from 'fs';
 // import path from "path";
-import { sendMail } from '../services/mail-service';
+import { sendMail } from "../services/mail-service";
 
-export const userDetailsWorker = new Worker('userDetails', async (job) => {
+export const userDetailsWorker = new Worker("userDetails", async (job) => {
 
   const userId = job.data.user_id;
   const { user_name, email } = await getUserById(userId);
@@ -37,12 +37,12 @@ export const userDetailsWorker = new Worker('userDetails', async (job) => {
   concurrency: 3,
 });
 
-userDetailsWorker.on('completed', (job) => {
+userDetailsWorker.on("completed", (job) => {
   console.log(`Job ${job.id} completed`);
 });
 
-userDetailsWorker.on('failed', (job, err) => {
+userDetailsWorker.on("failed", (job, err) => {
   console.error(`Job ${job.id} failed:`, err.message);
 });
 
-console.log('userDetails worker is running...');
+console.log("userDetails worker is running...");

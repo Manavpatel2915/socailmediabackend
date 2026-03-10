@@ -1,9 +1,8 @@
-import { getChannel } from '../config/rabbitmq';
+import { getChannel } from "../config/rabbitmq";
 import { EXCHANGE } from "../const/const-value";
+import { ExchangeType } from "../const/const-value";
 
-export type RoutingKey = 'SchedulePost' | 'notification' | 'userDetails' | ''
-
-export type ExchangeType = 'direct' | 'fanout' | 'topic' | 'headers';
+export type RoutingKey = "SchedulePost" | "notification" | "userDetails" | ""
 
 interface MessagePayload {
   msg: string;
@@ -13,7 +12,7 @@ interface MessagePayload {
 export const sendMessage = (routingKey: RoutingKey, payload: MessagePayload, exchangeType: ExchangeType): void => {
   const channel = getChannel();
 
-  const resolvedRoutingKey = exchangeType === 'fanout' ? '' : routingKey;
+  const resolvedRoutingKey = exchangeType === "fanout" ? "" : routingKey;
 
   channel.publish(
     EXCHANGE,

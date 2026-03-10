@@ -9,16 +9,16 @@ import {
   allUsers,
 } from "../services/user-service";
 import { defaultValues } from "../const/const-value";
-import { findPostsAndCommentByUserId } from '../services/post-service';
-import { ERRORS, errorhandler } from '../const/error-message';
-import { sendResponse } from '../utils/response';
-import { User } from '../config/databases/models/sql-models/user-model';
+import { findPostsAndCommentByUserId } from "../services/post-service";
+import { ERRORS, errorhandler } from "../const/error-message";
+import { sendResponse } from "../utils/response";
+import { User } from "../config/databases/models/sql-models/user-model";
 import { env } from "../config/env.config";
 import redis from "../config/databases/redis-connect";
 // import { userDetailsQueues } from "../queues/user-details-queues";
 import { getNotification } from "../services/notification-service";
 import { sendMessage } from "../services/producer";
-import { EXCHANGE_TYPE } from '../const/const-value';
+import { EXCHANGE_TYPE } from "../const/const-value";
 
 const getUserWithPostAndComment = async (
   req: Request,
@@ -28,7 +28,7 @@ const getUserWithPostAndComment = async (
     const userId = Number(req.params.userId);
     const postLimit = Number(req.query.postLimit) || defaultValues.DEFAULT_LIMIT;
     const postOffset = Number(req.query.postOffset) || defaultValues.DEFAULT_OFFSET;
-    const comment = req.query.comment_required === 'false';
+    const comment = req.query.comment_required === "false";
     const cacheKey = req.rediskey;
     if (!userId) {
       throw new AppError(ERRORS.MESSAGE.notFound("UserId"), ERRORS.STATUSCODE.NOT_FOUND);
@@ -163,7 +163,7 @@ const userAllData = async (req: Request, res: Response): Promise<Response> => {
     const userId = Number(authenticate.user_id);
     await sendMessage("userDetails", { msg: "for all queue", user_id: userId }, EXCHANGE_TYPE);
     // await userDetailsQueues.add('userDetails', { user_id: userId });
-    return sendResponse(res, 200, `user data download successfully`);
+    return sendResponse(res, 200, "user data download successfully");
 
   } catch (error) {
     errorhandler(error, "download!");

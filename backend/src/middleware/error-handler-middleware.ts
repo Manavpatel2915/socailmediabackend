@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { ErrorLog } from "../config/databases/models/mongodb-models/error-log";
 import { env } from "../config/env.config";
-import path from 'path';
-import fs from 'fs';
+import path from "path";
+import fs from "fs";
 import fsPromises from "fs/promises";
 import { month } from "../const/const-value";
 import { AppError } from "../utils/AppError";
@@ -26,13 +26,13 @@ export const errorHandler = async (
     errorType: err.name,
   };
 
-  if (LOG_PLACE) {
+  if (LOG_PLACE == "true") {
     try {
       const year = new Date().getFullYear().toString();
       const months = month[(new Date().getMonth() + 1)].toString();
       const dirname = path.resolve("src", "log", year, months);
       fs.mkdirSync(dirname, { recursive: true });
-      await fsPromises.appendFile(path.join(dirname, "error-log.txt"), JSON.stringify(data) + '\n', 'utf8');
+      await fsPromises.appendFile(path.join(dirname, "error-log.txt"), JSON.stringify(data) + "\n", "utf8");
     } catch (error) {
       console.error("Failed to save error log into FILESYSTEM", error);
     }

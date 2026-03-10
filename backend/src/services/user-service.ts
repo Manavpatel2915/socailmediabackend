@@ -1,4 +1,4 @@
-import { User } from '../config/databases/models/sql-models/user-model';
+import { User } from "../config/databases/models/sql-models/user-model";
 import db from "../config/databases/sql-connect";
 
 const deleteUserData = async (userId: number) => {
@@ -50,19 +50,19 @@ const allUsers = async (offset: number, limit: number) => {
     offset: offset,
     limit: limit,
     attributes: {
-      exclude: ['password'],
+      exclude: ["password"],
       include: [
-        [db.sequelize.fn('COUNT', db.sequelize.col('posts.post_id')), 'post_count']
+        [db.sequelize.fn("COUNT", db.sequelize.col("posts.post_id")), "post_count"]
       ]
     },
     include: [
       {
         model: db.Post,
-        as: 'posts',
+        as: "posts",
         attributes: [],
       }
     ],
-    group: ['User.user_id'],
+    group: ["User.user_id"],
     subQuery: false,
   });
 }
